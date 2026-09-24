@@ -1,0 +1,6 @@
+{
+  "name": "Digital Lecturer Engine",
+  "description": "AI-powered university lecturer for structured, source-grounded teaching",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
