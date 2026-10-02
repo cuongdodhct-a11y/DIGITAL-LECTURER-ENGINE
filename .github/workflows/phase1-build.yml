@@ -74,6 +74,38 @@ jobs:
           assert(p10.response.ok, '1MD10 package lookup failed');
           assert(p10.body.package.packageId === 'LPKG-1MD10-001', '1MD10 resolved to wrong package');
 
+          const buildPilot = await fetch('http://127.0.0.1:3000/api/course-engine/packages/LPKG-1MD1-001/build-pilot', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              courseId: 'COURSE-1MD',
+              level1: {
+                sourceId: 'SRC-1MD1-L1', filename: '1.MĐ1.docx', documentType: 'DOCX', sourceLevel: 1,
+                title: '1.MĐ1', author: 'source', year: 2026, publisher: 'source', pageCount: 37,
+                status: 'REGISTERED', extractedText: 'verified source text', metadata: {
+                  fileSize: 41330, extractedAt: '2026-10-01T00:00:00.000Z',
+                  checksum: '8dbc58d73bda58f526154a7e3ac354daee52c244e54f992596fc314f03a42192'
+                }
+              },
+              level3: {
+                sourceId: 'SRC-1MD1-L3', filename: '1.MĐ1.pptx', documentType: 'PPTX', sourceLevel: 3,
+                title: '1.MĐ1', author: 'source', year: 2026, publisher: 'source', pageCount: 1, slideCount: 52,
+                status: 'REGISTERED', extractedText: 'verified source text', metadata: {
+                  fileSize: 73779028, extractedAt: '2026-10-01T00:00:00.000Z',
+                  checksum: 'a2b609ea525583d6e1fb3be7ef84002664f06d51c61794053b0edc96853e3c0b'
+                }
+              },
+              mapping: [{blockId:'B1',slideStart:1,slideEnd:52,durationSeconds:11100}]
+            })
+          });
+          const buildPilotText = await buildPilot.text();
+          let buildPilotBody; try { buildPilotBody = JSON.parse(buildPilotText); } catch { buildPilotBody = buildPilotText; }
+          assert(buildPilot.ok, '1MD1 build-pilot POST failed');
+          assert(buildPilotBody.success === true, '1MD1 build-pilot did not return success');
+          assert(buildPilotBody.package.slideCount === 52, '1MD1 pilot must preserve 52 slides');
+          assert(buildPilotBody.package.timing.totalActualSeconds === 11100, '1MD1 pilot timing mismatch');
+          assert(buildPilotBody.package.contentPolicy === 'SOURCE_AUTHORITATIVE_READ_ONLY', 'Source protection policy missing');
+
           const p7 = await getJson('/api/course-engine/resolve/COURSE-1MD/LPKG-1MD7-001');
           assert(p7.response.ok, '1MD7 package resolution failed');
           assert(p7.body.package.packageId === 'LPKG-1MD7-001', '1MD7 resolved to wrong package');
