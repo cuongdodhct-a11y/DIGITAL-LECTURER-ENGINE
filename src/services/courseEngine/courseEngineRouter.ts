@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { COURSE_1MD_ID, getCourse, getLessonPackage, listCourses } from './courseRegistry';
 import { assertLessonBelongsToCourse } from './packageResolver';
+import { registerAndBuildPilotPackage, PackageBuildMapping } from './packageBuildService';
+import { RegisteredDocument } from '../../types/source';
 
 export const courseEngineRouter = Router();
 
@@ -33,6 +35,33 @@ courseEngineRouter.get('/resolve/:courseId/:packageId', (req: Request, res: Resp
     res.json({ package: pkg });
   } catch (error: any) {
     res.status(404).json({ error: error.message || 'Package không thuộc course.' });
+  }
+});
+
+courseEngineRouter.post('/packages/:packageId/build-pilot', (req: Request, res: Response) => {
+  try {
+    const { courseId, level1, level3, mapping } = req.body as {
+      courseId?: string;
+      level1?: RegisteredDocument;
+      level3?: RegisteredDocument;
+      mapping?: PackageBuildMapping[];
+    };
+
+    if (!courseId || !level1 || !level3 || !Array.isArray(mapping)) {
+      return res.status(400).json({ error: 'courseId, level1, level3 và mapping là bắt buộc.' });
+    }
+
+    const artifact = registerAndBuildPilotPackage({
+      courseId,
+      packageId: req.params.packageId,
+      level1,
+      level3,
+      mapping
+    });
+
+    return res.json({ success: true, package: artifact });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message || 'Không thể xây dựng package.' });
   }
 });
 
