@@ -19,8 +19,8 @@ import { PackageSummary } from '../types/lecture';
 import { PackageSwitcher } from './PackageSwitcher/PackageSwitcher';
 
 interface HeaderProps {
-  activeTab: 'sources' | 'package' | 'qc' | 'classroom';
-  setActiveTab: (tab: 'sources' | 'package' | 'qc' | 'classroom') => void;
+  activeTab: 'engine' | 'sources' | 'package' | 'qc' | 'classroom';
+  setActiveTab: (tab: 'engine' | 'sources' | 'package' | 'qc' | 'classroom') => void;
   approvalStatus: ApprovalState;
   criticalCount: number;
   warningCount: number;
@@ -133,6 +133,14 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Academic Workflow Tabs */}
         <nav className="flex space-x-1 border-t border-slate-800/80 -mb-px">
+          <button
+            onClick={() => setActiveTab('engine')}
+            className={`py-3 px-4 text-xs font-medium border-b-2 flex items-center gap-2 transition cursor-pointer ${activeTab === 'engine' ? 'border-indigo-500 text-indigo-400 bg-slate-800/40' : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700'}`}
+          >
+            <Layers className="w-4 h-4" />
+            <span>0. Course Engine 1MĐ (1MĐ1 → 1MĐ10)</span>
+          </button>
+
           <button
             onClick={() => setActiveTab('sources')}
             className={`py-3 px-4 text-xs font-medium border-b-2 flex items-center gap-2 transition cursor-pointer ${

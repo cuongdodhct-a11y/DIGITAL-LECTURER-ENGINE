@@ -1,0 +1,107 @@
+{
+  "packageId": "LPKG-1MD1-001",
+  "courseId": "COURSE-1MD",
+  "lessonNumber": 1,
+  "lessonCode": "1MD1",
+  "status": "READY_FOR_QC",
+  "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sources": [
+    {
+      "sourceId": "SRC-007",
+      "level": 1,
+      "filename": "1.MĐ1.docx",
+      "type": "DOCX",
+      "sha256": "8dbc58d73bda58f526154a7e3ac354daee52c244e54f992596fc314f03a42192",
+      "sizeBytes": 41330,
+      "paragraphCount": 287
+    },
+    {
+      "sourceId": "SRC-006",
+      "level": 3,
+      "filename": "1.MĐ1.pptx",
+      "type": "PPTX",
+      "sha256": "a2b609ea525583d6e1fb3be7ef84002664f06d51c61794053b0edc96853e3c0b",
+      "sizeBytes": 73779028,
+      "slideCount": 52
+    }
+  ],
+  "commonSourceSetId": "COMMON-1MD",
+  "commonLevels": [
+    2,
+    4,
+    5,
+    6,
+    7
+  ],
+  "timing": {
+    "totalPlannedSeconds": 11100,
+    "totalActualSeconds": 11100,
+    "varianceSeconds": 0,
+    "blocks": [
+      {
+        "blockId": "TB-1MD1-001",
+        "slideStart": 1,
+        "slideEnd": 4,
+        "durationSeconds": 300
+      },
+      {
+        "blockId": "TB-1MD1-002",
+        "slideStart": 5,
+        "slideEnd": 10,
+        "durationSeconds": 300
+      },
+      {
+        "blockId": "TB-1MD1-003",
+        "slideStart": 11,
+        "slideEnd": 21,
+        "durationSeconds": 1800
+      },
+      {
+        "blockId": "TB-1MD1-004",
+        "slideStart": 22,
+        "slideEnd": 26,
+        "durationSeconds": 1200
+      },
+      {
+        "blockId": "TB-1MD1-005",
+        "slideStart": 27,
+        "slideEnd": 46,
+        "durationSeconds": 5400
+      },
+      {
+        "blockId": "TB-1MD1-006",
+        "slideStart": 47,
+        "slideEnd": 50,
+        "durationSeconds": 1800
+      },
+      {
+        "blockId": "TB-1MD1-007",
+        "slideStart": 51,
+        "slideEnd": 52,
+        "durationSeconds": 300
+      }
+    ]
+  },
+  "slideMapPolicy": {
+    "slideCount": 52,
+    "coverage": "1..52",
+    "sourceId": "SRC-006",
+    "mappingDecision": "GOLDEN_REFERENCE_1MD1_OPERATIONAL_MAPPING"
+  },
+  "contentIntegrity": {
+    "docxParagraphs": 287,
+    "docxNonEmptyChars": 25323,
+    "pptxSlides": 52,
+    "visualOnlySlides": [
+      5,
+      7,
+      52
+    ]
+  },
+  "qc": {
+    "sourceIsolation": "PASS",
+    "timing": "PASS",
+    "slideCoverage": "PASS",
+    "sourceMutation": "NONE"
+  }
+}

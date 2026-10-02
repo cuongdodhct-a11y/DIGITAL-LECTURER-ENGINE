@@ -121,6 +121,7 @@ export class RealTTSGatewayDouble {
       return {
         audioBase64: undefined,
         audioSource: 'BROWSER_TTS',
+        voiceStatus: 'FALLBACK',
         mimeType: 'audio/speech-synthesis',
         durationEstimateSeconds: Math.max(3, Math.round(request.text.length / 14)),
         cached: false,
@@ -135,6 +136,7 @@ export class RealTTSGatewayDouble {
     return {
       audioBase64: 'REAL_GEMINI_WAV_BYTES_DATA',
       audioSource: 'GEMINI_TTS',
+      voiceStatus: 'OFFICIAL',
       mimeType: 'audio/wav',
       durationEstimateSeconds: Math.max(3, Math.round(request.text.length / 14)),
       cached: false,

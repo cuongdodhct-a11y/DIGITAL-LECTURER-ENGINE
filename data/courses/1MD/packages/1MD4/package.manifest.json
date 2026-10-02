@@ -1,0 +1,40 @@
+{
+  "packageId": "LPKG-1MD4-001",
+  "courseId": "COURSE-1MD",
+  "lessonNumber": 4,
+  "lessonCode": "1MD4",
+  "title": "Bài 1MD4 — chờ nạp tài liệu chuẩn",
+  "status": "CONTENT_PENDING",
+  "sources": {
+    "level1": {
+      "sourceId": "SRC-1MD4-L1",
+      "required": true,
+      "status": "PENDING",
+      "documentType": "DOCX"
+    },
+    "level3": {
+      "sourceId": "SRC-1MD4-L3",
+      "required": true,
+      "status": "PENDING",
+      "documentType": "PPTX"
+    }
+  },
+  "commonSourceSet": "COMMON-1MD",
+  "commonLevels": [
+    2,
+    4,
+    5,
+    6,
+    7
+  ],
+  "runtime": {
+    "ttsMode": "FREE",
+    "voiceProfile": "voice_free_pham_tuyen"
+  },
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "onboarding": {
+    "requiresLevel1": true,
+    "requiresLevel3": true,
+    "buildStatus": "WAITING_FOR_SOURCE_FILES"
+  }
+}

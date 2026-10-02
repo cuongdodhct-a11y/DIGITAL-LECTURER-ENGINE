@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
+import { CourseEngineView } from './components/CourseEngine/CourseEngineView';
 import { DocumentUploader } from './components/DocumentUploader/DocumentUploader';
 import { LecturePackageView } from './components/LectureMap/LecturePackageView';
 import { QualityControlDashboard } from './components/QualityControl/QualityControlDashboard';
@@ -15,7 +16,7 @@ import { QCReport } from './types/quality';
 import { createProduction1MD1Package, getProductionDocuments, PRODUCTION_PACKAGE_ID } from './services/lectureSequence/productionDefaultPackage';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'sources' | 'package' | 'qc' | 'classroom'>('package');
+  const [activeTab, setActiveTab] = useState<'engine' | 'sources' | 'package' | 'qc' | 'classroom'>('engine');
   const [documents, setDocuments] = useState<RegisteredDocument[]>(getProductionDocuments());
   const [packages, setPackages] = useState<PackageSummary[]>([]);
   const [activePackageId, setActivePackageId] = useState<string>(PRODUCTION_PACKAGE_ID);
@@ -304,6 +305,10 @@ export default function App() {
 
       {/* Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {activeTab === 'engine' && (
+          <CourseEngineView />
+        )}
+
         {activeTab === 'sources' && (
           <DocumentUploader
             documents={documents}
