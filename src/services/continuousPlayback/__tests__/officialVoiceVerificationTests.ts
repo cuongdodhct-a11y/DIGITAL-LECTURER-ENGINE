@@ -21,10 +21,9 @@ import { AudioCache } from '../../ttsGateway/audioCache';
 import { OFFICIAL_LECTURER_VOICE_PROFILE, OFFICIAL_TTS_MODEL } from '../../ttsGateway/voiceProfiles';
 import { generateAudioCacheKey } from '../../../utils/hashing';
 import { TeachingEngine } from '../../teachingEngine/teachingEngine';
-import { createProduction1MD1Package, PRODUCTION_PACKAGE_ID } from '../../lectureSequence/productionDefaultPackage';
+import { createProduction1MD1Package } from '../../lectureSequence/productionDefaultPackage';
 import { MockAudioController } from './mockAudioController';
 
-const LPKG_1MD1_001 = PRODUCTION_PACKAGE_ID;
 
 export interface TestResult {
   testId: string;
@@ -69,7 +68,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 2 — SESSION CREATION
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     // Mock gateway that returns official Gemini TTS audio
@@ -129,7 +128,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 3 — VOICE CONTINUITY
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
     const voiceProfilesUsed: string[] = [];
     const modelsUsed: string[] = [];
@@ -193,7 +192,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 4 — NO SILENT FALLBACK (Strict Protection)
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     // Mock Gemini TTS returning 429 quota exhaustion
@@ -242,7 +241,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 5 — FALLBACK AUTHORIZATION
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     // Gateway returning Browser TTS when authorized
@@ -390,7 +389,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 8 — RETRY OFFICIAL VOICE
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     let simulateFail = true;
@@ -460,7 +459,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 9 — MULTIPLE SLIDE STABILITY
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     const mockGateway = {
@@ -529,7 +528,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
   // TEST 10 — UI STATUS VERIFICATION
   // ==========================================
   try {
-    const teachingEngine = new TeachingEngine(LPKG_1MD1_001);
+    const teachingEngine = new TeachingEngine(createProduction1MD1Package());
     const audioController = new MockAudioController();
 
     const ttsQueue = new TTSQueueManager(undefined as any, OFFICIAL_LECTURER_VOICE_PROFILE, OFFICIAL_TTS_MODEL);
