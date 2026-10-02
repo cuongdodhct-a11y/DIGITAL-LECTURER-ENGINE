@@ -1,0 +1,5 @@
+{
+  "courseId":"COURSE-1MD","courseCode":"1MĐ","title":"Mỹ học Mác - Lênin","packageCount":10,
+  "commonSourceSet":{"id":"COMMON-1MD","levels":[2,4,5,6,7]},
+  "packages":["LPKG-1MD1-001","LPKG-1MD2-001","LPKG-1MD3-001","LPKG-1MD4-001","LPKG-1MD5-001","LPKG-1MD6-001","LPKG-1MD7-001","LPKG-1MD8-001","LPKG-1MD9-001","LPKG-1MD10-001"]
+}
