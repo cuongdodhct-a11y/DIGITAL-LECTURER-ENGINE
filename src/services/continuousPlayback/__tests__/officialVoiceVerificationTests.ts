@@ -21,8 +21,10 @@ import { AudioCache } from '../../ttsGateway/audioCache';
 import { OFFICIAL_LECTURER_VOICE_PROFILE, OFFICIAL_TTS_MODEL } from '../../ttsGateway/voiceProfiles';
 import { generateAudioCacheKey } from '../../../utils/hashing';
 import { TeachingEngine } from '../../teachingEngine/teachingEngine';
-import { createProduction1MD1Package } from '../../lectureSequence/productionDefaultPackage';
+import { createProduction1MD1Package, PRODUCTION_PACKAGE_ID } from '../../lectureSequence/productionDefaultPackage';
 import { MockAudioController } from './mockAudioController';
+
+const LPKG_1MD1_001 = PRODUCTION_PACKAGE_ID;
 
 export interface TestResult {
   testId: string;
@@ -341,7 +343,7 @@ export async function runOfficialVoiceVerificationSuite(): Promise<TestResult[]>
     cache.set({
       cacheKey: officialKey,
       createdAt: Date.now(),
-      audioBase64: undefined,
+      audioBase64: '',
       mimeType: 'audio/speech-synthesis',
       durationSeconds: 5,
       audioSource: 'BROWSER_TTS',
