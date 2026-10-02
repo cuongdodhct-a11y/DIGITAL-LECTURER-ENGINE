@@ -28,11 +28,13 @@ import { courseEngineRouter } from './src/services/courseEngine/courseEngineRout
 dotenv.config();
 
 const app = express();
-app.use('/api/course-engine', courseEngineRouter);
 const PORT = 3000;
 
+// Body parsers must run before the Course Engine router so JSON POST payloads
+// are available to package build endpoints.
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' }));
+app.use('/api/course-engine', courseEngineRouter);
 
 // Graceful JSON and payload size error handler (prevents returning HTML error pages)
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
