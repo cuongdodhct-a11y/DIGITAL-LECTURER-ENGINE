@@ -14,3 +14,53 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run build
+
+      - name: API and package-isolation smoke test
+        shell: bash
+        run: |
+          npm run dev > /tmp/digital-lecturer-engine.log 2>&1 &
+          PID=$!
+          trap 'kill $PID 2>/dev/null || true' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/api/course-engine/health > /tmp/health.json; then
+              break
+            fi
+            sleep 1
+          done
+
+          node <<'NODE'
+          const assert = (condition, message) => {
+            if (!condition) throw new Error(message);
+          };
+
+          const getJson = async (path) => {
+            const response = await fetch('http://127.0.0.1:3000' + path);
+            const text = await response.text();
+            let body;
+            try { body = JSON.parse(text); } catch { body = text; }
+            return { response, body };
+          };
+
+          const health = await getJson('/api/course-engine/health');
+          assert(health.response.ok, 'Course Engine health endpoint failed');
+          assert(health.body.ok === true, 'Course Engine health is not ok');
+          assert(health.body.packageCount === 10, 'Expected 10 lesson packages');
+
+          const p1 = await getJson('/api/course-engine/courses/COURSE-1MD/packages/1');
+          assert(p1.response.ok, '1MD1 package lookup failed');
+          assert(p1.body.package.packageId === 'LPKG-1MD1-001', '1MD1 resolved to wrong package');
+
+          const p10 = await getJson('/api/course-engine/courses/COURSE-1MD/packages/10');
+          assert(p10.response.ok, '1MD10 package lookup failed');
+          assert(p10.body.package.packageId === 'LPKG-1MD10-001', '1MD10 resolved to wrong package');
+
+          const p7 = await getJson('/api/course-engine/resolve/COURSE-1MD/LPKG-1MD7-001');
+          assert(p7.response.ok, '1MD7 package resolution failed');
+          assert(p7.body.package.packageId === 'LPKG-1MD7-001', '1MD7 resolved to wrong package');
+
+          const cross = await getJson('/api/course-engine/resolve/COURSE-1MD/LPKG-CS401-007');
+          assert(cross.response.status === 404, 'Cross-package isolation guard did not reject unknown package');
+
+          console.log('PHASE 1 API/ISOLATION SMOKE TEST: PASS');
+          NODE
