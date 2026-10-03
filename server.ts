@@ -28,13 +28,18 @@ import { courseEngineRouter } from './src/services/courseEngine/courseEngineRout
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 
 // Body parsers must run before the Course Engine router so JSON POST payloads
 // are available to package build endpoints.
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use('/api/course-engine', courseEngineRouter);
+
+// Lightweight platform health probe; independent from lecture package state.
+app.get('/healthz', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok', service: 'digital-lecturer-engine' });
+});
 
 // Graceful JSON and payload size error handler (prevents returning HTML error pages)
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -825,7 +830,7 @@ async function startServer() {
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static('dist'));
     app.get('*', (req: Request, res: Response) => {
-      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+      res.sendFile(path.resolve(process.cwd(), 'dist', 'index.html'));
     });
   } else {
     const vite = await createViteServer({
