@@ -1,0 +1,114 @@
+name: OCI Free Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - deploy-oci-free
+
+concurrency:
+  group: oci-free-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/deploy-oci-free'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required deployment secrets
+        env:
+          OCI_HOST: ${{ secrets.OCI_HOST }}
+          OCI_USER: ${{ secrets.OCI_USER }}
+          OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
+          OCI_KNOWN_HOSTS: ${{ secrets.OCI_KNOWN_HOSTS }}
+        run: |
+          set -eu
+          test -n "$OCI_HOST"
+          test -n "$OCI_USER"
+          test -n "$OCI_SSH_PRIVATE_KEY"
+          test -n "$OCI_KNOWN_HOSTS"
+
+      - name: Configure SSH
+        env:
+          OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
+          OCI_KNOWN_HOSTS: ${{ secrets.OCI_KNOWN_HOSTS }}
+        run: |
+          set -eu
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" > ~/.ssh/oci_key
+          chmod 600 ~/.ssh/oci_key
+          printf '%s\n' "$OCI_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Package source without local caches
+        run: |
+          set -eu
+          tar             --exclude=.git             --exclude=node_modules             --exclude=.vscode             --exclude=.DS_Store             --exclude=data             -czf /tmp/digital-lecturer-engine.tgz .
+
+      - name: Upload release bundle
+        env:
+          OCI_HOST: ${{ secrets.OCI_HOST }}
+          OCI_USER: ${{ secrets.OCI_USER }}
+        run: |
+          set -eu
+          scp -i ~/.ssh/oci_key -o BatchMode=yes             /tmp/digital-lecturer-engine.tgz             "$OCI_USER@$OCI_HOST:/tmp/digital-lecturer-engine.tgz"
+
+      - name: Deploy and verify on OCI
+        env:
+          OCI_HOST: ${{ secrets.OCI_HOST }}
+          OCI_USER: ${{ secrets.OCI_USER }}
+          OCI_APP_DIR: ${{ secrets.OCI_APP_DIR }}
+        run: |
+          set -eu
+          APP_DIR="${OCI_APP_DIR:-/opt/digital-lecturer-engine}"
+          ssh -i ~/.ssh/oci_key -o BatchMode=yes "$OCI_USER@$OCI_HOST" "APP_DIR='$APP_DIR' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          APP_DIR="${APP_DIR:-/opt/digital-lecturer-engine}"
+          MIN_FREE_KB=$((15 * 1024 * 1024))
+
+          mkdir -p "$APP_DIR"
+          if [ "$(df -Pk "$APP_DIR" | awk 'NR==2 {print $4}')" -lt "$MIN_FREE_KB" ]; then
+            echo "ERROR: less than 15 GiB free on the deployment filesystem; refusing deployment."
+            exit 20
+          fi
+
+          RELEASE_DIR="$APP_DIR/releases/$(date +%Y%m%d%H%M%S)"
+          mkdir -p "$RELEASE_DIR"
+          tar -xzf /tmp/digital-lecturer-engine.tgz -C "$RELEASE_DIR"
+          rm -f /tmp/digital-lecturer-engine.tgz
+
+          ln -sfn "$RELEASE_DIR" "$APP_DIR/current"
+
+          cd "$APP_DIR/current"
+          test -f Dockerfile
+          test -f docker-compose.oci.yml
+
+          if [ ! -f "$APP_DIR/.env" ]; then
+            echo "ERROR: $APP_DIR/.env is missing. Create it once on the OCI VM; it is never committed."
+            exit 21
+          fi
+
+          cp "$APP_DIR/.env" .env
+
+          podman compose -f docker-compose.oci.yml build
+          podman compose -f docker-compose.oci.yml up -d
+
+          sleep 10
+          curl --fail --silent --show-error http://127.0.0.1:3000/healthz >/tmp/engine-health.json
+          cat /tmp/engine-health.json
+
+          # Remove only dangling image layers; never prune named images or volumes.
+          podman image prune -f >/dev/null 2>&1 || true
+
+          # Retain the newest 3 source releases; do not touch /data or the active release.
+          find "$APP_DIR/releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' |
+            sort -nr |
+            awk 'NR>3 {$1=""; sub(/^ /,""); print}' |
+            xargs -r rm -rf
+
+          echo "OCI deployment verified."
+          REMOTE
