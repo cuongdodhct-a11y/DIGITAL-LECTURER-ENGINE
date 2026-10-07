@@ -32,37 +32,30 @@ export interface BuiltPackageArtifact {
   contentPolicy: 'SOURCE_AUTHORITATIVE_READ_ONLY';
 }
 
-export function registerAndBuildPilotPackage(params: {
-  courseId: string;
-  packageId: string;
-  level1: RegisteredDocument;
-  level3: RegisteredDocument;
-  mapping: PackageBuildMapping[];
-}): BuiltPackageArtifact {
-  const pkg = assertLessonBelongsToCourse(params.courseId, params.packageId);
-  registerPackageSource(params.courseId, params.packageId, {
-    ...params.level1,
-    metadata: { ...params.level1.metadata, checksum: params.level1.metadata.checksum || hashString(params.level1.extractedText) }
-  });
-  registerPackageSource(params.courseId, params.packageId, {
-    ...params.level3,
-    metadata: { ...params.level3.metadata, checksum: params.level3.metadata.checksum || hashString(params.level3.extractedText) }
-  });
+function validateMapping(mapping: PackageBuildMapping[], slideCount: number): void {
+  if (mapping.length === 0) throw new Error('Slide mapping cannot be empty.');
 
-  const registered = assertPackageReadyForBuild(params.packageId);
-  const level3 = registered.sources.get(3)!;
-  const totalActualSeconds = params.mapping.reduce((sum, block) => sum + block.durationSeconds, 0);
-  const totalPlannedSeconds = totalActualSeconds;
+  const blockIds = new Set<string>();
+  for (const block of mapping) {
+    if (!block.blockId || blockIds.has(block.blockId)) {
+      throw new Error('Slide mapping contains a missing or duplicate blockId.');
+    }
+    blockIds.add(block.blockId);
 
-  if (!Number.isInteger(level3.slideCount) || level3.slideCount! < 1) {
-    throw new Error(`Level 3 source ${level3.sourceId} has no valid slide count.`);
+    if (!Number.isInteger(block.slideStart) || !Number.isInteger(block.slideEnd) ||
+        block.slideStart < 1 || block.slideEnd < block.slideStart) {
+      throw new Error('Invalid slide range for block ' + block.blockId + '.');
+    }
+    if (!Number.isFinite(block.durationSeconds) || block.durationSeconds <= 0) {
+      throw new Error('Block ' + block.blockId + ' must have a positive duration.');
+    }
   }
 
-  const covered = params.mapping
+  const covered = mapping
     .map(block => [block.slideStart, block.slideEnd] as const)
     .sort((a, b) => a[0] - b[0]);
 
-  if (covered.length === 0 || covered[0][0] !== 1 || covered[covered.length - 1][1] !== level3.slideCount) {
+  if (covered[0][0] !== 1 || covered[covered.length - 1][1] !== slideCount) {
     throw new Error('Slide mapping must cover the complete Level 3 slide range.');
   }
 
@@ -71,6 +64,57 @@ export function registerAndBuildPilotPackage(params: {
       throw new Error('Slide mapping contains a gap or overlap.');
     }
   }
+}
+
+export function registerAndBuildPilotPackage(params: {
+  courseId: string;
+  packageId: string;
+  level1: RegisteredDocument;
+  level3: RegisteredDocument;
+  mapping: PackageBuildMapping[];
+}): BuiltPackageArtifact {
+  const pkg = assertLessonBelongsToCourse(params.courseId, params.packageId);
+
+  if (params.level1.sourceLevel !== 1 || params.level1.documentType !== 'DOCX') {
+    throw new Error('Pilot package requires a Level 1 DOCX source.');
+  }
+  if (params.level3.sourceLevel !== 3 || params.level3.documentType !== 'PPTX') {
+    throw new Error('Pilot package requires a Level 3 PPTX source.');
+  }
+
+  if (params.level1.metadata.packageId !== params.packageId ||
+      params.level3.metadata.packageId !== params.packageId) {
+    throw new Error('Authoritative sources must declare ownership by package ' + params.packageId + '.');
+  }
+
+  registerPackageSource(params.courseId, params.packageId, {
+    ...params.level1,
+    metadata: {
+      ...params.level1.metadata,
+      checksum: params.level1.metadata.checksum || hashString(params.level1.extractedText),
+      packageId: params.packageId
+    }
+  });
+
+  registerPackageSource(params.courseId, params.packageId, {
+    ...params.level3,
+    metadata: {
+      ...params.level3.metadata,
+      checksum: params.level3.metadata.checksum || hashString(params.level3.extractedText),
+      packageId: params.packageId
+    }
+  });
+
+  const registered = assertPackageReadyForBuild(params.packageId);
+  const level3 = registered.sources.get(3)!;
+  const totalActualSeconds = params.mapping.reduce((sum, block) => sum + block.durationSeconds, 0);
+  const totalPlannedSeconds = totalActualSeconds;
+
+  if (!Number.isInteger(level3.slideCount) || level3.slideCount! < 1) {
+    throw new Error('Level 3 source ' + level3.sourceId + ' has no valid slide count.');
+  }
+
+  validateMapping(params.mapping, level3.slideCount!);
 
   return {
     packageId: pkg.packageId,
