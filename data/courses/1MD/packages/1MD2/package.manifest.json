@@ -1,22 +1,31 @@
 {
+  "schemaVersion": 2,
   "packageId": "LPKG-1MD2-001",
   "courseId": "COURSE-1MD",
   "lessonNumber": 2,
   "lessonCode": "1MD2",
-  "title": "Bài 1MD2 — chờ nạp tài liệu chuẩn",
-  "status": "CONTENT_PENDING",
+  "title": "Những phạm trù cơ bản của Mỹ học Mác - Lênin",
+  "status": "QC_PENDING",
+  "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
       "sourceId": "SRC-1MD2-L1",
       "required": true,
-      "status": "PENDING",
-      "documentType": "DOCX"
+      "status": "REGISTERED",
+      "documentType": "DOCX",
+      "filename": "1.MĐ2.docx",
+      "sizeBytes": 47923,
+      "packageId": "LPKG-1MD2-001"
     },
     "level3": {
       "sourceId": "SRC-1MD2-L3",
       "required": true,
-      "status": "PENDING",
-      "documentType": "PPTX"
+      "status": "REGISTERED",
+      "documentType": "PPTX",
+      "filename": "1.MĐ2.pptx",
+      "sizeBytes": 142588629,
+      "slideCount": 55,
+      "packageId": "LPKG-1MD2-001"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -27,14 +36,85 @@
     6,
     7
   ],
+  "isolated": true,
   "runtime": {
     "ttsMode": "FREE",
     "voiceProfile": "voice_free_pham_tuyen"
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sourceInventory": {
+    "docxPresent": true,
+    "pptxPresent": true,
+    "ownershipDeclared": true,
+    "academicSourceMutation": "NONE"
+  },
+  "timing": {
+    "sourceTotalLessons": 4,
+    "plannedMinutes": 175,
+    "focus": "phần 1, 2, 3",
+    "mappingStatus": "SOURCE_TIMING_CONFLICT_REVIEW_REQUIRED",
+    "note": "DOCX states 4 tiết; practice procedure 5 min + content 160 min + closing 5 min = 170 min, while section timings I–V sum 165 min and procedure is listed as 175 min. Preserve source values; no silent normalization.",
+    "blocks": [
+      {
+        "blockId": "TB-1MD2-001",
+        "slideStart": 1,
+        "slideEnd": 10,
+        "durationMinutes": 10,
+        "label": "Thủ tục + mở đầu"
+      },
+      {
+        "blockId": "TB-1MD2-002",
+        "slideStart": 11,
+        "slideEnd": 31,
+        "durationMinutes": 60,
+        "label": "I. Cái đẹp"
+      },
+      {
+        "blockId": "TB-1MD2-003",
+        "slideStart": 32,
+        "slideEnd": 40,
+        "durationMinutes": 40,
+        "label": "II. Cái cao cả"
+      },
+      {
+        "blockId": "TB-1MD2-004",
+        "slideStart": 41,
+        "slideEnd": 46,
+        "durationMinutes": 35,
+        "label": "III. Cái hùng"
+      },
+      {
+        "blockId": "TB-1MD2-005",
+        "slideStart": 47,
+        "slideEnd": 51,
+        "durationMinutes": 15,
+        "label": "IV. Cái bi"
+      },
+      {
+        "blockId": "TB-1MD2-006",
+        "slideStart": 52,
+        "slideEnd": 54,
+        "durationMinutes": 15,
+        "label": "V. Cái hài"
+      },
+      {
+        "blockId": "TB-1MD2-007",
+        "slideStart": 55,
+        "slideEnd": 55,
+        "durationMinutes": 5,
+        "label": "Kết thúc"
+      }
+    ],
+    "slideCoverage": "1..55"
+  },
+  "qc": {
+    "sourceIsolation": "PENDING",
+    "timing": "SOURCE_CONFLICT_REVIEW_REQUIRED",
+    "slideCoverage": "PASS"
+  },
   "onboarding": {
     "requiresLevel1": true,
     "requiresLevel3": true,
-    "buildStatus": "WAITING_FOR_SOURCE_FILES"
+    "buildStatus": "PILOT_READY_FOR_QC"
   }
 }
