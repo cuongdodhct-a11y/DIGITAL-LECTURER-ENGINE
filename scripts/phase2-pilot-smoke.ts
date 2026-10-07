@@ -9,8 +9,8 @@ function loadManifest(lessonNumber: number) {
 }
 
 function toRegisteredDocuments(manifest: any): { level1: RegisteredDocument; level3: RegisteredDocument } {
-  const l1 = manifest.sources.level1;
-  const l3 = manifest.sources.level3;
+  const l1 = Array.isArray(manifest.sources) ? manifest.sources.find((source: any) => source.level === 1) : manifest.sources.level1;
+  const l3 = Array.isArray(manifest.sources) ? manifest.sources.find((source: any) => source.level === 3) : manifest.sources.level3;
 
   return {
     level1: {
