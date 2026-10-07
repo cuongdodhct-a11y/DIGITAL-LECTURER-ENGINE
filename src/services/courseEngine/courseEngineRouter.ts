@@ -59,6 +59,23 @@ courseEngineRouter.post('/packages/:packageId/build-pilot', (req: Request, res: 
       mapping
     });
 
+    const descriptor = getLessonPackage(courseId, artifact.lessonNumber);
+    if (descriptor) {
+      descriptor.status = 'READY_FOR_QC';
+      descriptor.sourceSlots.level1 = {
+        ...descriptor.sourceSlots.level1,
+        sourceId: artifact.sourceRefs.find(source => source.level === 1)?.sourceId,
+        filename: artifact.sourceRefs.find(source => source.level === 1)?.filename,
+        status: 'REGISTERED'
+      };
+      descriptor.sourceSlots.level3 = {
+        ...descriptor.sourceSlots.level3,
+        sourceId: artifact.sourceRefs.find(source => source.level === 3)?.sourceId,
+        filename: artifact.sourceRefs.find(source => source.level === 3)?.filename,
+        status: 'REGISTERED'
+      };
+    }
+
     return res.json({ success: true, package: artifact });
   } catch (error: any) {
     return res.status(400).json({ error: error.message || 'Không thể xây dựng package.' });
@@ -67,5 +84,5 @@ courseEngineRouter.post('/packages/:packageId/build-pilot', (req: Request, res: 
 
 courseEngineRouter.get('/health', (_req: Request, res: Response) => {
   const course = getCourse(COURSE_1MD_ID)!;
-  res.json({ ok: true, courseId: course.courseId, packageCount: course.packages.length, phase: 1 });
+  res.json({ ok: true, courseId: course.courseId, packageCount: course.packages.length, phase: 2 });
 });
