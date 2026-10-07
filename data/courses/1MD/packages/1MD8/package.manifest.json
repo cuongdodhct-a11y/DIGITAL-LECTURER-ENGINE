@@ -1,22 +1,31 @@
 {
+  "schemaVersion": 2,
   "packageId": "LPKG-1MD8-001",
   "courseId": "COURSE-1MD",
   "lessonNumber": 8,
   "lessonCode": "1MD8",
-  "title": "Bài 1MD8 — chờ nạp tài liệu chuẩn",
-  "status": "CONTENT_PENDING",
+  "title": "Một số tôn giáo lớn trên thế giới",
+  "status": "QC_PENDING",
+  "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
       "sourceId": "SRC-1MD8-L1",
       "required": true,
-      "status": "PENDING",
-      "documentType": "DOCX"
+      "status": "REGISTERED",
+      "documentType": "DOCX",
+      "filename": "1.MĐ8.docx",
+      "sizeBytes": 57975,
+      "packageId": "LPKG-1MD8-001"
     },
     "level3": {
       "sourceId": "SRC-1MD8-L3",
       "required": true,
-      "status": "PENDING",
-      "documentType": "PPTX"
+      "status": "REGISTERED",
+      "documentType": "PPTX",
+      "filename": "1.MĐ8.pptx",
+      "sizeBytes": 66635845,
+      "slideCount": 73,
+      "packageId": "LPKG-1MD8-001"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -27,14 +36,32 @@
     6,
     7
   ],
+  "isolated": true,
   "runtime": {
     "ttsMode": "FREE",
     "voiceProfile": "voice_free_pham_tuyen"
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sourceInventory": {
+    "docxPresent": true,
+    "pptxPresent": true,
+    "ownershipDeclared": true,
+    "academicSourceMutation": "NONE"
+  },
+  "timing": {
+    "sourceTotalLessons": 6,
+    "plannedMinutes": 6,
+    "focus": "mục 2/phần I, II, IV",
+    "mappingStatus": "PENDING_DETAILED_SLIDE_MAPPING"
+  },
+  "qc": {
+    "sourceIsolation": "PENDING",
+    "timing": "PENDING_DETAILED_SLIDE_MAPPING",
+    "titleMetadata": "REVIEW_REQUIRED: title slide says Bài 4; filename/content/package identify Bài 8"
+  },
   "onboarding": {
     "requiresLevel1": true,
     "requiresLevel3": true,
-    "buildStatus": "WAITING_FOR_SOURCE_FILES"
+    "buildStatus": "SOURCE_REGISTERED_WAITING_FOR_PILOT"
   }
 }
