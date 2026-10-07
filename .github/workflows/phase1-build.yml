@@ -1,6 +1,8 @@
 name: Phase 1 Build Verification
 on:
   push:
+    branches: [build-1md-engine, engine-generalization-20261007]
+  pull_request:
     branches: [build-1md-engine]
   workflow_dispatch:
 jobs:
