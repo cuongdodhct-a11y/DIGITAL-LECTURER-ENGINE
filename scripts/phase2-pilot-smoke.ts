@@ -2,76 +2,116 @@ import fs from 'fs';
 import { registerAndBuildPilotPackage } from '../src/services/courseEngine/packageBuildService';
 import { RegisteredDocument } from '../src/types/source';
 
-const manifest = JSON.parse(
+function loadManifest(lessonNumber: number) {
+  return JSON.parse(
+    fs.readFileSync(`data/courses/1MD/packages/1MD${lessonNumber}/package.manifest.json`, 'utf8')
+  );
+}
+
+function toRegisteredDocuments(manifest: any): { level1: RegisteredDocument; level3: RegisteredDocument } {
+  const l1 = manifest.sources.level1;
+  const l3 = manifest.sources.level3;
+
+  return {
+    level1: {
+      sourceId: l1.sourceId,
+      filename: l1.filename,
+      documentType: 'DOCX',
+      sourceLevel: 1,
+      title: `${manifest.lessonCode} Level 1`,
+      status: 'REGISTERED',
+      extractedText: '[source verified outside CI]',
+      metadata: {
+        fileSize: l1.sizeBytes,
+        extractedAt: new Date().toISOString(),
+        packageId: manifest.packageId
+      }
+    },
+    level3: {
+      sourceId: l3.sourceId,
+      filename: l3.filename,
+      documentType: 'PPTX',
+      sourceLevel: 3,
+      title: `${manifest.lessonCode} Level 3`,
+      slideCount: l3.slideCount,
+      status: 'REGISTERED',
+      extractedText: '[source verified outside CI]',
+      metadata: {
+        fileSize: l3.sizeBytes,
+        extractedAt: new Date().toISOString(),
+        packageId: manifest.packageId
+      }
+    }
+  };
+}
+
+// Golden Reference regression: Bài 1 remains unchanged.
+const manifest1 = JSON.parse(
   fs.readFileSync('data/courses/1MD/packages/1MD1/package.manifest.json', 'utf8')
 );
-
-const level1: RegisteredDocument = {
-  sourceId: manifest.sources[0].sourceId,
-  filename: manifest.sources[0].filename,
-  documentType: 'DOCX',
-  sourceLevel: 1,
-  title: '1MĐ1 Level 1',
-  status: 'REGISTERED',
-  extractedText: '[source verified outside CI]',
-  metadata: {
-    fileSize: manifest.sources[0].sizeBytes,
-    extractedAt: new Date().toISOString(),
-    checksum: manifest.sources[0].sha256,
-    packageId: manifest.packageId
-  }
-};
-
-const level3: RegisteredDocument = {
-  sourceId: manifest.sources[1].sourceId,
-  filename: manifest.sources[1].filename,
-  documentType: 'PPTX',
-  sourceLevel: 3,
-  title: '1MĐ1 Level 3',
-  slideCount: manifest.sources[1].slideCount,
-  status: 'REGISTERED',
-  extractedText: '[source verified outside CI]',
-  metadata: {
-    fileSize: manifest.sources[1].sizeBytes,
-    extractedAt: new Date().toISOString(),
-    checksum: manifest.sources[1].sha256,
-    packageId: manifest.packageId
-  }
-};
-
-const artifact = registerAndBuildPilotPackage({
-  courseId: manifest.courseId,
-  packageId: manifest.packageId,
-  level1,
-  level3,
-  mapping: manifest.timing.blocks
+const source1 = toRegisteredDocuments(manifest1);
+const artifact1 = registerAndBuildPilotPackage({
+  courseId: manifest1.courseId,
+  packageId: manifest1.packageId,
+  ...source1,
+  mapping: manifest1.timing.blocks
 });
 
 if (
-  artifact.slideCount !== 52 ||
-  artifact.timing.totalActualSeconds !== 11100 ||
-  artifact.timing.varianceSeconds !== 0 ||
-  artifact.sourceRefs.length !== 2
+  artifact1.slideCount !== 52 ||
+  artifact1.timing.totalActualSeconds !== 11100 ||
+  artifact1.timing.varianceSeconds !== 0 ||
+  artifact1.sourceRefs.length !== 2
 ) {
-  throw new Error('Phase 2 1MD1 pilot build assertions failed.');
+  throw new Error('Bài 1 Golden Reference regression assertions failed.');
 }
 
-// Cross-package guard: a source owned by 1MD2 cannot be attached to 1MD1.
+// Bài 2 pilot: source pair is present and slide mapping covers all 55 slides.
+// The source documents contain a 5-minute timing discrepancy; therefore the
+// engine verifies structural coverage here but does not silently normalize it.
+const manifest2 = loadManifest(2);
+const source2 = toRegisteredDocuments(manifest2);
+const artifact2 = registerAndBuildPilotPackage({
+  courseId: manifest2.courseId,
+  packageId: manifest2.packageId,
+  ...source2,
+  mapping: manifest2.timing.blocks.map((block: any) => ({
+    blockId: block.blockId,
+    slideStart: block.slideStart,
+    slideEnd: block.slideEnd,
+    durationSeconds: block.durationMinutes * 60
+  }))
+});
+
+if (
+  artifact2.slideCount !== 55 ||
+  artifact2.sourceRefs.length !== 2 ||
+  artifact2.timing.totalActualSeconds !== 10800 ||
+  artifact2.timing.varianceSeconds !== 0
+) {
+  throw new Error('Bài 2 pilot structural assertions failed.');
+}
+
+if (manifest2.timing.mappingStatus !== 'SOURCE_TIMING_CONFLICT_REVIEW_REQUIRED') {
+  throw new Error('Bài 2 timing conflict must remain explicitly flagged.');
+}
+
+// Cross-package guard: a source owned by Bài 2 cannot be attached to Bài 1.
 const foreignLevel1: RegisteredDocument = {
-  ...level1,
-  sourceId: 'SRC-1MD2-L1',
-  filename: '1.MĐ2.docx',
-  metadata: { ...level1.metadata, packageId: 'LPKG-1MD2-001' }
+  ...source1.level1,
+  sourceId: source2.level1.sourceId,
+  filename: source2.level1.filename,
+  metadata: { ...source1.level1.metadata, packageId: manifest2.packageId }
 };
 
 let rejectedForeignSource = false;
 try {
   registerAndBuildPilotPackage({
-    courseId: manifest.courseId,
-    packageId: manifest.packageId,
+    courseId: manifest1.courseId,
+    packageId: manifest1.packageId,
     level1: foreignLevel1,
-    level3,
-    mapping: manifest.timing.blocks
+    level3: source1.level3,
+    mapping: manifest1.timing.blocks
   });
 } catch {
   rejectedForeignSource = true;
@@ -81,5 +121,5 @@ if (!rejectedForeignSource) {
   throw new Error('Cross-package authoritative source guard failed.');
 }
 
-console.log('PHASE 2 1MD1 PILOT BUILD + SOURCE ISOLATION: PASS');
-console.log(JSON.stringify(artifact, null, 2));
+console.log('PHASE 2: Bài 1 regression + Bài 2 pilot + package isolation: PASS');
+console.log(JSON.stringify({ artifact1, artifact2 }, null, 2));
