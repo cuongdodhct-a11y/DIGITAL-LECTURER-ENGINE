@@ -1,22 +1,31 @@
 {
+  "schemaVersion": 2,
   "packageId": "LPKG-1MD5-001",
   "courseId": "COURSE-1MD",
   "lessonNumber": 5,
   "lessonCode": "1MD5",
-  "title": "Bài 1MD5 — chờ nạp tài liệu chuẩn",
-  "status": "CONTENT_PENDING",
+  "title": "Những phạm trù cơ bản của Đạo đức học quân sự",
+  "status": "CONTENT_READY",
+  "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
       "sourceId": "SRC-1MD5-L1",
       "required": true,
-      "status": "PENDING",
-      "documentType": "DOCX"
+      "status": "REGISTERED",
+      "documentType": "DOCX",
+      "filename": "1.MĐ5.docx",
+      "sizeBytes": 60751,
+      "packageId": "LPKG-1MD5-001"
     },
     "level3": {
       "sourceId": "SRC-1MD5-L3",
       "required": true,
-      "status": "PENDING",
-      "documentType": "PPTX"
+      "status": "REGISTERED",
+      "documentType": "PPTX",
+      "filename": "1.MĐ5.pptx",
+      "sizeBytes": 44158799,
+      "slideCount": 58,
+      "packageId": "LPKG-1MD5-001"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -27,14 +36,31 @@
     6,
     7
   ],
+  "isolated": true,
   "runtime": {
     "ttsMode": "FREE",
     "voiceProfile": "voice_free_pham_tuyen"
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sourceInventory": {
+    "docxPresent": true,
+    "pptxPresent": true,
+    "ownershipDeclared": true,
+    "academicSourceMutation": "NONE"
+  },
+  "timing": {
+    "sourceTotalLessons": 4,
+    "plannedMinutes": 4,
+    "focus": "phần 1; 2, 3; 4; 5; 8",
+    "mappingStatus": "PENDING_DETAILED_SLIDE_MAPPING"
+  },
+  "qc": {
+    "sourceIsolation": "PENDING",
+    "timing": "PENDING_DETAILED_SLIDE_MAPPING"
+  },
   "onboarding": {
     "requiresLevel1": true,
     "requiresLevel3": true,
-    "buildStatus": "WAITING_FOR_SOURCE_FILES"
+    "buildStatus": "SOURCE_REGISTERED_WAITING_FOR_PILOT"
   }
 }
