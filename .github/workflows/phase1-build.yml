@@ -117,20 +117,20 @@ jobs:
           assert(buildPilotBody.package.timing.totalActualSeconds === 11100, '1MD1 pilot timing mismatch');
           assert(buildPilotBody.package.contentPolicy === 'SOURCE_AUTHORITATIVE_READ_ONLY', 'Source protection policy missing');
 
-          const expectedOnboardedTitles = {
-            2: 'Những phạm trù cơ bản của Mỹ học Mác - Lênin',
-            3: 'Giáo dục thẩm mỹ',
-            4: 'Đạo đức, đạo đức học, đạo đức học quân sự',
-            5: 'Những phạm trù cơ bản của Đạo đức học quân sự',
-            6: 'Đạo đức quân nhân',
-            7: 'Những vấn đề chung về tôn giáo và Tôn giáo học',
-            8: 'Một số tôn giáo lớn trên thế giới',
-            9: 'Tín ngưỡng, tôn giáo bản địa Việt Nam'
+          const expectedOnboardedPackages = {
+            2: { title: 'Những phạm trù cơ bản của Mỹ học Mác - Lênin', status: 'QC_PENDING' },
+            3: { title: 'Giáo dục thẩm mỹ', status: 'CONTENT_READY' },
+            4: { title: 'Đạo đức, đạo đức học, đạo đức học quân sự', status: 'CONTENT_READY' },
+            5: { title: 'Những phạm trù cơ bản của Đạo đức học quân sự', status: 'CONTENT_READY' },
+            6: { title: 'Đạo đức quân nhân', status: 'CONTENT_READY' },
+            7: { title: 'Những vấn đề chung về tôn giáo và Tôn giáo học', status: 'CONTENT_READY' },
+            8: { title: 'Một số tôn giáo lớn trên thế giới', status: 'QC_PENDING' },
+            9: { title: 'Tín ngưỡng, tôn giáo bản địa Việt Nam', status: 'CONTENT_READY' }
           };
-          for (const [lesson, title] of Object.entries(expectedOnboardedTitles)) {
+          for (const [lesson, expected] of Object.entries(expectedOnboardedPackages)) {
             const pkg = coursePackages.body.packages[Number(lesson) - 1];
-            assert(pkg.title === title, `Wrong title for 1MD${lesson}`);
-            assert(pkg.status === 'QC_PENDING', `1MD${lesson} must be QC_PENDING before QC approval`);
+            assert(pkg.title === expected.title, `Wrong title for 1MD${lesson}`);
+            assert(pkg.status === expected.status, `Unexpected status for 1MD${lesson}: ${pkg.status}`);
             assert(pkg.sourceSlots.level1.status === 'REGISTERED', `1MD${lesson} Level 1 source not registered`);
             assert(pkg.sourceSlots.level3.status === 'REGISTERED', `1MD${lesson} Level 3 source not registered`);
           }
