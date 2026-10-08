@@ -38,14 +38,19 @@
             {
               "id": "CL-1MD2-001-01",
               "claim": "Nội dung bài gồm năm phạm trù: cái đẹp, cái cao cả, cái hùng, cái bi và cái hài.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-001-02",
               "claim": "Yêu cầu của bài bao gồm phân tích khái niệm, nguồn gốc, bản chất, biểu hiện và vận dụng các giá trị thẩm mỹ trong hoạt động quân sự.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -60,14 +65,18 @@
             {
               "id": "CL-1MD2-001-03",
               "claim": "Bài 2 được xác định giữ vị trí trung tâm và có ý nghĩa đối với nhận thức các hiện tượng thẩm mỹ trong đời sống xã hội và hoạt động quân sự.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-001-04",
               "claim": "Trọng tâm bài là phần 1, 2 và 3.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -80,7 +89,7 @@
       "blockId": "TB-1MD2-002",
       "slideStart": 11,
       "slideEnd": 31,
-      "durationSeconds": 3900,
+      "durationSeconds": 3600,
       "teachingPoints": [
         {
           "id": "TP-1MD2-002-01",
@@ -90,14 +99,19 @@
             {
               "id": "CL-1MD2-002-01",
               "claim": "Cái đẹp là phạm trù trung tâm của mỹ học.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-002-02",
               "claim": "Bản chất cái đẹp được trình bày như một phạm trù tinh thần phản ánh sự tương tác giữa chủ thể thẩm mỹ và khách thể thẩm mỹ, chứa đựng giá trị thẩm mỹ tích cực, tiến bộ.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -112,14 +126,19 @@
             {
               "id": "CL-1MD2-002-03",
               "claim": "Không có sự vật, hiện tượng trở thành cái đẹp nếu không thông qua hoạt động thực tiễn và không đặt trong quan hệ thẩm mỹ.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-002-04",
               "claim": "Bài giảng trình bày cái đẹp trong đời sống, nghệ thuật và hoạt động quân sự.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -134,14 +153,20 @@
             {
               "id": "CL-1MD2-002-05",
               "claim": "Giá trị đẹp gắn bó hữu cơ với cái Chân và cái Thiện; Chân - Thiện - Mỹ được trình bày là các giá trị tinh thần cao nhất mà con người hướng tới.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-002-06",
               "claim": "Phần vận dụng gắn việc thực hiện các giá trị thẩm mỹ với môi trường quân đội và phẩm chất người quân nhân.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -164,7 +189,10 @@
             {
               "id": "CL-1MD2-003-01",
               "claim": "Cái cao cả gắn với đối tượng chứa đựng giá trị đẹp vượt ngưỡng bình thường và gợi cảm xúc choáng ngợp, ngưỡng vọng.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -179,14 +207,18 @@
             {
               "id": "CL-1MD2-003-02",
               "claim": "Bản chất cái cao cả là cơ sở khoa học cho việc xác định nội dung, định hướng hoạt động thực tiễn và nâng cao năng lực, trình độ thẩm mỹ.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-003-03",
               "claim": "Phần vận dụng liên hệ với việc thực hiện các tiêu chí phẩm chất “Bộ đội Cụ Hồ”.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -209,7 +241,10 @@
             {
               "id": "CL-1MD2-004-01",
               "claim": "Cái hùng chỉ sự cảm thụ trước những hành động, sự kiện vượt trên mức bình thường, nhằm chiến thắng trở lực lớn và có ý nghĩa xã hội thúc đẩy lịch sử phát triển.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -224,14 +259,18 @@
             {
               "id": "CL-1MD2-004-02",
               "claim": "Nguồn gốc cái hùng gắn với hoạt động thực tiễn, sản xuất vật chất và đấu tranh cách mạng.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-004-03",
               "claim": "Bản chất cái hùng là cái đẹp trong xã hội biểu hiện ở mức độ cao.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -246,14 +285,18 @@
             {
               "id": "CL-1MD2-004-04",
               "claim": "Bài giảng đặt câu hỏi về quan hệ giữa cái hùng và cái cao cả và định hướng không đồng nhất hoàn toàn hai phạm trù.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-004-05",
               "claim": "Phần vận dụng liên hệ các tiêu chí rèn luyện của học viên được nêu trong bài giảng.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -276,7 +319,10 @@
             {
               "id": "CL-1MD2-005-01",
               "claim": "Cái bi được trình bày như sự thất bại, tiêu vong hoặc hy sinh tạm thời của cái đẹp, cái cao cả, cái hùng trong cuộc đấu tranh với cái xấu, tiêu cực, lỗi thời.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -291,14 +337,19 @@
             {
               "id": "CL-1MD2-005-02",
               "claim": "Nguồn gốc cái bi được trình bày gắn với sự đối kháng giai cấp và những hạn chế của con người trong nhận thức, hoạt động thực tiễn.",
-              "sourceRefs": ["SRC-1MD2-L1"],
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-005-03",
               "claim": "Bài giảng trình bày biểu hiện cái bi trong nghệ thuật và trong quân đội cách mạng.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -321,7 +372,10 @@
             {
               "id": "CL-1MD2-006-01",
               "claim": "Cái hài được xác định qua mâu thuẫn đặc biệt giữa cái đẹp và cái xấu bị phát hiện bất ngờ, gây tiếng cười tích cực.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -336,14 +390,20 @@
             {
               "id": "CL-1MD2-006-02",
               "claim": "Nguồn gốc cái hài được trình bày từ cuộc sống hiện thực.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             },
             {
               "id": "CL-1MD2-006-03",
               "claim": "Bài giảng trình bày cái hài trong xã hội, đời sống quân nhân và nghệ thuật.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
@@ -366,7 +426,10 @@
             {
               "id": "CL-1MD2-007-01",
               "claim": "Bài giảng khái quát năm phạm trù và chuyển sang định hướng nghiên cứu, giới thiệu Bài 3: Giáo dục thẩm mỹ.",
-              "sourceRefs": ["SRC-1MD2-L1", "SRC-1MD2-L3"],
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
               "confidence": "HIGH",
               "isUnsupported": false
             }
