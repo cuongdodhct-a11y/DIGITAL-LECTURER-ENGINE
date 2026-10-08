@@ -15,11 +15,11 @@ export interface VoiceProfile {
   rateAdjustment?: number;
 }
 
-export type TTSModelName = 'gemini-3.8-flash-tts' | 'gemini-3.8-flash-lite-tts';
+export type TTSModelName = 'gemini-3.8-flash-tts' | 'gemini-3.8-flash-lite-tts' | 'vieneu-v3-turbo';
 
-export type AudioSourceType = 'GEMINI_TTS' | 'BROWSER_TTS' | 'TEST_SYNTHETIC';
+export type AudioSourceType = 'GEMINI_TTS' | 'LOCAL_VIENEUV3' | 'BROWSER_TTS' | 'TEST_SYNTHETIC';
 
-export type VoiceStatus = 'OFFICIAL' | 'FALLBACK';
+export type VoiceStatus = 'OFFICIAL' | 'LOCAL' | 'FALLBACK';
 
 export type FallbackPolicy = 'DENY' | 'ALLOW_BROWSER_TTS';
 
