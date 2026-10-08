@@ -52,7 +52,7 @@ try {
   const request = {
     text: 'Đây là câu kiểm thử giọng giảng.',
     packageId: 'LPKG-1MD2-001',
-    teachingPointId: 'TP-1MD2-001',
+    teachingPointId: 'TP-1MD2-001-01',
     scriptId: 'SCRIPT-1MD2-001'
   };
 
