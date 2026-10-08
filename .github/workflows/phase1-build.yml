@@ -32,7 +32,7 @@ jobs:
       - name: API and package-isolation smoke test
         shell: bash
         run: |
-          npm run dev > /tmp/digital-lecturer-engine.log 2>&1 &
+          NODE_ENV=production npm run dev > /tmp/digital-lecturer-engine.log 2>&1 &
           PID=$!
           trap 'kill $PID 2>/dev/null || true' EXIT
 
@@ -42,6 +42,12 @@ jobs:
             fi
             sleep 1
           done
+
+          if ! curl -fsS http://127.0.0.1:3000/api/course-engine/health > /tmp/health.json; then
+            echo '--- server startup log ---'
+            cat /tmp/digital-lecturer-engine.log || true
+            exit 1
+          fi
 
           node <<'NODE'
           const assert = (condition, message) => {
