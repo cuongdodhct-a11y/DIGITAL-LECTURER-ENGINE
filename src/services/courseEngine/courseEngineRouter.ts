@@ -3,6 +3,7 @@ import { COURSE_1MD_ID, getCourse, getLessonPackage, listCourses } from './cours
 import { assertLessonBelongsToCourse } from './packageResolver';
 import { registerAndBuildPilotPackage, PackageBuildMapping } from './packageBuildService';
 import { verifySourceOnboarding } from './sourceOnboardingService';
+import { verifyLecturePackage } from './lecturePackageService';
 import { RegisteredDocument } from '../../types/source';
 
 export const courseEngineRouter = Router();
@@ -45,6 +46,14 @@ courseEngineRouter.get('/packages/:packageId/onboarding-status', (req: Request, 
     return res.json(result);
   } catch (error: any) {
     return res.status(404).json({ error: error.message || 'Không thể kiểm tra Source Onboarding.' });
+  }
+});
+
+courseEngineRouter.get('/packages/:packageId/lecture-package-status', (req: Request, res: Response) => {
+  try {
+    return res.json(verifyLecturePackage(req.params.packageId));
+  } catch (error: any) {
+    return res.status(404).json({ error: error.message || 'Không thể kiểm tra Lecture Package.' });
   }
 });
 
