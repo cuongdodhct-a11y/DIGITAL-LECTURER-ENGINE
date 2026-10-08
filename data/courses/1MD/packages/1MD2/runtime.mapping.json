@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "packageId": "LPKG-1MD2-001",
+  "sourcePresentation": "1.MĐ2.pptx",
+  "slideCount": 55,
+  "note": "Runtime slide anchors are derived from the authoritative PPTX. They are navigation/provenance metadata; they do not alter academic script content.",
+  "teachingPoints": [
+    {
+      "id": "TP-1MD2-001-01",
+      "slideNumber": 6
+    },
+    {
+      "id": "TP-1MD2-001-02",
+      "slideNumber": 9
+    },
+    {
+      "id": "TP-1MD2-002-01",
+      "slideNumber": 13
+    },
+    {
+      "id": "TP-1MD2-002-02",
+      "slideNumber": 18
+    },
+    {
+      "id": "TP-1MD2-002-03",
+      "slideNumber": 31
+    },
+    {
+      "id": "TP-1MD2-003-01",
+      "slideNumber": 33
+    },
+    {
+      "id": "TP-1MD2-003-02",
+      "slideNumber": 40
+    },
+    {
+      "id": "TP-1MD2-004-01",
+      "slideNumber": 42
+    },
+    {
+      "id": "TP-1MD2-004-02",
+      "slideNumber": 43
+    },
+    {
+      "id": "TP-1MD2-004-03",
+      "slideNumber": 46
+    },
+    {
+      "id": "TP-1MD2-005-01",
+      "slideNumber": 48
+    },
+    {
+      "id": "TP-1MD2-005-02",
+      "slideNumber": 51
+    },
+    {
+      "id": "TP-1MD2-006-01",
+      "slideNumber": 52
+    },
+    {
+      "id": "TP-1MD2-006-02",
+      "slideNumber": 54
+    },
+    {
+      "id": "TP-1MD2-007-01",
+      "slideNumber": 55
+    }
+  ]
+}
