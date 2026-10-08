@@ -185,7 +185,7 @@ function getPackageSummaries(): PackageSummary[] {
       id: descriptor.packageId,
       title: descriptor.title,
       courseCode: descriptor.lessonCode,
-      status: descriptor.status === 'CONTENT_PENDING' ? 'DRAFT' : descriptor.status,
+      status: descriptor.status === 'CONTENT_PENDING' || descriptor.status === 'READY_FOR_QC' ? 'QC_PENDING' : descriptor.status,
       slideCount,
       teachingBlockCount,
       durationMinutes,
