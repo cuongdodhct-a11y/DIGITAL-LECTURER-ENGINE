@@ -41,7 +41,7 @@ export function verifyLecturePackage(packageId: string): GateBResult {
   if (blocks.length === 0) blockers.push('Lecture package has no Teaching Blocks.');
 
   const ids = new Set<string>();
-  const ranges = blocks
+  const ranges: Array<[number, number]> = blocks
     .map((b: any) => [b.slideStart, b.slideEnd] as [number, number])
     .sort((a, b) => a[0] - b[0]);
 
