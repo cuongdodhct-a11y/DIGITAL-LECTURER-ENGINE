@@ -4,6 +4,7 @@ import { assertLessonBelongsToCourse } from './packageResolver';
 import { registerAndBuildPilotPackage, PackageBuildMapping } from './packageBuildService';
 import { verifySourceOnboarding } from './sourceOnboardingService';
 import { verifyLecturePackage } from './lecturePackageService';
+import { verifyGroundedScript } from './groundedScriptService';
 import { RegisteredDocument } from '../../types/source';
 
 export const courseEngineRouter = Router();
@@ -54,6 +55,14 @@ courseEngineRouter.get('/packages/:packageId/lecture-package-status', (req: Requ
     return res.json(verifyLecturePackage(req.params.packageId));
   } catch (error: any) {
     return res.status(404).json({ error: error.message || 'Không thể kiểm tra Lecture Package.' });
+  }
+});
+
+courseEngineRouter.get('/packages/:packageId/grounded-script-status', (req: Request, res: Response) => {
+  try {
+    return res.json(verifyGroundedScript(req.params.packageId));
+  } catch (error: any) {
+    return res.status(404).json({ error: error.message || 'Không thể kiểm tra Grounded Script.' });
   }
 });
 
