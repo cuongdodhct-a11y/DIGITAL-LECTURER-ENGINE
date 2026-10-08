@@ -1,0 +1,450 @@
+{
+  "schemaVersion": 1,
+  "gate": "C_GROUNDED_SCRIPT",
+  "packageId": "LPKG-1MD2-001",
+  "courseId": "COURSE-1MD",
+  "lessonCode": "1MD2",
+  "title": "Những phạm trù cơ bản của Mỹ học Mác - Lênin",
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "storage": {
+    "provider": "GOOGLE_DRIVE",
+    "sourceOfTruth": "GOOGLE_DRIVE",
+    "folderId": null,
+    "persistencePolicy": "Do not use repository-local files as the long-term content store.",
+    "credentialPolicy": "Google credentials/tokens must remain outside source control."
+  },
+  "timing": {
+    "totalMinutes": 180,
+    "totalSeconds": 10800,
+    "approval": "USER_APPROVED",
+    "adjustment": {
+      "blockId": "TB-1MD2-002",
+      "addedSeconds": 300,
+      "reason": "Cộng thêm 5 phút cho phần I. Phạm trù cái đẹp."
+    }
+  },
+  "teachingBlocks": [
+    {
+      "blockId": "TB-1MD2-001",
+      "slideStart": 1,
+      "slideEnd": 10,
+      "durationSeconds": 600,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-001-01",
+          "title": "Mở đầu: mục đích, yêu cầu và phạm vi",
+          "script": "Bài 2 tập trung vào năm phạm trù: cái đẹp, cái cao cả, cái hùng, cái bi và cái hài. Mục tiêu là nắm đúng khái niệm, nguồn gốc, bản chất và biểu hiện; đồng thời luận giải biểu hiện các giá trị thẩm mỹ trong hoạt động quân sự và vận dụng vào xây dựng đời sống thẩm mỹ ở đơn vị cơ sở.",
+          "claims": [
+            {
+              "id": "CL-1MD2-001-01",
+              "claim": "Nội dung bài gồm năm phạm trù: cái đẹp, cái cao cả, cái hùng, cái bi và cái hài.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-001-02",
+              "claim": "Yêu cầu của bài bao gồm phân tích khái niệm, nguồn gốc, bản chất, biểu hiện và vận dụng các giá trị thẩm mỹ trong hoạt động quân sự.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-001-02",
+          "title": "Vị trí và ý nghĩa của bài giảng",
+          "script": "Bài giảng được xác định có vị trí trung tâm trong việc trang bị công cụ tư duy và phương pháp luận để nhận thức các hiện tượng thẩm mỹ trong đời sống xã hội và hoạt động quân sự. Trọng tâm được xác định ở phần 1, phần 2 và phần 3.",
+          "claims": [
+            {
+              "id": "CL-1MD2-001-03",
+              "claim": "Bài 2 được xác định giữ vị trí trung tâm và có ý nghĩa đối với nhận thức các hiện tượng thẩm mỹ trong đời sống xã hội và hoạt động quân sự.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-001-04",
+              "claim": "Trọng tâm bài là phần 1, 2 và 3.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-002",
+      "slideStart": 11,
+      "slideEnd": 31,
+      "durationSeconds": 3600,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-002-01",
+          "title": "Cái đẹp là phạm trù trung tâm của mỹ học",
+          "script": "Trình bày cái đẹp với tư cách phạm trù trung tâm của mỹ học; từ đó làm rõ khái niệm, nguồn gốc và bản chất cái đẹp theo nội dung của bài giảng. Cái đẹp được xem xét trong quan hệ thẩm mỹ giữa chủ thể và khách thể, gắn với giá trị tinh thần tích cực và tiến bộ.",
+          "claims": [
+            {
+              "id": "CL-1MD2-002-01",
+              "claim": "Cái đẹp là phạm trù trung tâm của mỹ học.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-002-02",
+              "claim": "Bản chất cái đẹp được trình bày như một phạm trù tinh thần phản ánh sự tương tác giữa chủ thể thẩm mỹ và khách thể thẩm mỹ, chứa đựng giá trị thẩm mỹ tích cực, tiến bộ.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-002-02",
+          "title": "Nguồn gốc và các biểu hiện của cái đẹp",
+          "script": "Làm rõ nguồn gốc của cái đẹp gắn với hoạt động thực tiễn của con người; trong bài giảng, lao động sản xuất và thực tiễn được dùng để giải thích quá trình biến các thuộc tính tự nhiên thành giá trị thẩm mỹ trong quan hệ với con người. Tiếp đó phân tích các biểu hiện của cái đẹp trong đời sống, văn hóa, nghệ thuật và hoạt động quân sự theo nội dung nguồn.",
+          "claims": [
+            {
+              "id": "CL-1MD2-002-03",
+              "claim": "Không có sự vật, hiện tượng trở thành cái đẹp nếu không thông qua hoạt động thực tiễn và không đặt trong quan hệ thẩm mỹ.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-002-04",
+              "claim": "Bài giảng trình bày cái đẹp trong đời sống, nghệ thuật và hoạt động quân sự.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-002-03",
+          "title": "Giá trị của cái đẹp và vận dụng",
+          "script": "Khẳng định giá trị đẹp gắn bó hữu cơ với cái Chân, cái Thiện; cái đẹp mang lại khoái cảm thẩm mỹ tích cực và phù hợp với lý tưởng thẩm mỹ tiến bộ. Phần vận dụng hướng người học đến việc nhận thức, đánh giá và thực hiện các giá trị thẩm mỹ trong môi trường quân đội.",
+          "claims": [
+            {
+              "id": "CL-1MD2-002-05",
+              "claim": "Giá trị đẹp gắn bó hữu cơ với cái Chân và cái Thiện; Chân - Thiện - Mỹ được trình bày là các giá trị tinh thần cao nhất mà con người hướng tới.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-002-06",
+              "claim": "Phần vận dụng gắn việc thực hiện các giá trị thẩm mỹ với môi trường quân đội và phẩm chất người quân nhân.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-003",
+      "slideStart": 32,
+      "slideEnd": 40,
+      "durationSeconds": 2400,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-003-01",
+          "title": "Khái niệm cái cao cả",
+          "script": "Trình bày cái cao cả như phạm trù mỹ học gắn với những sự vật, hiện tượng chứa đựng giá trị đẹp vượt ngưỡng bình thường và gợi lên cảm xúc choáng ngợp, ngưỡng vọng. Bài giảng phân biệt các sắc thái biểu hiện như thanh cao, huy hoàng, rợn ngợp và thán phục.",
+          "claims": [
+            {
+              "id": "CL-1MD2-003-01",
+              "claim": "Cái cao cả gắn với đối tượng chứa đựng giá trị đẹp vượt ngưỡng bình thường và gợi cảm xúc choáng ngợp, ngưỡng vọng.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-003-02",
+          "title": "Nguồn gốc, bản chất và ý nghĩa",
+          "script": "Làm rõ nguồn gốc, bản chất của cái cao cả và ý nghĩa phương pháp luận đối với hoạt động thực tiễn. Phần vận dụng của bài giảng yêu cầu quán triệt và thực hiện tốt các tiêu chí phẩm chất “Bộ đội Cụ Hồ” trong tình hình mới.",
+          "claims": [
+            {
+              "id": "CL-1MD2-003-02",
+              "claim": "Bản chất cái cao cả là cơ sở khoa học cho việc xác định nội dung, định hướng hoạt động thực tiễn và nâng cao năng lực, trình độ thẩm mỹ.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-003-03",
+              "claim": "Phần vận dụng liên hệ với việc thực hiện các tiêu chí phẩm chất “Bộ đội Cụ Hồ”.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-004",
+      "slideStart": 41,
+      "slideEnd": 46,
+      "durationSeconds": 2100,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-004-01",
+          "title": "Khái niệm cái hùng",
+          "script": "Cái hùng được trình bày là sự cảm thụ của chủ thể thẩm mỹ trước những hành động, sự kiện vượt trên mức bình thường, nhằm chiến thắng những trở lực lớn và có ý nghĩa xã hội thúc đẩy lịch sử phát triển.",
+          "claims": [
+            {
+              "id": "CL-1MD2-004-01",
+              "claim": "Cái hùng chỉ sự cảm thụ trước những hành động, sự kiện vượt trên mức bình thường, nhằm chiến thắng trở lực lớn và có ý nghĩa xã hội thúc đẩy lịch sử phát triển.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-004-02",
+          "title": "Nguồn gốc và bản chất cái hùng",
+          "script": "Nguồn gốc cái hùng gắn với hoạt động thực tiễn của con người và xã hội, xuất hiện trực tiếp trong sản xuất vật chất và đấu tranh cách mạng. Bản chất được xác định là cái đẹp trong xã hội biểu hiện ở mức độ cao, với ý nghĩa xã hội sâu sắc và tác động thúc đẩy lịch sử.",
+          "claims": [
+            {
+              "id": "CL-1MD2-004-02",
+              "claim": "Nguồn gốc cái hùng gắn với hoạt động thực tiễn, sản xuất vật chất và đấu tranh cách mạng.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-004-03",
+              "claim": "Bản chất cái hùng là cái đẹp trong xã hội biểu hiện ở mức độ cao.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-004-03",
+          "title": "Phân biệt cái hùng và vận dụng",
+          "script": "Đặt vấn đề phân biệt cái hùng với cái cao cả; bài giảng không đồng nhất hoàn toàn hai phạm trù. Phần vận dụng liên hệ với các tiêu chí “Trung thành, dũng cảm; Chủ động, sáng tạo; Học tốt, rèn tốt, công tác tốt; Xung kích, quyết thắng” đối với học viên.",
+          "claims": [
+            {
+              "id": "CL-1MD2-004-04",
+              "claim": "Bài giảng đặt câu hỏi về quan hệ giữa cái hùng và cái cao cả và định hướng không đồng nhất hoàn toàn hai phạm trù.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-004-05",
+              "claim": "Phần vận dụng liên hệ các tiêu chí rèn luyện của học viên được nêu trong bài giảng.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-005",
+      "slideStart": 47,
+      "slideEnd": 51,
+      "durationSeconds": 900,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-005-01",
+          "title": "Khái niệm cái bi",
+          "script": "Theo quan điểm Mỹ học Mác - Lênin trong bài giảng, cái bi chỉ những cái đẹp, cái cao cả, cái hùng tạm thời thất bại, tiêu vong hoặc hy sinh trong cuộc đấu tranh giữa xu thế vươn tới cái mới, tích cực, tiến bộ với cái xấu, tiêu cực, lỗi thời; qua đó tạo nên sự đồng cảm thẩm mỹ và có ý nghĩa bền vững đối với chủ thể xã hội tiên tiến.",
+          "claims": [
+            {
+              "id": "CL-1MD2-005-01",
+              "claim": "Cái bi được trình bày như sự thất bại, tiêu vong hoặc hy sinh tạm thời của cái đẹp, cái cao cả, cái hùng trong cuộc đấu tranh với cái xấu, tiêu cực, lỗi thời.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-005-02",
+          "title": "Nguồn gốc, bản chất và biểu hiện",
+          "script": "Làm rõ nguồn gốc cái bi gắn với xã hội và sự đối kháng giai cấp theo nội dung nguồn. Trong nghệ thuật, cái bi của đời sống được phản ánh qua hình tượng nghệ thuật; trong quân đội cách mạng, bài giảng liên hệ sự hy sinh, tổn thất trong chiến đấu vì những mục tiêu được xác định là cao cả.",
+          "claims": [
+            {
+              "id": "CL-1MD2-005-02",
+              "claim": "Nguồn gốc cái bi được trình bày gắn với sự đối kháng giai cấp và những hạn chế của con người trong nhận thức, hoạt động thực tiễn.",
+              "sourceRefs": [
+                "SRC-1MD2-L1"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-005-03",
+              "claim": "Bài giảng trình bày biểu hiện cái bi trong nghệ thuật và trong quân đội cách mạng.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-006",
+      "slideStart": 52,
+      "slideEnd": 54,
+      "durationSeconds": 900,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-006-01",
+          "title": "Khái niệm cái hài",
+          "script": "Cái hài là phạm trù mỹ học chỉ những sự vật, hiện tượng có mâu thuẫn đặc biệt được phát hiện bất ngờ, gây ra tiếng cười tích cực và phê phán cái xấu dưới ánh sáng của lý tưởng thẩm mỹ tiến bộ.",
+          "claims": [
+            {
+              "id": "CL-1MD2-006-01",
+              "claim": "Cái hài được xác định qua mâu thuẫn đặc biệt giữa cái đẹp và cái xấu bị phát hiện bất ngờ, gây tiếng cười tích cực.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD2-006-02",
+          "title": "Nguồn gốc, bản chất và lĩnh vực biểu hiện",
+          "script": "Nguồn gốc cái hài được trình bày từ cuộc sống hiện thực. Bản chất là mâu thuẫn đặc biệt giữa cái đẹp và cái xấu bị phát hiện bất ngờ làm bật ra tiếng cười có ý nghĩa xã hội tích cực. Bài giảng nêu các lĩnh vực biểu hiện trong xã hội, đời sống quân nhân và nghệ thuật.",
+          "claims": [
+            {
+              "id": "CL-1MD2-006-02",
+              "claim": "Nguồn gốc cái hài được trình bày từ cuộc sống hiện thực.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            },
+            {
+              "id": "CL-1MD2-006-03",
+              "claim": "Bài giảng trình bày cái hài trong xã hội, đời sống quân nhân và nghệ thuật.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD2-007",
+      "slideStart": 55,
+      "slideEnd": 55,
+      "durationSeconds": 300,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD2-007-01",
+          "title": "Khái quát và chuyển tiếp",
+          "script": "Khái quát năm phạm trù cơ bản của Mỹ học Mác - Lênin đã được trình bày trong bài: cái đẹp, cái cao cả, cái hùng, cái bi và cái hài. Kết thúc bài giảng định hướng nghiên cứu các giá trị thẩm mỹ trong đời sống và môi trường quân đội, đồng thời giới thiệu Bài 3: Giáo dục thẩm mỹ.",
+          "claims": [
+            {
+              "id": "CL-1MD2-007-01",
+              "claim": "Bài giảng khái quát năm phạm trù và chuyển sang định hướng nghiên cứu, giới thiệu Bài 3: Giáo dục thẩm mỹ.",
+              "sourceRefs": [
+                "SRC-1MD2-L1",
+                "SRC-1MD2-L3"
+              ],
+              "confidence": "HIGH",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    }
+  ],
+  "qc": {
+    "unsupportedClaimCheck": "PASS",
+    "claimSourceCoverage": "PASS",
+    "primarySourceOnly": "PASS",
+    "timing": "PASS_180_MINUTES_USER_APPROVED",
+    "academicSourceMutation": "NONE",
+    "commonSourceUsage": "NONE"
+  }
+}

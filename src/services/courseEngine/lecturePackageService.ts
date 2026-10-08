@@ -14,7 +14,7 @@ export interface GateBResult {
 }
 
 export function loadLecturePackage(packageId: string): any {
-  const match = packageId.match(/^LPKG-1MD(\\d+)-001$/);
+  const match = packageId.match(/^LPKG-1MD(\d+)-001$/);
   if (!match) throw new Error('Unsupported packageId: ' + packageId);
   const lessonNumber = Number(match[1]);
   const file = path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + lessonNumber, 'lecture.package.json');
@@ -41,9 +41,9 @@ export function verifyLecturePackage(packageId: string): GateBResult {
   if (blocks.length === 0) blockers.push('Lecture package has no Teaching Blocks.');
 
   const ids = new Set<string>();
-  const ranges = blocks
+  const ranges: Array<[number, number]> = blocks
     .map((b: any) => [b.slideStart, b.slideEnd] as [number, number])
-    .sort((a, b) => a[0] - b[0]);
+    .sort((a: [number, number], b: [number, number]) => a[0] - b[0]);
 
   for (const block of blocks) {
     if (ids.has(block.id)) blockers.push('Duplicate TeachingBlock: ' + block.id);

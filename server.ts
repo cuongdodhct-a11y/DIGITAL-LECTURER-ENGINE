@@ -24,6 +24,9 @@ import { RegisteredDocument } from './src/types/source';
 import { LecturePackage, PackageSummary, LecturerDecisionsRecord } from './src/types/lecture';
 import { ResolutionRecord, QCIssue } from './src/types/quality';
 import { courseEngineRouter } from './src/services/courseEngine/courseEngineRouter';
+import { synthesizeWithTtsGateway, getTtsCacheStats } from './src/services/courseEngine/ttsGatewayService';
+import { getCourse } from './src/services/courseEngine/courseRegistry';
+import { loadRuntimeLecturePackage } from './src/services/courseEngine/runtimePackageService';
 
 dotenv.config();
 
@@ -143,12 +146,11 @@ function selectPackage(packageId: string): LecturePackage | undefined {
 }
 
 function getPackageSummaries(): PackageSummary[] {
-  const summaries: PackageSummary[] = [];
-  for (const [id, pkg] of packageRepository.entries()) {
-    // Exclude CS-401 from production summaries
-    if (id === 'LPKG-CS401-007') continue;
+  const summaries = new Map<string, PackageSummary>();
 
-    summaries.push({
+  for (const [id, pkg] of packageRepository.entries()) {
+    if (id === 'LPKG-CS401-007') continue;
+    summaries.set(id, {
       id: pkg.id,
       title: pkg.metadata.lectureTitle || pkg.id,
       courseCode: pkg.metadata.courseCode || 'GENERAL',
@@ -160,7 +162,45 @@ function getPackageSummaries(): PackageSummary[] {
       sourceIds: Array.from(new Set((pkg.sourceHierarchy || []).map(s => s.sourceId)))
     });
   }
-  return summaries;
+
+  const course = getCourse('COURSE-1MD');
+  for (const descriptor of course?.packages || []) {
+    if (summaries.has(descriptor.packageId)) continue;
+    let slideCount = 0;
+    let teachingBlockCount = 0;
+    let durationMinutes = 0;
+    try {
+      const file = path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', descriptor.lessonCode, 'lecture.package.json');
+      if (fs.existsSync(file)) {
+        const raw = JSON.parse(fs.readFileSync(file, 'utf8'));
+        slideCount = Number(raw.sourceRefs?.find((s: any) => s.level === 3)?.slideCount || 0);
+        teachingBlockCount = Array.isArray(raw.teachingBlocks) ? raw.teachingBlocks.length : 0;
+        durationMinutes = Number(raw.timingPlan?.approvedMinutes || raw.timingPlan?.mappedMinutes || 0);
+      }
+    } catch {
+      // Keep registry-only metadata when runtime artifacts are not yet available.
+    }
+
+    summaries.set(descriptor.packageId, {
+      id: descriptor.packageId,
+      title: descriptor.title,
+      courseCode: descriptor.lessonCode,
+      status: descriptor.status === 'CONTENT_PENDING' || descriptor.status === 'READY_FOR_QC' ? 'QC_PENDING' : descriptor.status,
+      slideCount,
+      teachingBlockCount,
+      durationMinutes,
+      isActive: descriptor.packageId === activePackageId,
+      sourceIds: [
+        descriptor.sourceSlots.level1.sourceId,
+        descriptor.sourceSlots.level3.sourceId
+      ].filter(Boolean) as string[]
+    });
+  }
+
+  return [...summaries.values()].map(summary => ({
+    ...summary,
+    isActive: summary.id === activePackageId
+  }));
 }
 
 const serverAudioCache = new Map<string, { audioBase64: string; mimeType: string; duration: number }>();
@@ -350,10 +390,26 @@ app.post('/api/lecture/select-package', (req: Request, res: Response) => {
   if (!packageId) {
     return res.status(400).json({ error: 'packageId là bắt buộc.' });
   }
-  const pkg = selectPackage(packageId);
-  if (!pkg) {
-    return res.status(404).json({ error: `Gói bài giảng với ID "${packageId}" không tồn tại trong kho.` });
+
+  let pkg = packageRepository.get(packageId);
+  if (!pkg && packageId === 'LPKG-1MD2-001') {
+    try {
+      pkg = loadRuntimeLecturePackage(packageId);
+      packageRepository.set(packageId, pkg);
+    } catch (error: any) {
+      return res.status(409).json({
+        error: error.message || 'Bài 2 chưa đủ runtime artifacts để mở Giảng đường.'
+      });
+    }
   }
+
+  if (!pkg) {
+    return res.status(404).json({
+      error: `Gói bài giảng với ID "${packageId}" chưa được nạp vào Lecture Player runtime.`
+    });
+  }
+
+  activePackageId = packageId;
   res.json({
     success: true,
     activePackageId,
@@ -599,144 +655,46 @@ app.post('/api/tts/synthesize', async (req: Request, res: Response) => {
   try {
     const {
       text,
-      voiceProfile,
-      model,
-      speakingStyle,
-      cacheKey,
       packageId,
       teachingPointId,
-      scriptId,
-      fallbackPolicy = 'DENY'
+      scriptId
     } = req.body;
 
-    if (!text) {
+    if (typeof text !== 'string' || !text.trim()) {
       return res.status(400).json({ error: 'Text is required for TTS' });
     }
-
-    // Check server cache (Only returns official Gemini TTS)
-    if (cacheKey && serverAudioCache.has(cacheKey)) {
-      const cached = serverAudioCache.get(cacheKey)!;
-      return res.json({
-        audioBase64: cached.audioBase64,
-        audioSource: 'GEMINI_TTS',
-        voiceStatus: 'OFFICIAL',
-        voiceProfileId: voiceProfile?.id || 'voice_academic_vn_male',
-        ttsModel: model || 'gemini-3.8-flash-lite-tts',
-        packageId,
-        teachingPointId,
-        scriptId,
-        mimeType: cached.mimeType,
-        durationEstimateSeconds: cached.duration,
-        cached: true,
-        modelUsed: model || 'gemini-3.8-flash-lite-tts'
-      });
+    if (!packageId || !teachingPointId) {
+      return res.status(400).json({ error: 'packageId and teachingPointId are required for provenance' });
     }
 
-    // Attempt Gemini TTS (primary: gemini-3.8-flash-lite-tts)
-    const selectedModel = model === 'gemini-3.8-flash-tts' ? 'gemini-3.8-flash-tts' : 'gemini-3.8-flash-lite-tts';
-    let isQuotaExhausted = false;
-    let geminiErrorMsg = '';
-
-    if (geminiClient) {
-      try {
-        const ttsResponse = await geminiClient.models.generateContent({
-          model: selectedModel,
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text,
-                  speechMetadata: {
-                    style: speakingStyle || 'Clear, authoritative university lecturer'
-                  }
-                }
-              ]
-            }
-          ],
-          config: {
-            responseModalities: ['AUDIO'],
-            speechConfig: {
-              voiceConfig: {
-                prebuiltVoiceConfig: {
-                  voiceName: voiceProfile?.providerVoiceId || 'Fenrir'
-                }
-              }
-            }
-          }
-        });
-
-        // If candidate audio is returned in base64
-        const candidate = ttsResponse.candidates?.[0];
-        const audioPart = candidate?.content?.parts?.find((p: any) => p.inlineData);
-        if (audioPart && audioPart.inlineData?.data) {
-          const duration = Math.max(3, Math.round(text.length / 14));
-          const returnedMimeType = audioPart.inlineData.mimeType || 'audio/wav';
-          if (cacheKey) {
-            serverAudioCache.set(cacheKey, {
-              audioBase64: audioPart.inlineData.data,
-              mimeType: returnedMimeType,
-              duration
-            });
-          }
-          return res.json({
-            audioBase64: audioPart.inlineData.data,
-            audioSource: 'GEMINI_TTS',
-            voiceStatus: 'OFFICIAL',
-            voiceProfileId: voiceProfile?.id || 'voice_academic_vn_male',
-            ttsModel: selectedModel,
-            packageId,
-            teachingPointId,
-            scriptId,
-            mimeType: returnedMimeType,
-            durationEstimateSeconds: duration,
-            cached: false,
-            modelUsed: selectedModel
-          });
-        }
-      } catch (ttsErr: any) {
-        isQuotaExhausted = ttsErr?.message?.includes('429') || ttsErr?.status === 'RESOURCE_EXHAUSTED';
-        geminiErrorMsg = ttsErr?.message || String(ttsErr);
-        if (isQuotaExhausted) {
-          console.warn('[TTS Gateway] Gemini TTS quota limit reached (429 RESOURCE_EXHAUSTED).');
-        } else {
-          console.warn('[TTS Gateway] Gemini TTS call notice:', geminiErrorMsg);
-        }
-      }
-    }
-
-    // If Official Gemini TTS is unavailable and fallbackPolicy is DENY, reject with 429
-    if (fallbackPolicy === 'DENY') {
-      return res.status(429).json({
-        error: 'VOICE_UNAVAILABLE',
-        voiceStatus: 'OFFICIAL',
-        message: 'Giọng giảng chuẩn hiện không khả dụng (Hạn ngạch Gemini TTS: 429 RESOURCE_EXHAUSTED).',
-        details: geminiErrorMsg
-      });
-    }
-
-    // Only if explicit fallback is allowed by user
-    const estimateSec = Math.max(3, Math.round(text.length / 14));
-    return res.json({
-      audioBase64: null,
-      audioSource: 'BROWSER_TTS',
-      voiceStatus: 'FALLBACK',
-      voiceProfileId: voiceProfile?.id || 'voice_academic_vn_male',
-      ttsModel: 'browser-speech-synthesis',
+    const audio = await synthesizeWithTtsGateway({
+      text: text.trim(),
       packageId,
       teachingPointId,
-      scriptId,
-      mimeType: 'audio/speech-synthesis',
-      durationEstimateSeconds: estimateSec,
-      cached: false,
-      modelUsed: 'browser-speech-synthesis',
-      fallbackReason: isQuotaExhausted ? 'GEMINI_TTS_QUOTA_EXHAUSTED' : 'GEMINI_TTS_UNAVAILABLE',
-      notice: 'Đang sử dụng giọng dự phòng'
+      scriptId
+    });
+
+    return res.json({
+      ...audio,
+      audioSource: audio.provider,
+      voiceStatus: 'LOCAL_VIENEUV3',
+      voiceProfileId: audio.voiceProfile,
+      ttsModel: audio.model,
+      modelUsed: audio.model
     });
   } catch (err: any) {
     console.error('[TTS Gateway] Server error:', err);
-    res.status(500).json({ error: err.message || 'TTS synthesis failed' });
+    const message = err?.message || 'TTS synthesis failed';
+    const status = message.includes('not configured') ? 503 : 502;
+    return res.status(status).json({
+      error: status === 503 ? 'VOICE_RUNTIME_NOT_CONFIGURED' : 'TTS_SYNTHESIS_FAILED',
+      message
+    });
   }
+});
+
+app.get('/api/tts/cache-status', (_req: Request, res: Response) => {
+  res.json(getTtsCacheStats());
 });
 
 // Classroom Interaction / Student Question Handling

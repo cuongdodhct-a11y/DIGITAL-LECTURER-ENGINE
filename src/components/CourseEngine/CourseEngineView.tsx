@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { BookOpen, CheckCircle2, FileText, Layers3, LockKeyhole } from 'lucide-react';
 import { CourseDescriptor, LessonPackageDescriptor } from '../../services/courseEngine/types';
 
-type LecturePackageStatus = { ready: boolean; slideCount: number; teachingBlockCount: number; mappedMinutes: number; timingConflictReviewRequired: boolean; blockers: string[]; warnings: string[]; };\n\ntype OnboardingStatus = {
+type LecturePackageStatus = { ready: boolean; slideCount: number; teachingBlockCount: number; mappedMinutes: number; timingConflictReviewRequired: boolean; blockers: string[]; warnings: string[]; };
+type GroundedScriptStatus = { ready: boolean; totalMinutes: number; teachingBlockCount: number; teachingPointCount: number; claimCount: number; unsupportedClaimCount: number; sourceCoverageComplete: boolean; storageProvider: string; blockers: string[]; warnings: string[]; };
+type TtsAudioStatus = { ready: boolean; provider: string; voiceProfile: string; model: string; browserTtsAllowed: boolean; cachePolicy: string; audioStorage: string; blockers: string[]; warnings: string[]; };
+
+type OnboardingStatus = {
   ready: boolean;
   sourceChecks: {
     level1: { present: boolean; filename?: string; documentType?: string; packageId?: string };
@@ -33,7 +37,10 @@ const statusClass: Record<LessonPackageDescriptor['status'], string> = {
 export const CourseEngineView: React.FC = () => {
   const [course, setCourse] = useState<CourseDescriptor | null>(null);
   const [selected, setSelected] = useState<LessonPackageDescriptor | null>(null);
-  const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);\n  const [lecturePackage, setLecturePackage] = useState<LecturePackageStatus | null>(null);
+  const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);
+  const [lecturePackage, setLecturePackage] = useState<LecturePackageStatus | null>(null);
+  const [groundedScript, setGroundedScript] = useState<GroundedScriptStatus | null>(null);
+  const [ttsAudio, setTtsAudio] = useState<TtsAudioStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -60,6 +67,41 @@ export const CourseEngineView: React.FC = () => {
       })
       .then(data => setOnboarding(data))
       .catch(() => setOnboarding(null));
+  }, [selected]);
+
+  useEffect(() => {
+    if (!selected) {
+      setLecturePackage(null);
+      setGroundedScript(null);
+      setTtsAudio(null);
+      return;
+    }
+
+    setLecturePackage(null);
+    setGroundedScript(null);
+
+    fetch('/api/course-engine/packages/' + selected.packageId + '/lecture-package-status')
+      .then(async r => {
+        if (!r.ok) throw new Error('Chưa có Lecture Package cho package này.');
+        return r.json();
+      })
+      .then(data => setLecturePackage(data))
+      .catch(() => setLecturePackage(null));
+
+    fetch('/api/course-engine/packages/' + selected.packageId + '/grounded-script-status')
+      .then(async r => {
+        if (!r.ok) throw new Error('Chưa có Grounded Script cho package này.');
+        return r.json();
+      })
+      .then(data => setGroundedScript(data))
+      .catch(() => setGroundedScript(null));
+    fetch('/api/course-engine/packages/' + selected.packageId + '/tts-audio-status')
+      .then(async r => {
+        if (!r.ok) throw new Error('Chưa có Gate D TTS/Audio cho package này.');
+        return r.json();
+      })
+      .then(data => setTtsAudio(data))
+      .catch(() => setTtsAudio(null));
   }, [selected]);
 
   if (error) return <div className="rounded-xl border border-rose-800 bg-rose-950/30 p-6 text-rose-200">{error}</div>;
@@ -178,7 +220,80 @@ export const CourseEngineView: React.FC = () => {
           </div>
         )}
 
-        {lecturePackage && (\n          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">\n            <div className="flex items-center justify-between gap-3">\n              <div>\n                <div className="text-xs font-mono text-indigo-300">GATE B • LECTURE PACKAGE</div>\n                <div className="mt-1 text-sm text-white">\n                  {lecturePackage.ready ? 'PASS — Lecture Package hợp lệ' : 'BLOCKED — cần xử lý'}\n                </div>\n              </div>\n              <span className={lecturePackage.ready ? 'text-emerald-300 text-xs' : 'text-rose-300 text-xs'}>\n                {lecturePackage.ready ? 'READY' : 'BLOCKED'}\n              </span>\n            </div>\n            <div className="mt-3 grid gap-2 sm:grid-cols-4 text-xs">\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Slides</div><div className="text-white">{lecturePackage.slideCount}</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Teaching Blocks</div><div className="text-white">{lecturePackage.teachingBlockCount}</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Mapped time</div><div className="text-white">{lecturePackage.mappedMinutes} phút</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Timing</div><div className="text-amber-300">{lecturePackage.timingConflictReviewRequired ? 'QC REVIEW' : 'OK'}</div></div>\n            </div>\n          </div>\n        )}\n\n        <div className="mt-2 text-[11px] text-slate-500">
+        {lecturePackage && (
+          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-mono text-indigo-300">GATE B • LECTURE PACKAGE</div>
+                <div className="mt-1 text-sm text-white">
+                  {lecturePackage.ready ? 'PASS — Lecture Package hợp lệ' : 'BLOCKED — cần xử lý'}
+                </div>
+              </div>
+              <span className={lecturePackage.ready ? 'text-emerald-300 text-xs' : 'text-rose-300 text-xs'}>
+                {lecturePackage.ready ? 'READY' : 'BLOCKED'}
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-4 text-xs">
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Slides</div><div className="text-white">{lecturePackage.slideCount}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Teaching Blocks</div><div className="text-white">{lecturePackage.teachingBlockCount}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Mapped time</div><div className="text-white">{lecturePackage.mappedMinutes} phút</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Timing</div><div className="text-amber-300">{lecturePackage.timingConflictReviewRequired ? 'QC REVIEW' : 'OK'}</div></div>
+            </div>
+          </div>
+        )}
+
+        {groundedScript && (
+          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-mono text-indigo-300">GATE C • GROUNDED SCRIPT</div>
+                <div className="mt-1 text-sm text-white">
+                  {groundedScript.ready ? 'PASS — Script có Claim→Source và QC chống claim không có nguồn' : 'BLOCKED — cần xử lý'}
+                </div>
+              </div>
+              <span className={groundedScript.ready ? 'text-emerald-300 text-xs' : 'text-rose-300 text-xs'}>
+                {groundedScript.ready ? 'READY' : 'BLOCKED'}
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-5 text-xs">
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Thời gian</div><div className="text-white">{groundedScript.totalMinutes} phút</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Teaching Points</div><div className="text-white">{groundedScript.teachingPointCount}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Claims</div><div className="text-white">{groundedScript.claimCount}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Unsupported</div><div className={groundedScript.unsupportedClaimCount === 0 ? 'text-emerald-300' : 'text-rose-300'}>{groundedScript.unsupportedClaimCount}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Storage</div><div className="text-emerald-300">{groundedScript.storageProvider}</div></div>
+            </div>
+            {groundedScript.warnings.map((warning, index) => (
+              <div key={index} className="mt-3 text-xs text-amber-300">⚠ {warning}</div>
+            ))}
+          </div>
+        )}
+
+        {ttsAudio && (
+          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-mono text-indigo-300">GATE D • TTS / AUDIO</div>
+                <div className="mt-1 text-sm text-white">
+                  {ttsAudio.ready ? 'PASS — VieNeu runtime contract sẵn sàng' : 'BLOCKED — cần cấu hình runtime'}
+                </div>
+              </div>
+              <span className={ttsAudio.ready ? 'text-emerald-300 text-xs' : 'text-amber-300 text-xs'}>
+                {ttsAudio.ready ? 'READY' : 'CONFIGURE'}
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-5 text-xs">
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Provider</div><div className="text-white">{ttsAudio.provider}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Voice</div><div className="text-white">{ttsAudio.voiceProfile}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Model</div><div className="text-white">{ttsAudio.model}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Browser TTS</div><div className="text-emerald-300">{ttsAudio.browserTtsAllowed ? 'ALLOWED' : 'DENY'}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Audio storage</div><div className="text-emerald-300">{ttsAudio.audioStorage}</div></div>
+            </div>
+            {ttsAudio.blockers.map((blocker, index) => (
+              <div key={index} className="mt-3 text-xs text-amber-300">⚠ {blocker}</div>
+            ))}
+          </div>
+        )}
+        <div className="mt-2 text-[11px] text-slate-500">
           PRIMARY = DOCX + PPTX của chính bài; COMMON = bộ nguồn chung của học phần. Không tự động lấy nội dung Bài 1 cho bài khác.
         </div>
       </div>

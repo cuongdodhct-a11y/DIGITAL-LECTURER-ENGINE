@@ -19,7 +19,7 @@ export interface SourceOnboardingResult {
 }
 
 export function loadPackageManifest(packageId: string): any {
-  const match = packageId.match(/^LPKG-1MD(\\d+)-001$/);
+  const match = packageId.match(/^LPKG-1MD(\d+)-001$/);
   if (!match) throw new Error('Unsupported packageId: ' + packageId);
   const lessonNumber = Number(match[1]);
   const file = path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + lessonNumber, 'package.manifest.json');
@@ -39,7 +39,7 @@ export function verifySourceOnboarding(packageId: string): SourceOnboardingResul
 
   const slideCount = level3?.slideCount;
   const coverage = manifest.timing?.slideCoverage;
-  const declaredCoverage = typeof coverage === 'string' && /^1\\.\\.\\d+$/.test(coverage);
+  const declaredCoverage = typeof coverage === 'string' && /^1\.\.\d+$/.test(coverage);
   const coverageEnd = declaredCoverage ? Number(coverage.split('..')[1]) : undefined;
   const slideCoverageValid = Boolean(
     declaredCoverage &&

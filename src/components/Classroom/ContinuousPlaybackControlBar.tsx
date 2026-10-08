@@ -87,7 +87,7 @@ export const ContinuousPlaybackControlBar: React.FC<ContinuousPlaybackControlBar
     return (
       <span className="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-950 text-emerald-300 border border-emerald-600/80 flex items-center gap-1.5 shadow-sm">
         <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-        ● GIỌNG GIẢNG CHUẨN ({status.voiceName || 'GS. Trần Đình Trọng'})
+        ● GIỌNG GIẢNG CHUẨN ({status.voiceName || 'Giảng viên số'})
       </span>
     );
   };
@@ -118,7 +118,7 @@ export const ContinuousPlaybackControlBar: React.FC<ContinuousPlaybackControlBar
                 <span>Tạm dừng tại Luận điểm: <strong>{status.currentTeachingPointId}</strong></span>
               )}
               {status.state === 'IDLE' && (
-                <span>Sẵn sàng phát bài giảng với Giọng giảng Chuẩn (Gemini TTS)</span>
+                <span>Sẵn sàng phát bài giảng với Giọng giảng Chuẩn</span>
               )}
               {status.state === 'COMPLETED' && (
                 <span className="text-emerald-300 flex items-center gap-1 font-semibold">

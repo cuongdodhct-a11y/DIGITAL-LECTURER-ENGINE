@@ -1,6 +1,7 @@
 import { verifySourceOnboarding } from '../src/services/courseEngine/sourceOnboardingService';
 
-const result = verifySourceOnboarding('LPKG-1MD2-001');
+const packageId = 'LPKG-1MD2-001';
+const result = verifySourceOnboarding(packageId);
 
 if (!result.ready) throw new Error('Gate A failed: ' + result.blockers.join('; '));
 if (result.sourceChecks.level1.filename !== '1.MĐ2.docx') throw new Error('Unexpected Level 1 source.');

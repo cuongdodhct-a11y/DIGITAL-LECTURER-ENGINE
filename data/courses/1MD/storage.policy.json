@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "courseId": "COURSE-1MD",
+  "contentStorage": {
+    "provider": "GOOGLE_DRIVE",
+    "sourceOfTruth": "GOOGLE_DRIVE",
+    "longTermPersistence": "GOOGLE_DRIVE",
+    "repositoryRole": "CODE_AND_SCHEMA_ONLY",
+    "localPersistentContentStore": false,
+    "localCache": "EPHEMERAL_ONLY"
+  },
+  "security": {
+    "credentialsInSourceControl": false,
+    "oauthTokensInSourceControl": false
+  },
+  "configuration": {
+    "folderId": null,
+    "status": "CONFIGURE_AT_RUNTIME"
+  }
+}
