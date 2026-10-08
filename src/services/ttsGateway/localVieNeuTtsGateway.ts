@@ -26,14 +26,26 @@ export class LocalVieNeuTTSGateway extends TTSGateway {
     const teachingPointId = request.teachingPointId;
     if (!teachingPointId) throw new Error('TeachingPointId is required for LOCAL_VIENEUV3 synthesis.');
 
-    const response = await fetch('/api/course-engine/packages/' + encodeURIComponent(packageId) + '/tts/synthesize', {
+    const isProduction1MD1 = packageId === 'LPKG-1MD1-001';
+    const endpoint = isProduction1MD1
+      ? '/api/tts/synthesize'
+      : '/api/course-engine/packages/' + encodeURIComponent(packageId) + '/tts/synthesize';
+
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text: request.text,
-        teachingPointId,
-        scriptId: request.scriptId
-      })
+      body: JSON.stringify(isProduction1MD1
+        ? {
+            text: request.text,
+            packageId,
+            teachingPointId,
+            scriptId: request.scriptId
+          }
+        : {
+            text: request.text,
+            teachingPointId,
+            scriptId: request.scriptId
+          })
     });
 
     const data = await response.json().catch(() => ({}));
