@@ -6,3 +6,16 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Generated local TTS/model/runtime artifacts — never commit
+.vieneu-models/
+.models/
+audio-cache/
+.cache-vieneu/
+*.wav
+*.mp3
+*.m4a
+*.onnx
+*.npz
+*.data
+*.bin

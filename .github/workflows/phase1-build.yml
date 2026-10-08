@@ -1,7 +1,7 @@
 name: Phase 1 Build Verification
 on:
   push:
-    branches: [build-1md-engine, engine-generalization-20261007, phase3-md2-gate-a-20261008, phase3-md2-gate-c-20261008]
+    branches: [build-1md-engine, engine-generalization-20261007, phase3-md2-gate-a-20261008, phase3-md2-gate-c-20261008, phase3-md2-gate-d-20261008]
   pull_request:
     branches: [build-1md-engine, phase3-md2-gate-a-20261008]
   workflow_dispatch:
@@ -31,3 +31,6 @@ jobs:
 
       - name: API and package-isolation smoke test
         run: npx tsx scripts/api-course-engine-smoke.ts
+
+      - name: Phase 3 Gate D TTS/Audio policy smoke test
+        run: npm run test:phase3-gate-d

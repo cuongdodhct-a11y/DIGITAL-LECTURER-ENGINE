@@ -4,7 +4,9 @@ import { assertLessonBelongsToCourse } from './packageResolver';
 import { registerAndBuildPilotPackage, PackageBuildMapping } from './packageBuildService';
 import { verifySourceOnboarding } from './sourceOnboardingService';
 import { verifyLecturePackage } from './lecturePackageService';
-import { verifyGroundedScript } from './groundedScriptService';
+import { verifyGroundedScript, loadGroundedScript } from './groundedScriptService';
+import { verifyTtsAudioGate } from './ttsAudioGateService';
+import { synthesizeWithTtsGateway, getTtsCacheStats } from './ttsGatewayService';
 import { RegisteredDocument } from '../../types/source';
 
 export const courseEngineRouter = Router();
@@ -55,6 +57,44 @@ courseEngineRouter.get('/packages/:packageId/lecture-package-status', (req: Requ
     return res.json(verifyLecturePackage(req.params.packageId));
   } catch (error: any) {
     return res.status(404).json({ error: error.message || 'Không thể kiểm tra Lecture Package.' });
+  }
+});
+
+courseEngineRouter.get('/packages/:packageId/tts-audio-status', (req: Request, res: Response) => {
+  try {
+    return res.json(verifyTtsAudioGate(req.params.packageId));
+  } catch (error: any) {
+    return res.status(404).json({ error: error.message || 'Không thể kiểm tra Gate D TTS/Audio.' });
+  }
+});
+
+courseEngineRouter.get('/tts/cache-status', (_req: Request, res: Response) => {
+  return res.json(getTtsCacheStats());
+});
+
+courseEngineRouter.post('/packages/:packageId/tts/synthesize', async (req: Request, res: Response) => {
+  try {
+    const packageId = req.params.packageId;
+    const script = loadGroundedScript(packageId);
+    const { teachingPointId, text, scriptId } = req.body as { teachingPointId?: string; text?: string; scriptId?: string };
+    const blocks = Array.isArray(script.teachingBlocks) ? script.teachingBlocks : [];
+    const point = blocks.flatMap((b: any) => Array.isArray(b.teachingPoints) ? b.teachingPoints : []).find((p: any) => p.id === teachingPointId);
+    if (!point) return res.status(404).json({ error: 'TeachingPoint không thuộc Grounded Script của package.' });
+    if (typeof text !== 'string' || !text.trim()) return res.status(400).json({ error: 'text là bắt buộc.' });
+    if (text.trim() !== String(point.script).trim()) {
+      return res.status(409).json({ error: 'TTS input phải đúng nguyên văn TeachingPoint script đã được grounded.' });
+    }
+    const gate = verifyTtsAudioGate(packageId);
+    if (!gate.ready) return res.status(503).json({ error: 'GATE_D_NOT_READY', gate });
+    const audio = await synthesizeWithTtsGateway({
+      text: point.script,
+      packageId,
+      teachingPointId: point.id,
+      scriptId
+    });
+    return res.json(audio);
+  } catch (error: any) {
+    return res.status(502).json({ error: error.message || 'TTS synthesis failed.' });
   }
 });
 
