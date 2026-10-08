@@ -1,7 +1,7 @@
 name: Phase 1 Build Verification
 on:
   push:
-    branches: [build-1md-engine, engine-generalization-20261007]
+    branches: [build-1md-engine, engine-generalization-20261007, phase3-md2-gate-a-20261008]
   pull_request:
     branches: [build-1md-engine]
   workflow_dispatch:
@@ -20,7 +20,10 @@ jobs:
       - name: Phase 2 1MD1 pilot package build smoke test
         run: npx tsx scripts/phase2-pilot-smoke.ts
 
-      - name: API and package-isolation smoke test
+      - name: Phase 3 Gate A source onboarding smoke test
+        run: npm run test:phase3-gate-a
+
+      - name: Phase 3 Gate B Lecture Package smoke test\n        run: npm run test:phase3-gate-b\n\n      - name: API and package-isolation smoke test
         shell: bash
         run: |
           npm run dev > /tmp/digital-lecturer-engine.log 2>&1 &

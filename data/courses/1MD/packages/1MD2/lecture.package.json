@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "gate": "B_LECTURE_PACKAGE",
+  "packageId": "LPKG-1MD2-001",
+  "courseId": "COURSE-1MD",
+  "lessonNumber": 2,
+  "lessonCode": "1MD2",
+  "title": "Những phạm trù cơ bản của Mỹ học Mác - Lênin",
+  "status": "READY_FOR_QC",
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sourceRefs": [
+    {
+      "sourceId": "SRC-1MD2-L1",
+      "level": 1,
+      "filename": "1.MĐ2.docx",
+      "documentType": "DOCX",
+      "role": "Kế hoạch bài giảng/nguồn nội dung chuẩn",
+      "packageId": "LPKG-1MD2-001"
+    },
+    {
+      "sourceId": "SRC-1MD2-L3",
+      "level": 3,
+      "filename": "1.MĐ2.pptx",
+      "documentType": "PPTX",
+      "role": "Khung trình chiếu và trực quan 55 slide",
+      "slideCount": 55,
+      "packageId": "LPKG-1MD2-001"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "OBJ-1MD2-01",
+      "statement": "Phân tích đúng khái niệm, nguồn gốc, bản chất, biểu hiện những phạm trù cơ bản Mỹ học Mác - Lênin.",
+      "sourceRef": "SRC-1MD2-L1"
+    },
+    {
+      "id": "OBJ-1MD2-02",
+      "statement": "Luận giải được biểu hiện các giá trị thẩm mỹ trong hoạt động quân sự; vận dụng trong xây dựng ĐSTT ở đơn vị cơ sở trên cương vị công tác.",
+      "sourceRef": "SRC-1MD2-L1"
+    },
+    {
+      "id": "OBJ-1MD2-03",
+      "statement": "Đấu tranh phê phán với những biểu hiện nhận thức lệch chuẩn về các giá trị thẩm mỹ trong tập thể quân nhân.",
+      "sourceRef": "SRC-1MD2-L1"
+    }
+  ],
+  "structure": [
+    {
+      "sectionId": "SEC-1MD2-01",
+      "title": "Thủ tục giảng bài + mở đầu",
+      "slideStart": 1,
+      "slideEnd": 10,
+      "blockIds": [
+        "TB-1MD2-001"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-02",
+      "title": "I. Cái đẹp",
+      "slideStart": 11,
+      "slideEnd": 31,
+      "blockIds": [
+        "TB-1MD2-002"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-03",
+      "title": "II. Cái cao cả",
+      "slideStart": 32,
+      "slideEnd": 40,
+      "blockIds": [
+        "TB-1MD2-003"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-04",
+      "title": "III. Cái hùng",
+      "slideStart": 41,
+      "slideEnd": 46,
+      "blockIds": [
+        "TB-1MD2-004"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-05",
+      "title": "IV. Cái bi",
+      "slideStart": 47,
+      "slideEnd": 51,
+      "blockIds": [
+        "TB-1MD2-005"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-06",
+      "title": "V. Cái hài",
+      "slideStart": 52,
+      "slideEnd": 54,
+      "blockIds": [
+        "TB-1MD2-006"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD2-07",
+      "title": "Kết thúc + định hướng nghiên cứu",
+      "slideStart": 55,
+      "slideEnd": 55,
+      "blockIds": [
+        "TB-1MD2-007"
+      ]
+    }
+  ],
+  "teachingBlocks": [
+    {
+      "id": "TB-1MD2-001",
+      "slideStart": 1,
+      "slideEnd": 10,
+      "durationSeconds": 600,
+      "topic": "Thủ tục + mở đầu",
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan, sử dụng trợ lý ảo",
+      "keyPoints": [
+        "Nhận lớp, nắm quân số, phổ biến quy định học tập, kiểm tra kiến thức cũ.",
+        "Giới thiệu Bài 2; mục đích, yêu cầu, nội dung, trọng tâm, thời gian, tổ chức và phương pháp.",
+        "Nêu vị trí, ý nghĩa và phạm vi nội dung của bài giảng."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-002",
+      "slideStart": 11,
+      "slideEnd": 31,
+      "durationSeconds": 3600,
+      "topic": "I. Cái đẹp",
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "keyPoints": [
+        "Cái đẹp là phạm trù trung tâm của mỹ học.",
+        "Khái niệm; nguồn gốc và bản chất cái đẹp; quan hệ thẩm mỹ giữa chủ thể và khách thể.",
+        "Cái đẹp gắn với Chân - Thiện - Mỹ; biểu hiện trong đời sống và hoạt động quân sự; ý nghĩa phương pháp luận và vận dụng."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-003",
+      "slideStart": 32,
+      "slideEnd": 40,
+      "durationSeconds": 2400,
+      "topic": "II. Cái cao cả",
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "keyPoints": [
+        "Khái niệm cái cao cả theo quan điểm Mỹ học Mác - Lênin.",
+        "Nguồn gốc, bản chất và các biểu hiện của cái cao cả; gợi cảm giác ngưỡng vọng.",
+        "Ý nghĩa phương pháp luận và vận dụng trong đời sống, môi trường quân đội và người học viên."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-004",
+      "slideStart": 41,
+      "slideEnd": 46,
+      "durationSeconds": 2100,
+      "topic": "III. Cái hùng",
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "keyPoints": [
+        "Cái hùng là sự cảm thụ trước những hành động, sự kiện vượt trên mức bình thường, nhằm chiến thắng trở lực lớn và có ý nghĩa xã hội thúc đẩy lịch sử.",
+        "Nguồn gốc gắn với hoạt động thực tiễn, sản xuất vật chất và đấu tranh cách mạng; bản chất là cái đẹp trong xã hội biểu hiện ở mức độ cao.",
+        "Phân biệt cái hùng với cái cao cả; biểu hiện trong xã hội và quân đội cách mạng; vận dụng vào tiêu chí rèn luyện của học viên."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-005",
+      "slideStart": 47,
+      "slideEnd": 51,
+      "durationSeconds": 900,
+      "topic": "IV. Cái bi",
+      "method": "Định hướng nghiên cứu",
+      "keyPoints": [
+        "Khái niệm cái bi theo Mỹ học Mác - Lênin: cái đẹp, cái cao cả, cái hùng tạm thời thất bại, tiêu vong, hy sinh trong cuộc đấu tranh giữa cái mới, tích cực, tiến bộ với cái xấu, tiêu cực, lỗi thời.",
+        "Nguồn gốc, bản chất và điều kiện trở thành cái bi; sự đồng cảm thẩm mỹ và ý nghĩa đối với lực lượng xã hội tiến bộ.",
+        "Các lĩnh vực biểu hiện trong đời sống, nghệ thuật và quân đội; ý nghĩa vận dụng trong công tác chính trị, tư tưởng."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-006",
+      "slideStart": 52,
+      "slideEnd": 54,
+      "durationSeconds": 900,
+      "topic": "V. Cái hài",
+      "method": "Định hướng nghiên cứu",
+      "keyPoints": [
+        "Khái niệm cái hài: mâu thuẫn đặc biệt được phát hiện bất ngờ, gây tiếng cười tích cực và phê phán cái xấu dưới ánh sáng của lý tưởng thẩm mỹ tiến bộ.",
+        "Nguồn gốc, bản chất và các lĩnh vực biểu hiện trong cuộc sống, đời sống quân nhân và nghệ thuật.",
+        "Định hướng vận dụng cái hài trong môi trường quân đội; gắn với yêu cầu nhận thức đúng các giá trị thẩm mỹ."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    },
+    {
+      "id": "TB-1MD2-007",
+      "slideStart": 55,
+      "slideEnd": 55,
+      "durationSeconds": 300,
+      "topic": "Kết thúc + định hướng nghiên cứu",
+      "method": "Định hướng nghiên cứu",
+      "keyPoints": [
+        "Khái quát hệ thống 5 phạm trù cơ bản của Mỹ học Mác - Lênin.",
+        "Định hướng nghiên cứu các giá trị thẩm mỹ trong đời sống và môi trường quân đội.",
+        "Giới thiệu Bài 3: Giáo dục thẩm mỹ."
+      ],
+      "sourceRefs": [
+        "SRC-1MD2-L1",
+        "SRC-1MD2-L3"
+      ]
+    }
+  ],
+  "timingPlan": {
+    "sourceDeclared": {
+      "plannedMinutes": 175,
+      "sourceTotalLessons": 4,
+      "focus": "phần 1, 2, 3"
+    },
+    "mappedMinutes": 180,
+    "mappedSeconds": 10800,
+    "varianceAgainstDeclaredMinutes": 5,
+    "status": "SOURCE_TIMING_CONFLICT_REVIEW_REQUIRED",
+    "rule": "Preserve source values; no silent normalization."
+  },
+  "provenance": {
+    "primarySourceIds": [
+      "SRC-1MD2-L1",
+      "SRC-1MD2-L3"
+    ],
+    "commonSourceUsage": "NONE",
+    "academicSourceMutation": "NONE"
+  }
+}
