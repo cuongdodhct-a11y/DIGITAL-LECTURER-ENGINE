@@ -43,7 +43,7 @@ export function verifyLecturePackage(packageId: string): GateBResult {
   const ids = new Set<string>();
   const ranges: Array<[number, number]> = blocks
     .map((b: any) => [b.slideStart, b.slideEnd] as [number, number])
-    .sort((a, b) => a[0] - b[0]);
+    .sort((a: [number, number], b: [number, number]) => a[0] - b[0]);
 
   for (const block of blocks) {
     if (ids.has(block.id)) blockers.push('Duplicate TeachingBlock: ' + block.id);
