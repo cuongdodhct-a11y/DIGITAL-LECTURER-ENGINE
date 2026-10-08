@@ -45,11 +45,12 @@ export function verifyTtsAudioGate(packageId: string): GateDResult {
 
   if (config.maxCacheBytes > 64 * 1024 * 1024) blockers.push('TTS cache exceeds 64 MB safety limit.');
   if (config.maxCacheEntries > 16) blockers.push('TTS cache entry limit exceeds 16.');
-  if (script.audioStorage?.provider !== 'GOOGLE_DRIVE') {
-    blockers.push('Audio long-term storage policy must declare GOOGLE_DRIVE.');
-  }
-  if (script.audioStorage?.repositoryCommitAllowed !== false) {
-    blockers.push('Generated audio must not be committed to the repository.');
+  const audioPolicyFile = path.join(path.dirname(path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + Number(packageId.match(/^LPKG-1MD(\\d+)-001$/)![1]), 'grounded.script.json')), 'tts.audio.policy.json');
+  if (!fs.existsSync(audioPolicyFile)) blockers.push('Gate D audio policy is missing.');
+  if (fs.existsSync(audioPolicyFile)) {
+    const audioPolicy = JSON.parse(fs.readFileSync(audioPolicyFile, 'utf8'));
+    if (audioPolicy.audioStorage?.provider !== 'GOOGLE_DRIVE') blockers.push('Audio long-term storage policy must declare GOOGLE_DRIVE.');
+    if (audioPolicy.audioStorage?.repositoryCommitAllowed !== false) blockers.push('Generated audio must not be committed to the repository.');
   }
 
   return {
