@@ -39,12 +39,15 @@ import { ContinuousPlaybackControlBar } from './ContinuousPlaybackControlBar';
 import { LecturerAudioPlayer } from '../AudioPlayer/LecturerAudioPlayer';
 import { formatTime, formatTimeDetailed } from '../../utils/timing';
 import { SourceClaim } from '../../types/source';
+import { LocalVieNeuTTSGateway, PHAM_TUYEN_VIETNAM_VOICE, VIENEU_V3_TURBO_MODEL } from '../../services/ttsGateway/localVieNeuTtsGateway';
+import { TTSQueueManager } from '../../services/continuousPlayback/ttsQueueManager';
 
 interface ClassroomViewProps {
   lecturePackage: LecturePackage;
 }
 
 export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) => {
+  const isMĐ2 = lecturePackage.id === 'LPKG-1MD2-001';
   const engineRef = useRef<TeachingEngine | null>(null);
   const continuousEngineRef = useRef<ContinuousLectureEngine | null>(null);
   const [engineStatus, setEngineStatus] = useState<TeachingEngineStatus | null>(null);
@@ -68,6 +71,16 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
 
     const continuousEngine = new ContinuousLectureEngine({
       teachingEngine: engine,
+      ...(isMĐ2 ? {
+        voiceProfile: PHAM_TUYEN_VIETNAM_VOICE,
+        ttsModel: VIENEU_V3_TURBO_MODEL,
+        fallbackPolicy: 'DENY' as const,
+        ttsQueueManager: new TTSQueueManager(
+          new LocalVieNeuTTSGateway(),
+          PHAM_TUYEN_VIETNAM_VOICE,
+          VIENEU_V3_TURBO_MODEL
+        )
+      } : {}),
       onStatusChange: (status) => {
         setContinuousStatus(status);
         if (engineRef.current) {
@@ -365,7 +378,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
           onStop={handleContinuousStop}
           onRestart={handleContinuousRestart}
           onRetry={handleContinuousRetry}
-          onAllowFallback={handleAllowFallback}
+          onAllowFallback={isMĐ2 ? undefined : handleAllowFallback}
         />
       )}
 

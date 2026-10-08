@@ -4,6 +4,7 @@ import { CourseDescriptor, LessonPackageDescriptor } from '../../services/course
 
 type LecturePackageStatus = { ready: boolean; slideCount: number; teachingBlockCount: number; mappedMinutes: number; timingConflictReviewRequired: boolean; blockers: string[]; warnings: string[]; };
 type GroundedScriptStatus = { ready: boolean; totalMinutes: number; teachingBlockCount: number; teachingPointCount: number; claimCount: number; unsupportedClaimCount: number; sourceCoverageComplete: boolean; storageProvider: string; blockers: string[]; warnings: string[]; };
+type TtsAudioStatus = { ready: boolean; provider: string; voiceProfile: string; model: string; browserTtsAllowed: boolean; cachePolicy: string; audioStorage: string; blockers: string[]; warnings: string[]; };
 
 type OnboardingStatus = {
   ready: boolean;
@@ -39,6 +40,7 @@ export const CourseEngineView: React.FC = () => {
   const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);
   const [lecturePackage, setLecturePackage] = useState<LecturePackageStatus | null>(null);
   const [groundedScript, setGroundedScript] = useState<GroundedScriptStatus | null>(null);
+  const [ttsAudio, setTtsAudio] = useState<TtsAudioStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -71,6 +73,7 @@ export const CourseEngineView: React.FC = () => {
     if (!selected) {
       setLecturePackage(null);
       setGroundedScript(null);
+      setTtsAudio(null);
       return;
     }
 
@@ -92,6 +95,13 @@ export const CourseEngineView: React.FC = () => {
       })
       .then(data => setGroundedScript(data))
       .catch(() => setGroundedScript(null));
+    fetch('/api/course-engine/packages/' + selected.packageId + '/tts-audio-status')
+      .then(async r => {
+        if (!r.ok) throw new Error('Chưa có Gate D TTS/Audio cho package này.');
+        return r.json();
+      })
+      .then(data => setTtsAudio(data))
+      .catch(() => setTtsAudio(null));
   }, [selected]);
 
   if (error) return <div className="rounded-xl border border-rose-800 bg-rose-950/30 p-6 text-rose-200">{error}</div>;
@@ -258,6 +268,31 @@ export const CourseEngineView: React.FC = () => {
           </div>
         )}
 
+        {ttsAudio && (
+          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-mono text-indigo-300">GATE D • TTS / AUDIO</div>
+                <div className="mt-1 text-sm text-white">
+                  {ttsAudio.ready ? 'PASS — VieNeu runtime contract sẵn sàng' : 'BLOCKED — cần cấu hình runtime'}
+                </div>
+              </div>
+              <span className={ttsAudio.ready ? 'text-emerald-300 text-xs' : 'text-amber-300 text-xs'}>
+                {ttsAudio.ready ? 'READY' : 'CONFIGURE'}
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-5 text-xs">
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Provider</div><div className="text-white">{ttsAudio.provider}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Voice</div><div className="text-white">{ttsAudio.voiceProfile}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Model</div><div className="text-white">{ttsAudio.model}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Browser TTS</div><div className="text-emerald-300">{ttsAudio.browserTtsAllowed ? 'ALLOWED' : 'DENY'}</div></div>
+              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Audio storage</div><div className="text-emerald-300">{ttsAudio.audioStorage}</div></div>
+            </div>
+            {ttsAudio.blockers.map((blocker, index) => (
+              <div key={index} className="mt-3 text-xs text-amber-300">⚠ {blocker}</div>
+            ))}
+          </div>
+        )}
         <div className="mt-2 text-[11px] text-slate-500">
           PRIMARY = DOCX + PPTX của chính bài; COMMON = bộ nguồn chung của học phần. Không tự động lấy nội dung Bài 1 cho bài khác.
         </div>

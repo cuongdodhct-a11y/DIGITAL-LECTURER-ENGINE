@@ -101,8 +101,9 @@ export class ContinuousLectureEngine {
     const currentQueueItem = curPoint ? this.ttsQueue.getItem(curPoint.id) : undefined;
     const spokenText = currentQueueItem?.text || (curPoint ? this.resolveSpokenDelivery(curPoint).fullLectureScript : undefined);
 
-    let audioSourceType: AudioSourceType = 'GEMINI_TTS';
-    let voiceStatus: VoiceStatus = 'OFFICIAL';
+    const isLocalVieNeu = this.voiceProfile.id === 'voice_pham_tuyen';
+    let audioSourceType: AudioSourceType = isLocalVieNeu ? 'LOCAL_VIENEUV3' : 'GEMINI_TTS';
+    let voiceStatus: VoiceStatus = isLocalVieNeu ? 'LOCAL' : 'OFFICIAL';
 
     if (currentQueueItem?.audioSource) {
       audioSourceType = currentQueueItem.audioSource;
@@ -314,7 +315,9 @@ export class ContinuousLectureEngine {
       // Must NOT silently switch voice or skip TeachingPoint.
       if (this.fallbackPolicy === 'DENY') {
         this.state = 'VOICE_UNAVAILABLE';
-        this.errorMessage = 'Giọng giảng chuẩn hiện không khả dụng. (Hạn ngạch Gemini TTS: 429 RESOURCE_EXHAUSTED)';
+        this.errorMessage = this.voiceProfile.id === 'voice_pham_tuyen'
+          ? 'VieNeu v3 Turbo không khả dụng. Kiểm tra VIENEU_TTS_URL và runtime cục bộ.'
+          : 'Giọng giảng chuẩn hiện không khả dụng.';
         this.audioController.stop();
 
         this.logEvent('LECTURE_ERROR', {
