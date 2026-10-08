@@ -68,7 +68,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
     engine.startLecture();
     setEngineStatus(engine.getStatus());
 
-    const isMĐ2 = lecturePackage.metadata?.lessonCode === '1MĐ2' || lecturePackage.id === 'LPKG-1MD2-001';
+    const isMĐ2 = lecturePackage.id === 'LPKG-1MD2-001';
     const continuousEngine = new ContinuousLectureEngine({
       teachingEngine: engine,
       ...(isMĐ2 ? {
