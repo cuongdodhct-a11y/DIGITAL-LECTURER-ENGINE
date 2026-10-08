@@ -40,6 +40,7 @@ import { LecturerAudioPlayer } from '../AudioPlayer/LecturerAudioPlayer';
 import { formatTime, formatTimeDetailed } from '../../utils/timing';
 import { SourceClaim } from '../../types/source';
 import { LocalVieNeuTTSGateway, PHAM_TUYEN_VIETNAM_VOICE, VIENEU_V3_TURBO_MODEL } from '../../services/ttsGateway/localVieNeuTtsGateway';
+import { TTSQueueManager } from '../../services/continuousPlayback/ttsQueueManager';
 
 interface ClassroomViewProps {
   lecturePackage: LecturePackage;
@@ -74,7 +75,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
         voiceProfile: PHAM_TUYEN_VIETNAM_VOICE,
         ttsModel: VIENEU_V3_TURBO_MODEL,
         fallbackPolicy: 'DENY' as const,
-        ttsQueueManager: new (require('../../services/continuousPlayback/ttsQueueManager').TTSQueueManager)(
+        ttsQueueManager: new TTSQueueManager(
           new LocalVieNeuTTSGateway(),
           PHAM_TUYEN_VIETNAM_VOICE,
           VIENEU_V3_TURBO_MODEL
