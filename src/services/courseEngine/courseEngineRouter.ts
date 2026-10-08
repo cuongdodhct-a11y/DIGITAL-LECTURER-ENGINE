@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { COURSE_1MD_ID, getCourse, getLessonPackage, listCourses } from './courseRegistry';
 import { assertLessonBelongsToCourse } from './packageResolver';
 import { registerAndBuildPilotPackage, PackageBuildMapping } from './packageBuildService';
+import { verifySourceOnboarding } from './sourceOnboardingService';
 import { RegisteredDocument } from '../../types/source';
 
 export const courseEngineRouter = Router();
@@ -35,6 +36,15 @@ courseEngineRouter.get('/resolve/:courseId/:packageId', (req: Request, res: Resp
     res.json({ package: pkg });
   } catch (error: any) {
     res.status(404).json({ error: error.message || 'Package không thuộc course.' });
+  }
+});
+
+courseEngineRouter.get('/packages/:packageId/onboarding-status', (req: Request, res: Response) => {
+  try {
+    const result = verifySourceOnboarding(req.params.packageId);
+    return res.json(result);
+  } catch (error: any) {
+    return res.status(404).json({ error: error.message || 'Không thể kiểm tra Source Onboarding.' });
   }
 });
 
@@ -84,5 +94,5 @@ courseEngineRouter.post('/packages/:packageId/build-pilot', (req: Request, res: 
 
 courseEngineRouter.get('/health', (_req: Request, res: Response) => {
   const course = getCourse(COURSE_1MD_ID)!;
-  res.json({ ok: true, courseId: course.courseId, packageCount: course.packages.length, phase: 2 });
+  res.json({ ok: true, courseId: course.courseId, packageCount: course.packages.length, phase: 3, gate: 'A_SOURCE_ONBOARDING' });
 });
