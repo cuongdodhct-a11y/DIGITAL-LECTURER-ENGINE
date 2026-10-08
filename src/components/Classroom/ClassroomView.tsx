@@ -39,6 +39,7 @@ import { ContinuousPlaybackControlBar } from './ContinuousPlaybackControlBar';
 import { LecturerAudioPlayer } from '../AudioPlayer/LecturerAudioPlayer';
 import { formatTime, formatTimeDetailed } from '../../utils/timing';
 import { SourceClaim } from '../../types/source';
+import { LocalVieNeuTTSGateway, PHAM_TUYEN_VIETNAM_VOICE, VIENEU_V3_TURBO_MODEL } from '../../services/ttsGateway/localVieNeuTtsGateway';
 
 interface ClassroomViewProps {
   lecturePackage: LecturePackage;
@@ -66,8 +67,19 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
     engine.startLecture();
     setEngineStatus(engine.getStatus());
 
+    const isMĐ2 = lecturePackage.metadata?.lessonCode === '1MĐ2' || lecturePackage.id === 'LPKG-1MD2-001';
     const continuousEngine = new ContinuousLectureEngine({
       teachingEngine: engine,
+      ...(isMĐ2 ? {
+        voiceProfile: PHAM_TUYEN_VIETNAM_VOICE,
+        ttsModel: VIENEU_V3_TURBO_MODEL,
+        fallbackPolicy: 'DENY' as const,
+        ttsQueueManager: new (require('../../services/continuousPlayback/ttsQueueManager').TTSQueueManager)(
+          new LocalVieNeuTTSGateway(),
+          PHAM_TUYEN_VIETNAM_VOICE,
+          VIENEU_V3_TURBO_MODEL
+        )
+      } : {}),
       onStatusChange: (status) => {
         setContinuousStatus(status);
         if (engineRef.current) {
