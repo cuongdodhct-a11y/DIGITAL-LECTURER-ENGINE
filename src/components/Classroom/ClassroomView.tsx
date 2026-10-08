@@ -378,7 +378,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
           onStop={handleContinuousStop}
           onRestart={handleContinuousRestart}
           onRetry={handleContinuousRetry}
-          onAllowFallback={isMĐ2 ? undefined : handleAllowFallback}
+          onAllowFallback={useLocalVieNeu ? undefined : handleAllowFallback}
         />
       )}
 
