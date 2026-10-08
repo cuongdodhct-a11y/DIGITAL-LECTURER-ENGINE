@@ -31,3 +31,6 @@ jobs:
 
       - name: API and package-isolation smoke test
         run: npx tsx scripts/api-course-engine-smoke.ts
+
+      - name: Phase 3 Gate D TTS/Audio policy smoke test
+        run: npm run test:phase3-gate-d
