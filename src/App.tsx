@@ -269,6 +269,11 @@ export default function App() {
   };
 
   const handlePlayScript = (text: string) => {
+    if (activePackageId === 'LPKG-1MD2-001') {
+      setActiveTab('classroom');
+      showToast('Bài 2 dùng VieNeu v3 Turbo + giọng Phạm Tuyên. Hãy chọn PHÁT BÀI GIẢNG (LIÊN TỤC).');
+      return;
+    }
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
