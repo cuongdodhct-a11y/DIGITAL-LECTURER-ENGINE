@@ -89,7 +89,7 @@ courseEngineRouter.post('/packages/:packageId/tts/synthesize', async (req: Reque
     const audio = await synthesizeWithTtsGateway({
       text: point.script,
       packageId,
-      teachingPointId,
+      teachingPointId: point.id,
       scriptId
     });
     return res.json(audio);
