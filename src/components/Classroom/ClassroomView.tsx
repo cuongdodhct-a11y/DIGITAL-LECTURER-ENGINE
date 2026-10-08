@@ -47,7 +47,7 @@ interface ClassroomViewProps {
 }
 
 export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) => {
-  const isMĐ2 = lecturePackage.id === 'LPKG-1MD2-001';
+  const useLocalVieNeu = lecturePackage.id === 'LPKG-1MD1-001' || lecturePackage.id === 'LPKG-1MD2-001';
   const engineRef = useRef<TeachingEngine | null>(null);
   const continuousEngineRef = useRef<ContinuousLectureEngine | null>(null);
   const [engineStatus, setEngineStatus] = useState<TeachingEngineStatus | null>(null);
@@ -64,14 +64,14 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
 
   // Initialize engine & continuous playback engine
   useEffect(() => {
-    const engine = new TeachingEngine(lecturePackage, 'FULL_LECTURE');
+    const engine = new TeachingEngine(lecturePackage, 'FULL_LECTURE', lecturePackage.teachingPoints);
     engineRef.current = engine;
     engine.startLecture();
     setEngineStatus(engine.getStatus());
 
     const continuousEngine = new ContinuousLectureEngine({
       teachingEngine: engine,
-      ...(isMĐ2 ? {
+      ...(useLocalVieNeu ? {
         voiceProfile: PHAM_TUYEN_VIETNAM_VOICE,
         ttsModel: VIENEU_V3_TURBO_MODEL,
         fallbackPolicy: 'DENY' as const,
@@ -378,7 +378,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
           onStop={handleContinuousStop}
           onRestart={handleContinuousRestart}
           onRetry={handleContinuousRetry}
-          onAllowFallback={isMĐ2 ? undefined : handleAllowFallback}
+          onAllowFallback={useLocalVieNeu ? undefined : handleAllowFallback}
         />
       )}
 
