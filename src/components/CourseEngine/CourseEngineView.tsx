@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BookOpen, CheckCircle2, FileText, Layers3, LockKeyhole } from 'lucide-react';
 import { CourseDescriptor, LessonPackageDescriptor } from '../../services/courseEngine/types';
 
-type OnboardingStatus = {
+type LecturePackageStatus = { ready: boolean; slideCount: number; teachingBlockCount: number; mappedMinutes: number; timingConflictReviewRequired: boolean; blockers: string[]; warnings: string[]; };\n\ntype OnboardingStatus = {
   ready: boolean;
   sourceChecks: {
     level1: { present: boolean; filename?: string; documentType?: string; packageId?: string };
@@ -33,7 +33,7 @@ const statusClass: Record<LessonPackageDescriptor['status'], string> = {
 export const CourseEngineView: React.FC = () => {
   const [course, setCourse] = useState<CourseDescriptor | null>(null);
   const [selected, setSelected] = useState<LessonPackageDescriptor | null>(null);
-  const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);
+  const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);\n  const [lecturePackage, setLecturePackage] = useState<LecturePackageStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -178,7 +178,7 @@ export const CourseEngineView: React.FC = () => {
           </div>
         )}
 
-        <div className="mt-2 text-[11px] text-slate-500">
+        {lecturePackage && (\n          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">\n            <div className="flex items-center justify-between gap-3">\n              <div>\n                <div className="text-xs font-mono text-indigo-300">GATE B • LECTURE PACKAGE</div>\n                <div className="mt-1 text-sm text-white">\n                  {lecturePackage.ready ? 'PASS — Lecture Package hợp lệ' : 'BLOCKED — cần xử lý'}\n                </div>\n              </div>\n              <span className={lecturePackage.ready ? 'text-emerald-300 text-xs' : 'text-rose-300 text-xs'}>\n                {lecturePackage.ready ? 'READY' : 'BLOCKED'}\n              </span>\n            </div>\n            <div className="mt-3 grid gap-2 sm:grid-cols-4 text-xs">\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Slides</div><div className="text-white">{lecturePackage.slideCount}</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Teaching Blocks</div><div className="text-white">{lecturePackage.teachingBlockCount}</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Mapped time</div><div className="text-white">{lecturePackage.mappedMinutes} phút</div></div>\n              <div className="rounded-lg border border-slate-800 p-3"><div className="text-slate-500">Timing</div><div className="text-amber-300">{lecturePackage.timingConflictReviewRequired ? 'QC REVIEW' : 'OK'}</div></div>\n            </div>\n          </div>\n        )}\n\n        <div className="mt-2 text-[11px] text-slate-500">
           PRIMARY = DOCX + PPTX của chính bài; COMMON = bộ nguồn chung của học phần. Không tự động lấy nội dung Bài 1 cho bài khác.
         </div>
       </div>
