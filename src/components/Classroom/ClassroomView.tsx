@@ -47,6 +47,7 @@ interface ClassroomViewProps {
 }
 
 export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) => {
+  const isMĐ2 = lecturePackage.id === 'LPKG-1MD2-001';
   const engineRef = useRef<TeachingEngine | null>(null);
   const continuousEngineRef = useRef<ContinuousLectureEngine | null>(null);
   const [engineStatus, setEngineStatus] = useState<TeachingEngineStatus | null>(null);
@@ -68,7 +69,6 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
     engine.startLecture();
     setEngineStatus(engine.getStatus());
 
-    const isMĐ2 = lecturePackage.id === 'LPKG-1MD2-001';
     const continuousEngine = new ContinuousLectureEngine({
       teachingEngine: engine,
       ...(isMĐ2 ? {
@@ -378,7 +378,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) 
           onStop={handleContinuousStop}
           onRestart={handleContinuousRestart}
           onRetry={handleContinuousRetry}
-          onAllowFallback={handleAllowFallback}
+          onAllowFallback={isMĐ2 ? undefined : handleAllowFallback}
         />
       )}
 
