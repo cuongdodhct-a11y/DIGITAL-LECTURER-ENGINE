@@ -239,8 +239,14 @@
     "mappedMinutes": 180,
     "mappedSeconds": 10800,
     "varianceAgainstDeclaredMinutes": 5,
-    "status": "SOURCE_TIMING_CONFLICT_REVIEW_REQUIRED",
-    "rule": "Preserve source values; no silent normalization."
+    "approvedMinutes": 180,
+    "status": "APPROVED_USER_ADJUSTMENT",
+    "adjustment": {
+      "blockId": "TB-1MD2-002",
+      "addedSeconds": 300,
+      "reason": "Cộng thêm 5 phút cho phần I. Phạm trù cái đẹp."
+    },
+    "rule": "Preserve source values; apply only the explicit user-approved 5-minute adjustment."
   },
   "provenance": {
     "primarySourceIds": [
