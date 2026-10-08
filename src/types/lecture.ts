@@ -4,6 +4,7 @@
 
 import { SourceLevel, RegisteredDocument, SourceClaim } from './source';
 import { TeachingBlock } from './teaching';
+import { TeachingPoint } from './teachingPoint';
 import { QCReport, QCIssue, ApprovalState } from './quality';
 
 export interface LectureObjective {
@@ -123,6 +124,8 @@ export interface LecturePackage {
   timingPlan: TimingPlan;
   slideMap: SlideMapItem[];
   teachingBlocks: TeachingBlock[];
+  /** Optional runtime-resolved teaching points. Gate B/C artifacts remain authoritative. */
+  teachingPoints?: TeachingPoint[];
   interactionPlan: {
     blockId: string;
     checkpointPrompt: string;
