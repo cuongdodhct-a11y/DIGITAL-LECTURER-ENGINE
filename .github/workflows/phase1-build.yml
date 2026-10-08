@@ -23,7 +23,7 @@ jobs:
       - name: Phase 3 Gate A source onboarding smoke test
         run: npm run test:phase3-gate-a
 
-      - name: API and package-isolation smoke test
+      - name: Phase 3 Gate B Lecture Package smoke test\n        run: npm run test:phase3-gate-b\n\n      - name: API and package-isolation smoke test
         shell: bash
         run: |
           npm run dev > /tmp/digital-lecturer-engine.log 2>&1 &
