@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { BookOpen, CheckCircle2, FileText, Layers3, LockKeyhole } from 'lucide-react';
 import { CourseDescriptor, LessonPackageDescriptor } from '../../services/courseEngine/types';
 
+type OnboardingStatus = {
+  ready: boolean;
+  sourceChecks: {
+    level1: { present: boolean; filename?: string; documentType?: string; packageId?: string };
+    level3: { present: boolean; filename?: string; documentType?: string; slideCount?: number; packageId?: string };
+  };
+  slideCoverage: { coverage?: string; slideCount?: number; valid: boolean };
+  timing: { conflictReviewRequired: boolean; note?: string };
+  blockers: string[];
+  warnings: string[];
+};
+
 const statusLabel: Record<LessonPackageDescriptor['status'], string> = {
   CONTENT_PENDING: 'CHỜ NẠP NGUỒN',
   READY_FOR_QC: 'SẴN SÀNG QC',
@@ -21,6 +33,7 @@ const statusClass: Record<LessonPackageDescriptor['status'], string> = {
 export const CourseEngineView: React.FC = () => {
   const [course, setCourse] = useState<CourseDescriptor | null>(null);
   const [selected, setSelected] = useState<LessonPackageDescriptor | null>(null);
+  const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,6 +46,22 @@ export const CourseEngineView: React.FC = () => {
       .catch(e => setError(e.message));
   }, []);
 
+  useEffect(() => {
+    if (!selected) {
+      setOnboarding(null);
+      return;
+    }
+
+    setOnboarding(null);
+    fetch('/api/course-engine/packages/' + selected.packageId + '/onboarding-status')
+      .then(async r => {
+        if (!r.ok) throw new Error('Chưa có manifest onboarding cho package này.');
+        return r.json();
+      })
+      .then(data => setOnboarding(data))
+      .catch(() => setOnboarding(null));
+  }, [selected]);
+
   if (error) return <div className="rounded-xl border border-rose-800 bg-rose-950/30 p-6 text-rose-200">{error}</div>;
   if (!course) return <div className="rounded-xl border border-slate-800 bg-slate-900 p-6 text-slate-400">Đang tải Course Registry…</div>;
 
@@ -40,7 +69,7 @@ export const CourseEngineView: React.FC = () => {
     <div className="rounded-2xl border border-indigo-800/60 bg-slate-900 p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-xs font-mono text-indigo-300">COURSE-1MD • ENGINE</div>
+          <div className="text-xs font-mono text-indigo-300">COURSE-1MD • ENGINE • PHASE 3</div>
           <h1 className="mt-1 text-2xl font-bold text-white">{course.title}</h1>
           <p className="mt-2 text-sm text-slate-400">
             Engine tổng quát cho 10 bài độc lập. Bài 1 là Golden Reference; Bài 2–10 chỉ được nạp khi có DOCX/PPTX chính thức.
@@ -70,7 +99,7 @@ export const CourseEngineView: React.FC = () => {
                 <div className="text-xs text-slate-500 font-mono">{pkg.packageId}</div>
               </div>
             </div>
-            <span className={`text-[10px] px-2 py-1 rounded-full border ${statusClass[pkg.status]}`}>
+            <span className={'text-[10px] px-2 py-1 rounded-full border ' + statusClass[pkg.status]}>
               {statusLabel[pkg.status]}
             </span>
           </div>
@@ -110,6 +139,45 @@ export const CourseEngineView: React.FC = () => {
         <div className="mt-1 text-xs text-slate-400">
           {selected.title} • {statusLabel[selected.status]} • Common source set: {selected.commonSourceSetId}
         </div>
+
+        {onboarding && (
+          <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-mono text-indigo-300">GATE A • SOURCE ONBOARDING</div>
+                <div className="mt-1 text-sm text-white">
+                  {onboarding.ready ? 'PASS — nguồn đủ điều kiện cấu trúc' : 'BLOCKED — chưa đủ điều kiện'}
+                </div>
+              </div>
+              <span className={onboarding.ready ? 'text-emerald-300 text-xs' : 'text-rose-300 text-xs'}>
+                {onboarding.ready ? 'READY' : 'BLOCKED'}
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-3 text-xs">
+              <div className="rounded-lg border border-slate-800 p-3">
+                <div className="text-slate-500">Level 1</div>
+                <div className="text-white">{onboarding.sourceChecks.level1.filename || 'MISSING'}</div>
+              </div>
+              <div className="rounded-lg border border-slate-800 p-3">
+                <div className="text-slate-500">Level 3</div>
+                <div className="text-white">{onboarding.sourceChecks.level3.filename || 'MISSING'}</div>
+                <div className="text-slate-500">{onboarding.sourceChecks.level3.slideCount || 0} slides</div>
+              </div>
+              <div className="rounded-lg border border-slate-800 p-3">
+                <div className="text-slate-500">Coverage</div>
+                <div className={onboarding.slideCoverage.valid ? 'text-emerald-300' : 'text-rose-300'}>
+                  {onboarding.slideCoverage.coverage || 'MISSING'}
+                </div>
+              </div>
+            </div>
+            {onboarding.warnings.map((warning, index) => (
+              <div key={index} className="mt-3 text-xs text-amber-300">
+                ⚠ {warning}
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="mt-2 text-[11px] text-slate-500">
           PRIMARY = DOCX + PPTX của chính bài; COMMON = bộ nguồn chung của học phần. Không tự động lấy nội dung Bài 1 cho bài khác.
         </div>
