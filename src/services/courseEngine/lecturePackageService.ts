@@ -14,7 +14,7 @@ export interface GateBResult {
 }
 
 export function loadLecturePackage(packageId: string): any {
-  const match = packageId.match(/^LPKG-1MD(\\d+)-001$/);
+  const match = packageId.match(/^LPKG-1MD(\d+)-001$/);
   if (!match) throw new Error('Unsupported packageId: ' + packageId);
   const lessonNumber = Number(match[1]);
   const file = path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + lessonNumber, 'lecture.package.json');
