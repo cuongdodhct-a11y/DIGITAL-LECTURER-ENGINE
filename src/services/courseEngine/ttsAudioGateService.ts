@@ -28,6 +28,9 @@ function loadGroundedScript(packageId: string): any {
 export function verifyTtsAudioGate(packageId: string): GateDResult {
   const blockers: string[] = [];
   const warnings: string[] = [];
+  const packageMatch = packageId.match(/^LPKG-1MD(\d+)-001$/);
+  if (!packageMatch) throw new Error('Unsupported packageId: ' + packageId);
+  const lessonNumber = Number(packageMatch[1]);
   const script = loadGroundedScript(packageId);
   const config = getTtsGatewayConfig();
 
@@ -45,7 +48,7 @@ export function verifyTtsAudioGate(packageId: string): GateDResult {
 
   if (config.maxCacheBytes > 64 * 1024 * 1024) blockers.push('TTS cache exceeds 64 MB safety limit.');
   if (config.maxCacheEntries > 16) blockers.push('TTS cache entry limit exceeds 16.');
-  const audioPolicyFile = path.join(path.dirname(path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + Number(packageId.match(/^LPKG-1MD(\\d+)-001$/)![1]), 'grounded.script.json')), 'tts.audio.policy.json');
+  const audioPolicyFile = path.join(process.cwd(), 'data', 'courses', '1MD', 'packages', '1MD' + lessonNumber, 'tts.audio.policy.json');
   if (!fs.existsSync(audioPolicyFile)) blockers.push('Gate D audio policy is missing.');
   if (fs.existsSync(audioPolicyFile)) {
     const audioPolicy = JSON.parse(fs.readFileSync(audioPolicyFile, 'utf8'));
