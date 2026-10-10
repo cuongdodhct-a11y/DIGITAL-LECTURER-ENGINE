@@ -6,7 +6,7 @@
   "lessonNumber": 2,
   "lessonCode": "1MD2",
   "title": "Những phạm trù cơ bản của Mỹ học Mác - Lênin",
-  "status": "READY_FOR_QC",
+  "status": "CONTENT_PENDING",
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceRefs": [
     {
@@ -255,5 +255,9 @@
     ],
     "commonSourceUsage": "NONE",
     "academicSourceMutation": "NONE"
+  },
+  "qc": {
+    "sourceTiming": "BLOCKED_SOURCE_CONFLICT_REVIEW",
+    "runtimeReadiness": "NOT_APPROVED"
   }
 }
