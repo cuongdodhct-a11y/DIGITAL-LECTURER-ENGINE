@@ -34,3 +34,6 @@ jobs:
 
       - name: Phase 3 Gate D TTS/Audio policy smoke test
         run: npm run test:phase3-gate-d
+
+      - name: Ten-lesson readiness audit and storage-policy smoke test
+        run: npm run test:ten-lesson-readiness
