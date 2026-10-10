@@ -63,6 +63,44 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
   if (!mapping) blockers.push('RUNTIME_MAPPING_MISSING');
   else if (mapping.packageId !== expectedId) blockers.push('RUNTIME_MAPPING_OWNERSHIP_MISMATCH');
 
+  // Validate structure only; never synthesize missing academic content or slide anchors.
+  if (mapping) {
+    const expectedSlides = Number(manifest?.sources?.level3?.slideCount || 0);
+    const actualSlides = Number(mapping.slideCount || 0);
+    const anchors = Array.isArray(mapping.teachingPoints) ? mapping.teachingPoints : [];
+    if (!Number.isInteger(actualSlides) || actualSlides <= 0 || actualSlides !== expectedSlides) blockers.push('RUNTIME_MAPPING_SLIDE_COUNT_MISMATCH');
+    if (anchors.length === 0) blockers.push('RUNTIME_MAPPING_HAS_NO_TEACHING_POINT_ANCHORS');
+    const ids = new Set<string>();
+    for (const anchor of anchors) {
+      const id = String(anchor?.id || '');
+      const slide = Number(anchor?.slideNumber);
+      if (!id || ids.has(id)) blockers.push('RUNTIME_MAPPING_DUPLICATE_OR_EMPTY_TEACHING_POINT_ID');
+      ids.add(id);
+      if (!Number.isInteger(slide) || slide < 1 || slide > actualSlides) blockers.push('RUNTIME_MAPPING_SLIDE_ANCHOR_OUT_OF_RANGE');
+    }
+  }
+
+  if (script) {
+    const blocks = Array.isArray(script.teachingBlocks) ? script.teachingBlocks : [];
+    if (blocks.length === 0) blockers.push('GROUNDED_SCRIPT_HAS_NO_TEACHING_BLOCKS');
+    const blockIds = new Set<string>();
+    const pointIds = new Set<string>();
+    for (const block of blocks) {
+      const blockId = String(block?.blockId || '');
+      if (!blockId || blockIds.has(blockId)) blockers.push('GROUNDED_SCRIPT_DUPLICATE_OR_EMPTY_BLOCK_ID');
+      blockIds.add(blockId);
+      if (!Number.isFinite(Number(block?.durationSeconds)) || Number(block?.durationSeconds) <= 0) blockers.push('GROUNDED_SCRIPT_BLOCK_DURATION_INVALID');
+      const points = Array.isArray(block?.teachingPoints) ? block.teachingPoints : [];
+      if (points.length === 0) blockers.push('GROUNDED_SCRIPT_BLOCK_HAS_NO_TEACHING_POINTS');
+      for (const point of points) {
+        const pointId = String(point?.id || '');
+        if (!pointId || pointIds.has(pointId)) blockers.push('GROUNDED_SCRIPT_DUPLICATE_OR_EMPTY_TEACHING_POINT_ID');
+        pointIds.add(pointId);
+        if (!Array.isArray(point?.claims) || point.claims.length === 0) blockers.push('GROUNDED_SCRIPT_TEACHING_POINT_HAS_NO_SOURCE_CLAIMS');
+      }
+    }
+  }
+
   if (!policy) blockers.push('TTS_AUDIO_POLICY_MISSING');
   else {
     if (policy.packageId !== expectedId) blockers.push('TTS_POLICY_OWNERSHIP_MISMATCH');
