@@ -12,6 +12,10 @@ if (audit.tts.geminiAllowedForFreeLocal !== false) throw new Error('Gemini must 
 if (audit.cache.maxBytes !== 64 * 1024 * 1024 || audit.cache.maxEntries !== 16) {
   throw new Error('TTS in-memory cache limits changed unexpectedly.');
 }
+const lesson1 = audit.items.find((item) => item.lessonNumber === 1);
+if (!lesson1?.contentArtifactsReady || !lesson1.runtimeArtifactsReady) {
+  throw new Error('Protected 1MD1 production provider/registry must be recognized without rewriting the package.');
+}
 const lesson2 = audit.items.find((item) => item.lessonNumber === 2);
 if (!lesson2?.contentArtifactsReady) throw new Error('Expected existing 1MD2 content artifacts to be detected.');
 console.log('TEN-LESSON READINESS AUDIT — PASS');
