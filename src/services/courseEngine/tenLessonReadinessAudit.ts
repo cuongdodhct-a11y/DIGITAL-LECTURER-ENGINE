@@ -31,11 +31,16 @@ export function auditTenLessonReadiness() {
     let runtimeArtifactsReady = false;
 
     if (lesson.lessonNumber === 1) {
-      contentArtifactsReady =
-        exists('src/services/lectureSequence/productionDefaultPackage.ts') &&
-        exists('data/registeredDocuments.json');
-      if (!contentArtifactsReady) missingArtifacts.push('production 1MD1 source package');
+      // 1MD1 is the protected production golden reference and uses its existing
+      // provider rather than the package-file layout used by lessons 2–10.
+      const providerExists = exists('src/services/lectureSequence/productionDefaultPackage.ts');
+      const registryExists = exists('data/registeredDocuments.json');
+      contentArtifactsReady = providerExists && registryExists;
+      runtimeArtifactsReady = contentArtifactsReady;
+      if (!providerExists) missingArtifacts.push('src/services/lectureSequence/productionDefaultPackage.ts');
+      if (!registryExists) missingArtifacts.push('data/registeredDocuments.json');
       notes.push('1MD1 uses the existing production package provider; do not rewrite it.');
+      notes.push('1MD1 readiness here means repository provider/registry files exist, not that local VieNeu playback or packaged offline runtime has been tested.');
     } else {
       const required = [
         'lecture.package.json',
@@ -51,7 +56,9 @@ export function auditTenLessonReadiness() {
 
     if (!contentArtifactsReady) notes.push('Content package is not ready; do not synthesize or teach this lesson.');
     if (contentArtifactsReady && !runtimeArtifactsReady) notes.push('Content exists, but the complete runtime artifact set is not verified.');
-    if (runtimeArtifactsReady) notes.push('All expected repository artifacts are present; gate checks and local playback still need verification.');
+    if (runtimeArtifactsReady && lesson.lessonNumber !== 1) {
+      notes.push('All expected repository artifacts are present; gate checks and local playback still need verification.');
+    }
 
     return {
       packageId: lesson.packageId,
