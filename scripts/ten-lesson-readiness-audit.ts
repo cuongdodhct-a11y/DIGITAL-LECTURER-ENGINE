@@ -58,6 +58,26 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
     if (voice.provider !== 'LOCAL_VIENEUV3' || voice.geminiAllowedForFreeLocal !== false || voice.browserSpeechSynthesisAllowed !== false) {
       blockers.push('FREE_LOCAL_TTS_POLICY_NOT_EXPLICIT');
     }
+    if (!['APPROVED', 'READY_FOR_QC'].includes(String(policy.status || ''))) {
+      blockers.push('TTS_POLICY_NOT_QC_APPROVED');
+    }
+  }
+
+  // Artifact existence alone is not runtime readiness. Draft content must remain blocked.
+  if (lecture && !['READY_FOR_QC', 'APPROVED'].includes(String(lecture.status || ''))) {
+    blockers.push('LECTURE_PACKAGE_NOT_QC_APPROVED');
+  }
+  if (script && !['READY_FOR_QC', 'APPROVED'].includes(String(script.status || ''))) {
+    blockers.push('GROUNDED_SCRIPT_NOT_QC_APPROVED');
+  }
+  if (mapping && !['READY_FOR_QC', 'APPROVED'].includes(String(mapping.status || ''))) {
+    blockers.push('RUNTIME_MAPPING_NOT_QC_APPROVED');
+  }
+  if (script) {
+    const seconds = Number(script.timing?.totalSeconds || 0);
+    if (!Number.isFinite(seconds) || seconds <= 0 || script.timing?.approval !== 'APPROVED') {
+      blockers.push('SCRIPT_TIMING_NOT_APPROVED');
+    }
   }
 
   if (lecture && script) {
@@ -83,7 +103,7 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
     lesson: code,
     title: manifest?.title || 'UNKNOWN',
     declaredStatus,
-    readiness: ready ? 'ARTIFACTS_PRESENT_NEEDS_RUNTIME_QC' : 'CONTENT_PENDING',
+    readiness: ready ? 'READY_FOR_RUNTIME_QC' : (blockers.some((item) => /MISSING|NOT_REGISTERED|MISMATCH|FOREIGN_SOURCE/.test(item)) ? 'CONTENT_PENDING' : 'ARTIFACTS_PRESENT_BUT_QC_BLOCKED'),
     blockers: [...new Set(blockers)]
   });
 }
@@ -91,7 +111,7 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
 console.log(JSON.stringify({
   audit: 'TEN_LESSON_SOURCE_AND_RUNTIME_READINESS',
   scope: '1MD2-1MD10; 1MD1 remains the protected regression package',
-  note: 'Registered source metadata is not proof that the source file is accessible or that runtime/audio passed. This audit checks repository artifacts and package ownership only.',
+  note: 'Registered source metadata is not proof that source bytes are accessible. Readiness requires package/script/mapping/TTS policy and positive duration to be explicitly QC-approved; this audit does not perform real TTS or listening tests.',
   falseReadyCount,
   lessons: report
 }, null, 2));
