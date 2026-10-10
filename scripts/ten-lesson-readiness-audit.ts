@@ -54,7 +54,8 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
   if (!policy) blockers.push('TTS_AUDIO_POLICY_MISSING');
   else {
     if (policy.packageId !== expectedId) blockers.push('TTS_POLICY_OWNERSHIP_MISMATCH');
-    if (policy.ttsMode !== 'FREE' && policy.mode !== 'FREE' && policy.policy?.mode !== 'FREE') {
+    const voice = policy.voice || {};
+    if (voice.provider !== 'LOCAL_VIENEUV3' || voice.geminiAllowedForFreeLocal !== false || voice.browserSpeechSynthesisAllowed !== false) {
       blockers.push('FREE_LOCAL_TTS_POLICY_NOT_EXPLICIT');
     }
   }
@@ -76,7 +77,7 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
 
   const declaredStatus = String(manifest?.status || 'MISSING');
   const ready = blockers.length === 0;
-  if (!ready && /READY|COMPLETE|APPROVED/i.test(declaredStatus)) falseReadyCount += 1;
+  if (!ready && /^(READY|READY_FOR_RUNTIME|PRODUCTION_READY|COMPLETE|APPROVED)$/i.test(declaredStatus)) falseReadyCount += 1;
 
   report.push({
     lesson: code,
