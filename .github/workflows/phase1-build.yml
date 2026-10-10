@@ -37,3 +37,6 @@ jobs:
 
       - name: Runtime source ownership smoke test
         run: npm run test:runtime-source-ownership
+
+      - name: Runtime package selection smoke test
+        run: npm run test:runtime-package-selection
