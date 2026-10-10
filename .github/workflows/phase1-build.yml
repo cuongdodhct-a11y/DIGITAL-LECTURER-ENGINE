@@ -43,3 +43,6 @@ jobs:
 
       - name: Grounded source ownership smoke test
         run: npm run test:grounded-source-ownership
+
+      - name: Draft package playback guard smoke test
+        run: npm run test:draft-playback-guard
