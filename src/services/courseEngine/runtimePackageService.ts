@@ -63,6 +63,18 @@ export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
     throw new Error('Runtime package ownership mismatch for ' + packageId);
   }
 
+  // A structurally present draft must never become playable by accident.
+  if (pkg.status !== 'READY_FOR_QC') {
+    throw new Error('Runtime package is not approved for playback: ' + packageId + ' (' + String(pkg.status || 'UNSET') + ')');
+  }
+  if (script.status && script.status !== 'READY_FOR_QC' && script.status !== 'APPROVED') {
+    throw new Error('Grounded script is not approved for playback: ' + packageId + ' (' + String(script.status) + ')');
+  }
+  const approvedDuration = Number(script.timing?.totalSeconds || pkg.timingPlan?.mappedSeconds || 0);
+  if (!Number.isFinite(approvedDuration) || approvedDuration <= 0) {
+    throw new Error('Runtime package has no approved positive duration: ' + packageId);
+  }
+
   const packageSourceRefs = (pkg.sourceRefs || []) as RuntimeSourceRef[];
   const { level1: level1Source, level3: level3Source } = resolveRuntimeSourceRefs(packageSourceRefs, packageId);
 
