@@ -41,13 +41,14 @@ import { formatTime, formatTimeDetailed } from '../../utils/timing';
 import { SourceClaim } from '../../types/source';
 import { LocalVieNeuTTSGateway, PHAM_TUYEN_VIETNAM_VOICE, VIENEU_V3_TURBO_MODEL } from '../../services/ttsGateway/localVieNeuTtsGateway';
 import { TTSQueueManager } from '../../services/continuousPlayback/ttsQueueManager';
+import { isCourseLessonPackageId } from '../../services/courseEngine/runtimePackageSelection';
 
 interface ClassroomViewProps {
   lecturePackage: LecturePackage;
 }
 
 export const ClassroomView: React.FC<ClassroomViewProps> = ({ lecturePackage }) => {
-  const useLocalVieNeu = lecturePackage.id === 'LPKG-1MD1-001' || lecturePackage.id === 'LPKG-1MD2-001';
+  const useLocalVieNeu = isCourseLessonPackageId(lecturePackage.id);
   const engineRef = useRef<TeachingEngine | null>(null);
   const continuousEngineRef = useRef<ContinuousLectureEngine | null>(null);
   const [engineStatus, setEngineStatus] = useState<TeachingEngineStatus | null>(null);
