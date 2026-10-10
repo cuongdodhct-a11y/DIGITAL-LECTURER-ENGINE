@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "gate": "B_LECTURE_PACKAGE",
+  "packageId": "LPKG-1MD3-001",
+  "courseId": "COURSE-1MD",
+  "lessonNumber": 3,
+  "lessonCode": "1MD3",
+  "title": "Giáo dục thẩm mỹ",
+  "status": "CONTENT_DRAFT_NEEDS_QC",
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "sourceRefs": [
+    {
+      "sourceId": "SRC-1MD3-L1",
+      "level": 1,
+      "filename": "1.MĐ3(1).docx",
+      "documentType": "DOCX",
+      "role": "Kế hoạch và nội dung bài giảng chuẩn",
+      "packageId": "LPKG-1MD3-001"
+    },
+    {
+      "sourceId": "SRC-1MD3-L3",
+      "level": 3,
+      "filename": "1.MĐ3.pptx",
+      "documentType": "PPTX",
+      "role": "Khung trình chiếu 30 slide",
+      "slideCount": 30,
+      "packageId": "LPKG-1MD3-001"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "OBJ-1MD3-01",
+      "statement": "Giải thích rõ khái niệm, mục đích, nhiệm vụ, nguyên tắc của giáo dục thẩm mỹ và giáo dục thẩm mỹ trong Quân đội nhân dân Việt Nam.",
+      "sourceRef": "SRC-1MD3-L1"
+    },
+    {
+      "id": "OBJ-1MD3-02",
+      "statement": "Phân tích đúng tính tất yếu, nội dung, hình thức giáo dục thẩm mỹ trong Quân đội nhân dân Việt Nam.",
+      "sourceRef": "SRC-1MD3-L1"
+    },
+    {
+      "id": "OBJ-1MD3-03",
+      "statement": "Vận dụng các nguyên tắc giáo dục thẩm mỹ vào thực tiễn giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở; đấu tranh phê phán những quan điểm sai trái về vấn đề này.",
+      "sourceRef": "SRC-1MD3-L1"
+    }
+  ],
+  "structure": [
+    {
+      "sectionId": "SEC-1MD3-01",
+      "title": "Mở đầu, mục đích, yêu cầu và nội dung bài",
+      "slideStart": 1,
+      "slideEnd": 9,
+      "blockIds": [
+        "TB-1MD3-001"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD3-02",
+      "title": "Quan niệm, mục đích và nhiệm vụ giáo dục thẩm mỹ",
+      "slideStart": 10,
+      "slideEnd": 16,
+      "blockIds": [
+        "TB-1MD3-002"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD3-03",
+      "title": "Những nguyên tắc giáo dục thẩm mỹ",
+      "slideStart": 17,
+      "slideEnd": 21,
+      "blockIds": [
+        "TB-1MD3-003"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD3-04",
+      "title": "Giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở: khái niệm, mục tiêu, tính tất yếu",
+      "slideStart": 22,
+      "slideEnd": 25,
+      "blockIds": [
+        "TB-1MD3-004"
+      ]
+    },
+    {
+      "sectionId": "SEC-1MD3-05",
+      "title": "Nội dung, hình thức và biện pháp giáo dục thẩm mỹ cho quân nhân",
+      "slideStart": 26,
+      "slideEnd": 30,
+      "blockIds": [
+        "TB-1MD3-005"
+      ]
+    }
+  ],
+  "teachingBlocks": [
+    {
+      "id": "TB-1MD3-001",
+      "topic": "Mở đầu và định hướng bài học",
+      "slideStart": 1,
+      "slideEnd": 9,
+      "durationSeconds": 0,
+      "sourceRefs": [
+        "SRC-1MD3-L1",
+        "SRC-1MD3-L3"
+      ],
+      "keyPoints": [
+        "Mục đích, yêu cầu của bài",
+        "Hai nội dung lớn và trọng tâm"
+      ],
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "status": "DRAFT_NEEDS_QC"
+    },
+    {
+      "id": "TB-1MD3-002",
+      "topic": "Quan niệm, mục đích, nhiệm vụ giáo dục thẩm mỹ",
+      "slideStart": 10,
+      "slideEnd": 16,
+      "durationSeconds": 0,
+      "sourceRefs": [
+        "SRC-1MD3-L1",
+        "SRC-1MD3-L3"
+      ],
+      "keyPoints": [
+        "Quan niệm Mác - Lênin về giáo dục thẩm mỹ",
+        "Mục đích trực tiếp và sâu xa",
+        "Các nhiệm vụ giáo dục thẩm mỹ"
+      ],
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "status": "DRAFT_NEEDS_QC"
+    },
+    {
+      "id": "TB-1MD3-003",
+      "topic": "Những nguyên tắc giáo dục thẩm mỹ",
+      "slideStart": 17,
+      "slideEnd": 21,
+      "durationSeconds": 0,
+      "sourceRefs": [
+        "SRC-1MD3-L1",
+        "SRC-1MD3-L3"
+      ],
+      "keyPoints": [
+        "Lấy con người làm trung tâm",
+        "Tính đảng và tính dân tộc",
+        "Thống nhất lý luận với thực tiễn",
+        "Thống nhất và đa dạng"
+      ],
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "status": "DRAFT_NEEDS_QC"
+    },
+    {
+      "id": "TB-1MD3-004",
+      "topic": "Giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở",
+      "slideStart": 22,
+      "slideEnd": 25,
+      "durationSeconds": 0,
+      "sourceRefs": [
+        "SRC-1MD3-L1",
+        "SRC-1MD3-L3"
+      ],
+      "keyPoints": [
+        "Khái niệm và mục tiêu",
+        "Tính tất yếu về lý luận và thực tiễn"
+      ],
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "status": "DRAFT_NEEDS_QC"
+    },
+    {
+      "id": "TB-1MD3-005",
+      "topic": "Nội dung, hình thức và biện pháp giáo dục thẩm mỹ",
+      "slideStart": 26,
+      "slideEnd": 30,
+      "durationSeconds": 0,
+      "sourceRefs": [
+        "SRC-1MD3-L1",
+        "SRC-1MD3-L3"
+      ],
+      "keyPoints": [
+        "Giáo dục ý thức, nhu cầu và năng lực thẩm mỹ",
+        "Giáo dục trực tiếp, qua thực tiễn, nghệ thuật, sinh hoạt và tấm gương"
+      ],
+      "method": "Thuyết trình, nêu vấn đề, đàm thoại, trực quan",
+      "status": "DRAFT_NEEDS_QC"
+    }
+  ],
+  "timingPlan": {
+    "sourceTotalLessons": 2,
+    "plannedMinutes": null,
+    "mappingStatus": "SOURCE_TIMING_REVIEW_REQUIRED",
+    "note": "Không suy ra tổng thời lượng phát giảng từ các mốc không thống nhất trong nguồn."
+  }
+}
