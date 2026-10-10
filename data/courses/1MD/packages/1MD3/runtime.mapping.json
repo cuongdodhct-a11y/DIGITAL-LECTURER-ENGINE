@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "packageId": "LPKG-1MD3-001",
+  "sourcePresentation": "1.MĐ3.pptx",
+  "slideCount": 30,
+  "status": "MAPPING_DRAFT_NEEDS_QC",
+  "note": "Slide anchors are based on the registered 1.MĐ3.pptx (30 slides). This file records navigation/provenance only; it does not certify the lecture script, slide-to-block mapping, timing, or audio runtime.",
+  "teachingPoints": [
+    {
+      "id": "TP-1MD3-001-01",
+      "slideNumber": 4
+    },
+    {
+      "id": "TP-1MD3-001-02",
+      "slideNumber": 6
+    },
+    {
+      "id": "TP-1MD3-002-01",
+      "slideNumber": 10
+    },
+    {
+      "id": "TP-1MD3-002-02",
+      "slideNumber": 11
+    },
+    {
+      "id": "TP-1MD3-002-03",
+      "slideNumber": 13
+    },
+    {
+      "id": "TP-1MD3-003-01",
+      "slideNumber": 15
+    },
+    {
+      "id": "TP-1MD3-003-02",
+      "slideNumber": 17
+    },
+    {
+      "id": "TP-1MD3-003-03",
+      "slideNumber": 20
+    },
+    {
+      "id": "TP-1MD3-004-01",
+      "slideNumber": 23
+    },
+    {
+      "id": "TP-1MD3-004-02",
+      "slideNumber": 24
+    },
+    {
+      "id": "TP-1MD3-004-03",
+      "slideNumber": 25
+    },
+    {
+      "id": "TP-1MD3-005-01",
+      "slideNumber": 26
+    },
+    {
+      "id": "TP-1MD3-005-02",
+      "slideNumber": 27
+    },
+    {
+      "id": "TP-1MD3-005-03",
+      "slideNumber": 30
+    }
+  ]
+}
