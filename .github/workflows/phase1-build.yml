@@ -34,3 +34,6 @@ jobs:
 
       - name: Phase 3 Gate D TTS/Audio policy smoke test
         run: npm run test:phase3-gate-d
+
+      - name: Runtime source ownership smoke test
+        run: npm run test:runtime-source-ownership
