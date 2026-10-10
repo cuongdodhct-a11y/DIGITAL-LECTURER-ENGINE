@@ -40,3 +40,6 @@ jobs:
 
       - name: Runtime package selection smoke test
         run: npm run test:runtime-package-selection
+
+      - name: Grounded source ownership smoke test
+        run: npm run test:grounded-source-ownership
