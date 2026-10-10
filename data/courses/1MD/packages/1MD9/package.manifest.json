@@ -5,7 +5,7 @@
   "lessonNumber": 9,
   "lessonCode": "1MD9",
   "title": "Tín ngưỡng, tôn giáo bản địa Việt Nam",
-  "status": "CONTENT_READY",
+  "status": "CONTENT_PENDING",
   "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
@@ -15,7 +15,8 @@
       "documentType": "DOCX",
       "filename": "1.MĐ9.docx",
       "sizeBytes": 62719,
-      "packageId": "LPKG-1MD9-001"
+      "packageId": "LPKG-1MD9-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     },
     "level3": {
       "sourceId": "SRC-1MD9-L3",
@@ -25,7 +26,8 @@
       "filename": "1.MĐ9.pptx",
       "sizeBytes": 13054537,
       "slideCount": 63,
-      "packageId": "LPKG-1MD9-001"
+      "packageId": "LPKG-1MD9-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -43,8 +45,10 @@
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceInventory": {
-    "docxPresent": true,
-    "pptxPresent": true,
+    "docxRegistered": true,
+    "pptxRegistered": true,
+    "rawSourceBytesVerifiedInRepository": false,
+    "sourceTextReviewedFromLibrary": false,
     "ownershipDeclared": true,
     "academicSourceMutation": "NONE"
   },

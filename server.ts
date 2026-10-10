@@ -27,6 +27,7 @@ import { courseEngineRouter } from './src/services/courseEngine/courseEngineRout
 import { synthesizeWithTtsGateway, getTtsCacheStats } from './src/services/courseEngine/ttsGatewayService';
 import { getCourse } from './src/services/courseEngine/courseRegistry';
 import { loadRuntimeLecturePackage } from './src/services/courseEngine/runtimePackageService';
+import { isRuntimeLessonPackageId } from './src/services/courseEngine/runtimePackageSelection';
 
 dotenv.config();
 
@@ -392,7 +393,7 @@ app.post('/api/lecture/select-package', (req: Request, res: Response) => {
   }
 
   let pkg = packageRepository.get(packageId);
-  if (!pkg && packageId === 'LPKG-1MD2-001') {
+  if (!pkg && isRuntimeLessonPackageId(packageId)) {
     try {
       pkg = loadRuntimeLecturePackage(packageId);
       packageRepository.set(packageId, pkg);

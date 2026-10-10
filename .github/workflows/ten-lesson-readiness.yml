@@ -1,0 +1,19 @@
+name: Ten Lesson Readiness Audit
+on:
+  push:
+    branches: [feat/ten-lesson-source-readiness-20261010]
+  pull_request:
+    branches: [phase3-md2-gate-c-20261008]
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run lint
+      - name: Audit source registration and runtime artifacts for 1MD2-1MD10
+        run: npx tsx scripts/ten-lesson-readiness-audit.ts

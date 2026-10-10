@@ -5,7 +5,7 @@
   "lessonNumber": 2,
   "lessonCode": "1MD2",
   "title": "Những phạm trù cơ bản của Mỹ học Mác - Lênin",
-  "status": "QC_PENDING",
+  "status": "CONTENT_PENDING",
   "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
@@ -15,7 +15,8 @@
       "documentType": "DOCX",
       "filename": "1.MĐ2.docx",
       "sizeBytes": 47923,
-      "packageId": "LPKG-1MD2-001"
+      "packageId": "LPKG-1MD2-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     },
     "level3": {
       "sourceId": "SRC-1MD2-L3",
@@ -25,7 +26,8 @@
       "filename": "1.MĐ2.pptx",
       "sizeBytes": 142588629,
       "slideCount": 55,
-      "packageId": "LPKG-1MD2-001"
+      "packageId": "LPKG-1MD2-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -43,8 +45,10 @@
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceInventory": {
-    "docxPresent": true,
-    "pptxPresent": true,
+    "docxRegistered": true,
+    "pptxRegistered": true,
+    "rawSourceBytesVerifiedInRepository": false,
+    "sourceTextReviewedFromLibrary": true,
     "ownershipDeclared": true,
     "academicSourceMutation": "NONE"
   },

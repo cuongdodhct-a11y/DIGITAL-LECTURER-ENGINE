@@ -5,7 +5,7 @@
   "lessonNumber": 5,
   "lessonCode": "1MD5",
   "title": "Những phạm trù cơ bản của Đạo đức học quân sự",
-  "status": "CONTENT_READY",
+  "status": "CONTENT_PENDING",
   "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
@@ -15,7 +15,8 @@
       "documentType": "DOCX",
       "filename": "1.MĐ5.docx",
       "sizeBytes": 60751,
-      "packageId": "LPKG-1MD5-001"
+      "packageId": "LPKG-1MD5-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     },
     "level3": {
       "sourceId": "SRC-1MD5-L3",
@@ -25,7 +26,8 @@
       "filename": "1.MĐ5.pptx",
       "sizeBytes": 44158799,
       "slideCount": 58,
-      "packageId": "LPKG-1MD5-001"
+      "packageId": "LPKG-1MD5-001",
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -43,8 +45,10 @@
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceInventory": {
-    "docxPresent": true,
-    "pptxPresent": true,
+    "docxRegistered": true,
+    "pptxRegistered": true,
+    "rawSourceBytesVerifiedInRepository": false,
+    "sourceTextReviewedFromLibrary": false,
     "ownershipDeclared": true,
     "academicSourceMutation": "NONE"
   },

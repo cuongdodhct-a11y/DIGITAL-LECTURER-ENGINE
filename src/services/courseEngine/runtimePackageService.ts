@@ -19,6 +19,31 @@ type RuntimeMapping = {
   teachingPoints: Array<{ id: string; slideNumber: number }>;
 };
 
+export interface RuntimeSourceRef {
+  sourceId: string;
+  level: number;
+  filename: string;
+  documentType: string;
+  role?: string;
+  packageId: string;
+}
+
+/** Resolve package-owned primary sources without assuming the lesson is 1MD2. */
+export function resolveRuntimeSourceRefs(sourceRefs: RuntimeSourceRef[], packageId: string) {
+  const level1 = sourceRefs.find((source) => source.level === 1);
+  const level3 = sourceRefs.find((source) => source.level === 3);
+  if (!level1 || !level3) {
+    throw new Error('Runtime package must declare both Level 1 and Level 3 sources: ' + packageId);
+  }
+  if (level1.packageId !== packageId || level3.packageId !== packageId) {
+    throw new Error('Runtime source ownership mismatch for ' + packageId);
+  }
+  if (level1.documentType !== 'DOCX' || level3.documentType !== 'PPTX') {
+    throw new Error('Runtime source types must be Level 1 DOCX and Level 3 PPTX: ' + packageId);
+  }
+  return { level1, level3 };
+}
+
 export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
   if (packageId === 'LPKG-1MD1-001') {
     throw new Error('Use the production 1MD1 package provider for LPKG-1MD1-001.');
@@ -38,6 +63,21 @@ export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
     throw new Error('Runtime package ownership mismatch for ' + packageId);
   }
 
+  // A structurally present draft must never become playable by accident.
+  if (pkg.status !== 'READY_FOR_QC') {
+    throw new Error('Runtime package is not approved for playback: ' + packageId + ' (' + String(pkg.status || 'UNSET') + ')');
+  }
+  if (script.status && script.status !== 'READY_FOR_QC' && script.status !== 'APPROVED') {
+    throw new Error('Grounded script is not approved for playback: ' + packageId + ' (' + String(script.status) + ')');
+  }
+  const approvedDuration = Number(script.timing?.totalSeconds || pkg.timingPlan?.mappedSeconds || 0);
+  if (!Number.isFinite(approvedDuration) || approvedDuration <= 0) {
+    throw new Error('Runtime package has no approved positive duration: ' + packageId);
+  }
+
+  const packageSourceRefs = (pkg.sourceRefs || []) as RuntimeSourceRef[];
+  const { level1: level1Source, level3: level3Source } = resolveRuntimeSourceRefs(packageSourceRefs, packageId);
+
   const sourceHierarchy = (pkg.sourceRefs || []).map((source: any) => ({
     sourceId: source.sourceId,
     level: source.level,
@@ -52,15 +92,18 @@ export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
     const groundedBlock = (script.teachingBlocks || []).find((b: any) => b.blockId === block.id);
     const points = groundedBlock?.teachingPoints || [];
     const lectureText = points.map((point: any) => point.script).join(' ');
-    const sources = (block.sourceRefs || []).map((sourceId: string) => ({
-      sourceId,
-      citation: sourceId === 'SRC-1MD2-L1' ? '1.MĐ2.docx — kế hoạch bài giảng/nguồn nội dung chuẩn' : '1.MĐ2.pptx — khung trình chiếu',
-      sourceType: sourceId === 'SRC-1MD2-L1' ? 'DOCX' : 'PPTX',
-      pageOrSlide: sourceId === 'SRC-1MD2-L1' ? undefined : `Slides ${block.slideStart}-${block.slideEnd}`,
-      confidence: 'HIGH' as const,
-      contentType: 'CORE_CONTENT' as const,
-      isUnsupported: false
-    }));
+    const sources = (block.sourceRefs || []).map((sourceId: string) => {
+      const source = packageSourceRefs.find((item) => item.sourceId === sourceId);
+      return {
+        sourceId,
+        citation: source ? source.filename + ' — ' + (source.role || 'nguồn bài giảng') : sourceId,
+        sourceType: source?.documentType || 'UNKNOWN',
+        pageOrSlide: source?.level === 1 ? undefined : `Slides ${block.slideStart}-${block.slideEnd}`,
+        confidence: 'HIGH' as const,
+        contentType: 'CORE_CONTENT' as const,
+        isUnsupported: false
+      };
+    });
 
     return {
       id: block.id,
@@ -95,8 +138,8 @@ export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
       mappedTeachingBlockIds: block ? [block.id] : [],
       status: block ? 'MAPPED' : 'UNMAPPED',
       issues: [],
-      sourceDocumentId: 'SRC-1MD2-L3',
-      provenance: { sourceId: 'SRC-1MD2-L3', locator: { slideNumber } }
+      sourceDocumentId: level3Source.sourceId,
+      provenance: { sourceId: level3Source.sourceId, locator: { slideNumber } }
     };
   });
 
@@ -124,7 +167,7 @@ export function loadRuntimeLecturePackage(packageId: string): LecturePackage {
         transition: '',
         durationSeconds: duration,
         provenance: {
-          sourceId: firstClaim?.sourceRefs?.[0] || 'SRC-1MD2-L1',
+          sourceId: firstClaim?.sourceRefs?.[0] || level1Source.sourceId,
           locator: { slideNumber }
         }
       };

@@ -14,6 +14,7 @@ import { RegisteredDocument } from './types/source';
 import { LecturePackage, PackageSummary } from './types/lecture';
 import { QCReport } from './types/quality';
 import { createProduction1MD1Package, getProductionDocuments, PRODUCTION_PACKAGE_ID } from './services/lectureSequence/productionDefaultPackage';
+import { isCourseLessonPackageId } from './services/courseEngine/runtimePackageSelection';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'engine' | 'sources' | 'package' | 'qc' | 'classroom'>('engine');
@@ -269,9 +270,9 @@ export default function App() {
   };
 
   const handlePlayScript = (text: string) => {
-    if (activePackageId === 'LPKG-1MD2-001') {
+    if (isCourseLessonPackageId(activePackageId)) {
       setActiveTab('classroom');
-      showToast('Bài 2 dùng VieNeu v3 Turbo + giọng Phạm Tuyên. Hãy chọn PHÁT BÀI GIẢNG (LIÊN TỤC).');
+      showToast('Bài thuộc học phần 1MĐ dùng VieNeu v3 Turbo + giọng Phạm Tuyên. Hãy chọn PHÁT BÀI GIẢNG (LIÊN TỤC).');
       return;
     }
     if ('speechSynthesis' in window) {

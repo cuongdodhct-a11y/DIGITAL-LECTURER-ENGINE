@@ -5,7 +5,7 @@
   "lessonNumber": 3,
   "lessonCode": "1MD3",
   "title": "Giáo dục thẩm mỹ",
-  "status": "CONTENT_READY",
+  "status": "CONTENT_PENDING",
   "sourcePolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sources": {
     "level1": {
@@ -14,8 +14,9 @@
       "status": "REGISTERED",
       "documentType": "DOCX",
       "filename": "1.MĐ3.docx",
+      "packageId": "LPKG-1MD3-001",
       "sizeBytes": 40417,
-      "packageId": "LPKG-1MD3-001"
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     },
     "level3": {
       "sourceId": "SRC-1MD3-L3",
@@ -23,9 +24,10 @@
       "status": "REGISTERED",
       "documentType": "PPTX",
       "filename": "1.MĐ3.pptx",
-      "sizeBytes": 28513288,
       "slideCount": 30,
-      "packageId": "LPKG-1MD3-001"
+      "packageId": "LPKG-1MD3-001",
+      "sizeBytes": 28513288,
+      "sourceLocation": "/DIGITAL LECTUER ENGINE/"
     }
   },
   "commonSourceSet": "COMMON-1MD",
@@ -43,24 +45,17 @@
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceInventory": {
-    "docxPresent": true,
-    "pptxPresent": true,
+    "docxRegistered": true,
+    "pptxRegistered": true,
+    "rawSourceBytesVerifiedInRepository": false,
+    "sourceTextReviewedFromLibrary": true,
     "ownershipDeclared": true,
     "academicSourceMutation": "NONE"
   },
   "timing": {
-    "sourceTotalLessons": 2,
-    "plannedMinutes": 2,
-    "focus": "source DOCX",
-    "mappingStatus": "PENDING_DETAILED_SLIDE_MAPPING"
-  },
-  "qc": {
-    "sourceIsolation": "PENDING",
-    "timing": "PENDING_DETAILED_SLIDE_MAPPING"
-  },
-  "onboarding": {
-    "requiresLevel1": true,
-    "requiresLevel3": true,
-    "buildStatus": "SOURCE_REGISTERED_WAITING_FOR_PILOT"
+    "sourceLessonHours": 2,
+    "plannedMinutes": null,
+    "mappingStatus": "SOURCE_TIMING_REVIEW_REQUIRED",
+    "note": "DOCX states 2 tiết; section timings require reconciliation before runtime duration is approved."
   }
 }

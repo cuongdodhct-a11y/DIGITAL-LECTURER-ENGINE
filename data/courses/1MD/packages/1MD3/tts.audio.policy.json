@@ -1,0 +1,39 @@
+{
+  "gate": "D_TTS_AUDIO",
+  "packageId": "LPKG-1MD3-001",
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "voice": {
+    "profileId": "PHAM_TUYEN",
+    "provider": "LOCAL_VIENEUV3",
+    "model": "vieneu-v3-turbo",
+    "browserSpeechSynthesisAllowed": false,
+    "geminiAllowedForFreeLocal": false
+  },
+  "input": {
+    "source": "GROUNDED_SCRIPT",
+    "requiresTeachingPointId": true,
+    "requiresPackageId": true
+  },
+  "audioStorage": {
+    "provider": "GOOGLE_DRIVE",
+    "sourceOfTruth": "GOOGLE_DRIVE",
+    "repositoryCommitAllowed": false,
+    "localCache": "EPHEMERAL_ONLY",
+    "cacheLimit": {
+      "entries": 16,
+      "bytes": 67108864
+    }
+  },
+  "runtime": {
+    "endpointEnv": "VIENEU_TTS_URL",
+    "timeoutMs": 120000,
+    "responseFormat": "wav"
+  },
+  "qc": {
+    "providerPolicy": "PENDING_REAL_LOCAL_TTS_TEST",
+    "voicePolicy": "PENDING_PHAM_TUYEN_LISTENING_TEST",
+    "browserTtsPolicy": "PASS_DENY",
+    "repositoryAudioPolicy": "PASS_DENY"
+  },
+  "status": "POLICY_DRAFT_NEEDS_RUNTIME_QC"
+}

@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "gate": "C_GROUNDED_SCRIPT",
+  "packageId": "LPKG-1MD3-001",
+  "courseId": "COURSE-1MD",
+  "lessonCode": "1MD3",
+  "title": "Giáo dục thẩm mỹ",
+  "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
+  "status": "DRAFT_NEEDS_ACADEMIC_QC",
+  "storage": {
+    "provider": "GOOGLE_DRIVE",
+    "sourceOfTruth": "GOOGLE_DRIVE",
+    "folderId": null,
+    "persistencePolicy": "Do not use repository-local files as the long-term content store.",
+    "credentialPolicy": "Google credentials/tokens must remain outside source control."
+  },
+  "timing": {
+    "totalMinutes": 75,
+    "totalSeconds": 4500,
+    "approval": "NOT_APPROVED",
+    "note": "Draft block allocation follows explicit DOCX section timings (opening 5 min, section 1 30 min, section 2 35 min, closing 5 min). The source also states 2 tiết and THỰC HÀNH GIẢNG BÀI (02.55); this discrepancy remains unresolved, so this timing must not be used for runtime until reviewed."
+  },
+  "teachingBlocks": [
+    {
+      "blockId": "TB-1MD3-001",
+      "slideStart": 1,
+      "slideEnd": 9,
+      "durationSeconds": 300,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD3-001-01",
+          "title": "Mục đích, yêu cầu và phạm vi bài học",
+          "script": "Bài học trang bị những nội dung cơ bản của Mỹ học Mác - Lênin về giáo dục thẩm mỹ; hướng vào xác định nội dung, hình thức, biện pháp giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở và phê phán các quan niệm sai trái về xây dựng đời sống thẩm mỹ quân nhân.",
+          "claims": [
+            {
+              "id": "CL-1MD3-001-01",
+              "claim": "Mục đích bài học bao gồm nắm lý luận giáo dục thẩm mỹ và vận dụng vào giáo dục quân nhân ở đơn vị cơ sở.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-001-02",
+          "title": "Kết cấu và trọng tâm bài học",
+          "script": "Bài học gồm hai nội dung lớn: quan niệm, mục đích, nhiệm vụ, nguyên tắc giáo dục thẩm mỹ; và giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở trong Quân đội nhân dân Việt Nam. Tài liệu Word xác định trọng tâm ở mục c phần thứ nhất và phần thứ hai.",
+          "claims": [
+            {
+              "id": "CL-1MD3-001-02",
+              "claim": "Bài học có hai phần nội dung lớn; trọng tâm được tài liệu Word xác định là mục c phần một và phần hai.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD3-002",
+      "slideStart": 10,
+      "slideEnd": 16,
+      "durationSeconds": 1200,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD3-002-01",
+          "title": "Quan niệm về giáo dục thẩm mỹ",
+          "script": "Theo quan niệm Mỹ học Mác - Lênin trong slide, giáo dục thẩm mỹ là quá trình xã hội nhằm xây dựng, phát triển văn hóa thẩm mỹ và khả năng thưởng thức, đánh giá, sáng tạo những giá trị xã hội theo tiêu chuẩn của cái đẹp cho các chủ thể thẩm mỹ.",
+          "claims": [
+            {
+              "id": "CL-1MD3-002-01",
+              "claim": "Giáo dục thẩm mỹ phát triển văn hóa thẩm mỹ và năng lực thưởng thức, đánh giá, sáng tạo cái đẹp.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-002-02",
+          "title": "Nghĩa rộng, nghĩa hẹp và bản chất giáo dục thẩm mỹ",
+          "script": "Tài liệu phân biệt nghĩa rộng là quá trình giáo dục và tự giáo dục để hình thành văn hóa, năng lực thẩm mỹ; nghĩa hẹp nhấn mạnh giáo dục chuẩn mực cái đẹp, giúp con người thụ cảm, đánh giá và sáng tạo cái đẹp. Bản chất được trình bày là chuyển hóa giá trị thẩm mỹ xã hội thành giá trị thẩm mỹ cá nhân.",
+          "claims": [
+            {
+              "id": "CL-1MD3-002-02",
+              "claim": "Giáo dục thẩm mỹ chuyển hóa giá trị thẩm mỹ xã hội thành giá trị thẩm mỹ cá nhân.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-002-03",
+          "title": "Mục đích và nhiệm vụ giáo dục thẩm mỹ",
+          "script": "Mục đích trực tiếp là hình thành, phát triển giá trị văn hóa và năng lực thẩm mỹ; mục đích sâu xa là phát triển con người toàn diện, hài hòa. Slide nêu các nhiệm vụ gồm trang bị tri thức, văn hóa thẩm mỹ; tạo khả năng thẩm mỹ hóa trong hoạt động xã hội; làm cho cái đẹp trở thành nhu cầu cuộc sống.",
+          "claims": [
+            {
+              "id": "CL-1MD3-002-03",
+              "claim": "Mục đích giáo dục thẩm mỹ gồm phương diện trực tiếp và sâu xa; các nhiệm vụ được trình bày trên slide 15.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD3-003",
+      "slideStart": 17,
+      "slideEnd": 21,
+      "durationSeconds": 600,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD3-003-01",
+          "title": "Nguyên tắc lấy con người làm trung tâm",
+          "script": "Slide 17 xác định nguyên tắc lấy con người làm trung tâm, với cơ sở hình thành từ bản chất và mục đích giáo dục thẩm mỹ mácxít; đồng thời yêu cầu gắn với nền giáo dục xã hội và bảo đảm tính lịch sử, cụ thể.",
+          "claims": [
+            {
+              "id": "CL-1MD3-003-01",
+              "claim": "Nguyên tắc lấy con người làm trung tâm gắn với bản chất, mục đích giáo dục thẩm mỹ và tính lịch sử cụ thể.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-003-02",
+          "title": "Nguyên tắc tính đảng và tính dân tộc",
+          "script": "Các slide 18–19 trình bày nguyên tắc tính đảng nhằm bảo đảm định hướng của quá trình giáo dục thẩm mỹ, và nguyên tắc tính dân tộc nhằm gắn giáo dục thẩm mỹ với thực tiễn cùng giá trị truyền thống của dân tộc.",
+          "claims": [
+            {
+              "id": "CL-1MD3-003-02",
+              "claim": "Nguyên tắc tính đảng và tính dân tộc được trình bày riêng ở slide 18 và 19.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-003-03",
+          "title": "Thống nhất lý luận với thực tiễn; thống nhất và đa dạng",
+          "script": "Slide 20 yêu cầu thống nhất lý luận với thực tiễn, tổng kết lý luận từ thực tiễn thẩm mỹ và tránh tuyệt đối hóa một phía. Slide 21 yêu cầu thống nhất mục tiêu, chương trình, nội dung, phương pháp, đồng thời đa dạng hóa hình thức phù hợp đối tượng và hoàn cảnh lịch sử cụ thể.",
+          "claims": [
+            {
+              "id": "CL-1MD3-003-03",
+              "claim": "Hai nguyên tắc cuối nhấn mạnh gắn lý luận với thực tiễn và kết hợp thống nhất với đa dạng.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD3-004",
+      "slideStart": 22,
+      "slideEnd": 25,
+      "durationSeconds": 1200,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD3-004-01",
+          "title": "Khái niệm giáo dục thẩm mỹ cho quân nhân",
+          "script": "Slide 23 trình bày giáo dục thẩm mỹ cho quân nhân ở đơn vị cơ sở là bộ phận của giáo dục thẩm mỹ xã hội trong môi trường đặc thù, nhằm xây dựng văn hóa thẩm mỹ và bồi dưỡng khả năng thưởng thức, đánh giá, sáng tạo giá trị thẩm mỹ cho quân nhân.",
+          "claims": [
+            {
+              "id": "CL-1MD3-004-01",
+              "claim": "Giáo dục thẩm mỹ cho quân nhân diễn ra trong môi trường quân sự đặc thù và hướng đến phát triển năng lực thẩm mỹ.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-004-02",
+          "title": "Mục tiêu giáo dục thẩm mỹ cho quân nhân",
+          "script": "Slide 24 nêu mục tiêu hình thành, phát triển khả năng cảm thụ, đánh giá, sáng tạo giá trị thẩm mỹ; xây dựng đời sống thẩm mỹ trong sáng, lành mạnh và xây dựng người quân nhân theo tiêu chuẩn “Bộ đội Cụ Hồ”.",
+          "claims": [
+            {
+              "id": "CL-1MD3-004-02",
+              "claim": "Mục tiêu gồm phát triển năng lực thẩm mỹ, đời sống thẩm mỹ lành mạnh và phẩm chất người quân nhân.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-004-03",
+          "title": "Tính tất yếu về lý luận và thực tiễn",
+          "script": "Slide 25 đặt tính tất yếu trên cả phương diện lý luận và thực tiễn, liên hệ bản chất, mục đích giáo dục thẩm mỹ, yêu cầu xây dựng quân đội, ảnh hưởng tiêu cực của kinh tế thị trường và thực trạng đời sống thẩm mỹ cũng như công tác giáo dục thẩm mỹ trong quân đội.",
+          "claims": [
+            {
+              "id": "CL-1MD3-004-03",
+              "claim": "Tài liệu lý giải tính tất yếu từ cả căn cứ lý luận và yêu cầu thực tiễn quân đội.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    },
+    {
+      "blockId": "TB-1MD3-005",
+      "slideStart": 26,
+      "slideEnd": 30,
+      "durationSeconds": 900,
+      "teachingPoints": [
+        {
+          "id": "TP-1MD3-005-01",
+          "title": "Nội dung giáo dục thẩm mỹ cho quân nhân",
+          "script": "Slide 26 nêu các nội dung: giáo dục ý thức thẩm mỹ, bồi dưỡng nhu cầu thẩm mỹ lành mạnh, phát triển năng lực cảm thụ, đánh giá và sáng tạo thẩm mỹ; đồng thời đề cập giáo dục văn hóa thẩm mỹ.",
+          "claims": [
+            {
+              "id": "CL-1MD3-005-01",
+              "claim": "Nội dung giáo dục thẩm mỹ gồm ý thức, nhu cầu, năng lực và văn hóa thẩm mỹ.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-005-02",
+          "title": "Hình thức và biện pháp giáo dục thẩm mỹ",
+          "script": "Slide 27 liệt kê giáo dục trực tiếp; thông qua thực tiễn hoạt động quân sự; thông qua nghệ thuật; trong sinh hoạt và quan hệ quân nhân; và thông qua các tấm gương.",
+          "claims": [
+            {
+              "id": "CL-1MD3-005-02",
+              "claim": "Slide 27 nêu năm hình thức, biện pháp giáo dục thẩm mỹ cho quân nhân.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        },
+        {
+          "id": "TP-1MD3-005-03",
+          "title": "Định hướng nghiên cứu và chủ đề xemina",
+          "script": "Slide 28 định hướng nghiên cứu bản chất, mục đích, nhiệm vụ, nguyên tắc và việc vận dụng giáo dục thẩm mỹ; slide 30 nêu chủ đề xemina về xây dựng đời sống thẩm mỹ cho quân nhân trong Quân đội nhân dân Việt Nam hiện nay.",
+          "claims": [
+            {
+              "id": "CL-1MD3-005-03",
+              "claim": "Tài liệu kết thúc bằng định hướng nghiên cứu và chủ đề xemina về đời sống thẩm mỹ quân nhân.",
+              "sourceRefs": [
+                "SRC-1MD3-L1",
+                "SRC-1MD3-L3"
+              ],
+              "confidence": "MEDIUM",
+              "isUnsupported": false
+            }
+          ],
+          "unsupportedClaims": []
+        }
+      ]
+    }
+  ],
+  "qc": {
+    "sourceDerivedFrom": [
+      "1.MĐ3(1).docx",
+      "1.MĐ3.pptx"
+    ],
+    "slideAnchorsNeedVisualQC": true,
+    "academicReviewRequired": true,
+    "timingApprovalRequired": true,
+    "audioNotVerified": true
+  }
+}

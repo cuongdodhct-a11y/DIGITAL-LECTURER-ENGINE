@@ -34,3 +34,15 @@ jobs:
 
       - name: Phase 3 Gate D TTS/Audio policy smoke test
         run: npm run test:phase3-gate-d
+
+      - name: Runtime source ownership smoke test
+        run: npm run test:runtime-source-ownership
+
+      - name: Runtime package selection smoke test
+        run: npm run test:runtime-package-selection
+
+      - name: Grounded source ownership smoke test
+        run: npm run test:grounded-source-ownership
+
+      - name: Draft package playback guard smoke test
+        run: npm run test:draft-playback-guard
