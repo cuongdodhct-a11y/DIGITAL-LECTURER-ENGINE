@@ -15,17 +15,17 @@
     "credentialPolicy": "Google credentials/tokens must remain outside source control."
   },
   "timing": {
-    "totalMinutes": 0,
-    "totalSeconds": 0,
+    "totalMinutes": 75,
+    "totalSeconds": 4500,
     "approval": "NOT_APPROVED",
-    "note": "Source states 2 tiết but detailed section timings are not reconciled. Runtime duration must not be inferred until reviewed."
+    "note": "Draft block allocation follows explicit DOCX section timings (opening 5 min, section 1 30 min, section 2 35 min, closing 5 min). The source also states 2 tiết and THỰC HÀNH GIẢNG BÀI (02.55); this discrepancy remains unresolved, so this timing must not be used for runtime until reviewed."
   },
   "teachingBlocks": [
     {
       "blockId": "TB-1MD3-001",
       "slideStart": 1,
       "slideEnd": 9,
-      "durationSeconds": 0,
+      "durationSeconds": 300,
       "teachingPoints": [
         {
           "id": "TP-1MD3-001-01",
@@ -69,7 +69,7 @@
       "blockId": "TB-1MD3-002",
       "slideStart": 10,
       "slideEnd": 16,
-      "durationSeconds": 0,
+      "durationSeconds": 1200,
       "teachingPoints": [
         {
           "id": "TP-1MD3-002-01",
@@ -131,7 +131,7 @@
       "blockId": "TB-1MD3-003",
       "slideStart": 17,
       "slideEnd": 21,
-      "durationSeconds": 0,
+      "durationSeconds": 600,
       "teachingPoints": [
         {
           "id": "TP-1MD3-003-01",
@@ -193,7 +193,7 @@
       "blockId": "TB-1MD3-004",
       "slideStart": 22,
       "slideEnd": 25,
-      "durationSeconds": 0,
+      "durationSeconds": 1200,
       "teachingPoints": [
         {
           "id": "TP-1MD3-004-01",
@@ -255,7 +255,7 @@
       "blockId": "TB-1MD3-005",
       "slideStart": 26,
       "slideEnd": 30,
-      "durationSeconds": 0,
+      "durationSeconds": 900,
       "teachingPoints": [
         {
           "id": "TP-1MD3-005-01",
