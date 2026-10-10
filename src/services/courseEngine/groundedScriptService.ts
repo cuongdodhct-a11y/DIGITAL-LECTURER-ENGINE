@@ -2,6 +2,22 @@ import fs from 'fs';
 import path from 'path';
 import { loadLecturePackage } from './lecturePackageService';
 
+export interface PrimaryPackageSourceIds {
+  level1SourceId?: string;
+  level3SourceId?: string;
+  ids: Set<string>;
+}
+
+/** Resolve claim-eligible sources from the current package, never from a hard-coded lesson. */
+export function resolvePrimaryPackageSourceIds(sourceRefs: Array<{ sourceId: string; level: number; documentType: string }>): PrimaryPackageSourceIds {
+  const level1 = sourceRefs.find((source) => source.level === 1 && source.documentType === 'DOCX');
+  const level3 = sourceRefs.find((source) => source.level === 3 && source.documentType === 'PPTX');
+  const ids = new Set<string>();
+  if (level1?.sourceId) ids.add(level1.sourceId);
+  if (level3?.sourceId) ids.add(level3.sourceId);
+  return { level1SourceId: level1?.sourceId, level3SourceId: level3?.sourceId, ids };
+}
+
 export interface GateCResult {
   gate: 'C_GROUNDED_SCRIPT';
   packageId: string;
@@ -51,6 +67,10 @@ export function verifyGroundedScript(packageId: string): GateCResult {
   if (script.storage?.sourceOfTruth !== 'GOOGLE_DRIVE') {
     blockers.push('Google Drive must be declared as the content source of truth.');
   }
+
+  const primarySources = resolvePrimaryPackageSourceIds(pkg.sourceRefs || []);
+  if (!primarySources.level1SourceId) blockers.push('Gate C requires a package-owned Level 1 DOCX source.');
+  if (!primarySources.level3SourceId) blockers.push('Gate C requires a package-owned Level 3 PPTX source.');
 
   const packageBlocks = Array.isArray(pkg.teachingBlocks) ? pkg.teachingBlocks : [];
   const scriptBlocks = Array.isArray(script.teachingBlocks) ? script.teachingBlocks : [];
@@ -106,7 +126,7 @@ export function verifyGroundedScript(packageId: string): GateCResult {
         }
 
         for (const ref of refs) {
-          if (!['SRC-1MD2-L1', 'SRC-1MD2-L3'].includes(ref)) {
+          if (!primarySources.ids.has(ref)) {
             sourceCoverageComplete = false;
             blockers.push('Claim ' + claim.id + ' references non-primary source ' + ref);
           }

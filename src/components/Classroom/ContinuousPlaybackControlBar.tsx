@@ -162,7 +162,7 @@ export const ContinuousPlaybackControlBar: React.FC<ContinuousPlaybackControlBar
               <button
                 onClick={onRetry}
                 className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-extrabold transition flex items-center gap-1.5 shadow-md cursor-pointer active:scale-95 ring-1 ring-indigo-400"
-                title="Thử lại kết nối Gemini TTS với giọng giảng chuẩn"
+                title="Thử lại kết nối giọng giảng chuẩn"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>THỬ LẠI GIỌNG CHUẨN</span>

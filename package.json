@@ -13,7 +13,10 @@
     "test:phase3-gate-a": "tsx scripts/phase3-gate-a-smoke.ts",
     "test:phase3-gate-b": "tsx scripts/phase3-gate-b-smoke.ts",
     "test:phase3-gate-c": "tsx scripts/phase3-gate-c-smoke.ts",
-    "test:phase3-gate-d": "tsx scripts/phase3-gate-d-smoke.ts"
+    "test:phase3-gate-d": "tsx scripts/phase3-gate-d-smoke.ts",
+    "test:runtime-source-ownership": "tsx scripts/runtime-source-ownership-smoke.ts",
+    "test:runtime-package-selection": "tsx scripts/runtime-package-selection-smoke.ts",
+    "test:grounded-source-ownership": "tsx scripts/grounded-source-ownership-smoke.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
