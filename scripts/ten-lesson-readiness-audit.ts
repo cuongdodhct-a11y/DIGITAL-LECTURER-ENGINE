@@ -43,6 +43,16 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
   const inventory = manifest?.sourceInventory || {};
   if (inventory.rawSourceBytesVerifiedInRepository !== true) blockers.push('RAW_SOURCE_BYTES_NOT_VERIFIED_IN_REPOSITORY');
 
+  // Source timing conflicts are a hard QC gate even if a derivative script
+  // contains an approval flag. Never silently reconcile lesson-plan timings.
+  const manifestTiming = manifest?.timing || {};
+  const manifestTimingStatus = String(manifestTiming.mappingStatus || '');
+  const manifestQcTiming = String(manifest?.qc?.timing || '');
+  if (/CONFLICT|REVIEW_REQUIRED|PENDING|NOT_APPROVED/i.test(manifestTimingStatus)
+      || /CONFLICT|REVIEW_REQUIRED|PENDING|NOT_APPROVED/i.test(manifestQcTiming)) {
+    blockers.push('SOURCE_TIMING_CONFLICT_REQUIRES_REVIEW');
+  }
+
   const expectedId = `LPKG-1MD${lesson}-001`;
   if (!lecture) blockers.push('LECTURE_PACKAGE_MISSING');
   else if (lecture.packageId !== expectedId) blockers.push('LECTURE_PACKAGE_OWNERSHIP_MISMATCH');
