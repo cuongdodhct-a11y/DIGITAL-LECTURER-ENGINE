@@ -41,7 +41,9 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
   if (!sourceIsDeclared(manifest, 'level3', lesson)) blockers.push('LEVEL3_PPTX_NOT_REGISTERED_OR_NONCANONICAL_FILENAME');
 
   const inventory = manifest?.sourceInventory || {};
-  if (inventory.rawSourceBytesVerifiedInRepository !== true) blockers.push('RAW_SOURCE_BYTES_NOT_VERIFIED_IN_REPOSITORY');
+  // Long-term source-of-truth is Google Drive/Library, not repository-local files.
+  // Require reviewed source text rather than demanding academic originals be committed to Git.
+  if (inventory.sourceTextReviewedFromLibrary !== true) blockers.push('SOURCE_TEXT_NOT_REVIEWED_FROM_LIBRARY');
 
   // Source timing conflicts are a hard QC gate even if a derivative script
   // contains an approval flag. Never silently reconcile lesson-plan timings.
@@ -153,7 +155,7 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
     lesson: code,
     title: manifest?.title || 'UNKNOWN',
     declaredStatus,
-    readiness: ready ? 'READY_FOR_RUNTIME_QC' : (blockers.some((item) => /MISSING|NOT_REGISTERED|NONCANONICAL|RAW_SOURCE_BYTES|MISMATCH|FOREIGN_SOURCE/.test(item)) ? 'CONTENT_PENDING' : 'ARTIFACTS_PRESENT_BUT_QC_BLOCKED'),
+    readiness: ready ? 'READY_FOR_RUNTIME_QC' : (blockers.some((item) => /MISSING|NOT_REGISTERED|NONCANONICAL|SOURCE_TEXT_NOT_REVIEWED_FROM_LIBRARY|MISMATCH|FOREIGN_SOURCE/.test(item)) ? 'CONTENT_PENDING' : 'ARTIFACTS_PRESENT_BUT_QC_BLOCKED'),
     blockers: [...new Set(blockers)]
   });
 }
