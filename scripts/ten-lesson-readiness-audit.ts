@@ -20,8 +20,7 @@ function sourceIsDeclared(manifest: Json | null, level: 'level1' | 'level3', les
     && source?.status === 'REGISTERED'
     && source?.documentType === expectedType
     && source?.packageId === `LPKG-1MD${lesson}-001`
-    && typeof source?.filename === 'string'
-    && source.filename.length > 0;
+    && source.filename === (level === 'level1' ? `1.MĐ${lesson}.docx` : `1.MĐ${lesson}.pptx`);
 }
 
 const report: Array<Record<string, unknown>> = [];
@@ -39,7 +38,10 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
   const blockers: string[] = [];
   if (!manifest) blockers.push('PACKAGE_MANIFEST_MISSING');
   if (!sourceIsDeclared(manifest, 'level1', lesson)) blockers.push('LEVEL1_DOCX_NOT_REGISTERED_FOR_PACKAGE');
-  if (!sourceIsDeclared(manifest, 'level3', lesson)) blockers.push('LEVEL3_PPTX_NOT_REGISTERED_FOR_PACKAGE');
+  if (!sourceIsDeclared(manifest, 'level3', lesson)) blockers.push('LEVEL3_PPTX_NOT_REGISTERED_OR_NONCANONICAL_FILENAME');
+
+  const inventory = manifest?.sourceInventory || {};
+  if (inventory.rawSourceBytesVerifiedInRepository !== true) blockers.push('RAW_SOURCE_BYTES_NOT_VERIFIED_IN_REPOSITORY');
 
   const expectedId = `LPKG-1MD${lesson}-001`;
   if (!lecture) blockers.push('LECTURE_PACKAGE_MISSING');
@@ -103,7 +105,7 @@ for (let lesson = 2; lesson <= 10; lesson += 1) {
     lesson: code,
     title: manifest?.title || 'UNKNOWN',
     declaredStatus,
-    readiness: ready ? 'READY_FOR_RUNTIME_QC' : (blockers.some((item) => /MISSING|NOT_REGISTERED|MISMATCH|FOREIGN_SOURCE/.test(item)) ? 'CONTENT_PENDING' : 'ARTIFACTS_PRESENT_BUT_QC_BLOCKED'),
+    readiness: ready ? 'READY_FOR_RUNTIME_QC' : (blockers.some((item) => /MISSING|NOT_REGISTERED|NONCANONICAL|RAW_SOURCE_BYTES|MISMATCH|FOREIGN_SOURCE/.test(item)) ? 'CONTENT_PENDING' : 'ARTIFACTS_PRESENT_BUT_QC_BLOCKED'),
     blockers: [...new Set(blockers)]
   });
 }
