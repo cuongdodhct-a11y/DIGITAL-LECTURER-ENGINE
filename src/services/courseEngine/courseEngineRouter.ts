@@ -8,6 +8,7 @@ import { verifyGroundedScript, loadGroundedScript } from './groundedScriptServic
 import { verifyTtsAudioGate } from './ttsAudioGateService';
 import { synthesizeWithTtsGateway, getTtsCacheStats } from './ttsGatewayService';
 import { RegisteredDocument } from '../../types/source';
+import { auditTenLessonReadiness } from './tenLessonReadinessAudit';
 
 export const courseEngineRouter = Router();
 
@@ -148,6 +149,10 @@ courseEngineRouter.post('/packages/:packageId/build-pilot', (req: Request, res: 
   } catch (error: any) {
     return res.status(400).json({ error: error.message || 'Không thể xây dựng package.' });
   }
+});
+
+courseEngineRouter.get('/readiness/ten-lessons', (_req: Request, res: Response) => {
+  return res.json(auditTenLessonReadiness());
 });
 
 courseEngineRouter.get('/health', (_req: Request, res: Response) => {
