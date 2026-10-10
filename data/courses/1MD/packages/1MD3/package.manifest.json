@@ -14,7 +14,6 @@
       "status": "REGISTERED",
       "documentType": "DOCX",
       "filename": "1.MĐ3(1).docx",
-      "sizeBytes": 35324,
       "packageId": "LPKG-1MD3-001"
     },
     "level3": {
@@ -23,7 +22,6 @@
       "status": "REGISTERED",
       "documentType": "PPTX",
       "filename": "1.MĐ3.pptx",
-      "sizeBytes": 28513288,
       "slideCount": 30,
       "packageId": "LPKG-1MD3-001"
     }
@@ -43,8 +41,10 @@
   },
   "contentPolicy": "SOURCE_AUTHORITATIVE_READ_ONLY",
   "sourceInventory": {
-    "docxPresent": true,
-    "pptxPresent": true,
+    "docxRegistered": true,
+    "pptxRegistered": true,
+    "rawSourceBytesVerifiedInRepository": false,
+    "sourceTextReviewedFromLibrary": true,
     "ownershipDeclared": true,
     "academicSourceMutation": "NONE"
   },
